@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 export default class CategoriasApi {
   async buscarTodasAsCategorias() {
-    const { data } = await axios.get('/categorias/');
+    const { data } = await axios.get("/categorias/");
     return data;
   }
   async adicionarCategoria(categoria) {
-    const { data } = await axios.post('/categorias/', categoria);
+    const { data } = await axios.post("/categorias/", categoria);
     return data;
   }
   async atualizarCategoria(categoria) {
