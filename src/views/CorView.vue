@@ -36,13 +36,13 @@ export default {
   <h1>Cor</h1>
   <hr />
   <div class="form">
-    <input type="text" v-model="cor.descricao" placeholder="Descrição" />
+    <input type="text" v-model="cor.nome_cor" placeholder="Descrição" />
     <button @click="salvar">Salvar</button>
   </div>
   <hr />
   <ul>
     <li v-for="cor in cores" :key="cor.id">
-      <span @click="editar(cor)"> ({{ cor.id }}) - {{ cor.descricao }} - </span>
+      <span @click="editar(cor)"> ({{ cor.id }}) - {{ cor.nome_cor }} - </span>
       <button @click="excluir(cor)">X</button>
     </li>
   </ul>

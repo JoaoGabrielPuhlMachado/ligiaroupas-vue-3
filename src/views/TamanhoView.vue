@@ -36,14 +36,18 @@ export default {
   <h1>Tamanho</h1>
   <hr />
   <div class="form">
-    <input type="text" v-model="tamanho.descricao" placeholder="Descrição" />
+    <input
+      type="text"
+      v-model="tamanho.especificacao"
+      placeholder="Descrição"
+    />
     <button @click="salvar">Salvar</button>
   </div>
   <hr />
   <ul>
     <li v-for="tamanho in tamanhos" :key="tamanho.id">
       <span @click="editar(tamanho)">
-        ({{ tamanho.id }}) - {{ tamanho.descricao }} -
+        ({{ tamanho.id }}) - {{ tamanho.especificacao }} -
       </span>
       <button @click="excluir(tamanho)">X</button>
     </li>

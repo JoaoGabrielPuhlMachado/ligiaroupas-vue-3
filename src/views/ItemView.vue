@@ -68,17 +68,17 @@ export default {
     </select>
     <select v-model="item.corId">
       <option v-for="cor in cores" :key="cor.id" :value="cor.id">
-        {{ cor.descricao }}
+        {{ cor.nome_cor }}
       </option>
     </select>
     <select v-model="item.marcaId">
       <option v-for="marca in marcas" :key="marca.id" :value="marca.id">
-        {{ marca.descricao }}
+        {{ marca.nome_marca }}
       </option>
     </select>
     <select v-model="item.tamanhoId">
       <option v-for="tamanho in tamanhos" :key="tamanho.id" :value="tamanho.id">
-        {{ tamanho.descricao }}
+        {{ tamanho.especificacao }}
       </option>
     </select>
     <button @click="salvar">Salvar</button>
@@ -87,10 +87,11 @@ export default {
   <ul>
     <li v-for="item in itens" :key="item.id">
       <span @click="editar(item)">
-        ({{ item.id }}) - {{ item.nome }} - {{ item.cor }} -
-        {{ item.categoria }} {{ item.marca }} - {{ item.tamanho }} -
-        {{ item.quantidade }} -
-        {{ item.preco }}
+        ({{ item.id }}) - {{ item.nome }} - Cor: {{ item.cor.nome_cor }} -
+        Categoria: {{ item.categoria.descricao }} - Marca:
+        {{ item.marca.nome_marca }} - Tamanho:
+        {{ item.tamanho.especificacao }} - Estoque: {{ item.quantidade }} -
+        Preço: {{ item.preco }}
       </span>
       <button @click="excluir(item)">X</button>
     </li>

@@ -36,14 +36,14 @@ export default {
   <h1>Marca</h1>
   <hr />
   <div class="form">
-    <input type="text" v-model="marca.descricao" placeholder="Descrição" />
+    <input type="text" v-model="marca.nome_marca" placeholder="Descrição" />
     <button @click="salvar">Salvar</button>
   </div>
   <hr />
   <ul>
     <li v-for="marca in marcas" :key="marca.id">
       <span @click="editar(marca)">
-        ({{ marca.id }}) - {{ marca.descricao }} -
+        ({{ marca.id }}) - {{ marca.nome_marca }} -
       </span>
       <button @click="excluir(marca)">X</button>
     </li>

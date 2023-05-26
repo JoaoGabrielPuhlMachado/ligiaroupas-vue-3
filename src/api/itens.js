@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 export default class ItensApi {
   async buscarTodosOsItens() {
-    const { data } = await axios.get('/itens/');
+    const { data } = await axios.get("/itens/");
     return data;
   }
   async adicionarItem(item) {
-    const { data } = await axios.post('/itens/', item);
+    const { data } = await axios.post("/itens/", item);
     return data;
   }
   async atualizarItem(item) {
