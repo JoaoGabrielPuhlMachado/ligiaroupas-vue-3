@@ -13,7 +13,10 @@ export default {
   data() {
     return {
       itens: [],
-      item: {},
+      item: {
+        cor: "",
+        marca: "",
+      },
       marcas: [],
       cores: [],
       tamanhos: [],
@@ -32,19 +35,46 @@ export default {
   methods: {
     async salvar() {
       if (this.item.id) {
+        this.item.cor = this.item.cor.id;
+        this.item.marca = this.item.marca.id;
         await itensApi.atualizarItem(this.item);
       } else {
         await itensApi.adicionarItem(this.item);
       }
-      this.item = {};
       this.itens = await itensApi.buscarTodosOsItens();
     },
     editar(item) {
-      Object.assign(this.item, item);
+      this.item = { ...item, cor: { ...item.cor } };
     },
     async excluir(item) {
       await itensApi.excluirItem(item.id);
       this.itens = await itensApi.buscarTodosOsItens();
+    },
+    // selecionarImagem(event) {
+    //   this.item.imagem = event.target.files[0];
+    // },
+    // async inserirImagem() {
+    //   const formData = new FormData();
+    //   formData.append("imagem", this.item.imagem);
+    //   try {
+    //     const response = await axios.post(
+    //       "http://joaosttirlley.pythonanywhere.com/",
+    //       formData,
+    //       {
+    //         headers: {
+    //           "Content-Type": "multipart/form-data",
+    //         },
+    //       }
+    //     );
+    //     this.item.imagemUrl = response.data.url;
+    //     this.item.imagem = {};
+    //   } catch (error) {
+    //     console.error("Erro ao inserir imagem:", error);
+    //   }
+    // },
+
+    verificar(cor) {
+      return cor.id === this.item.cor.id;
     },
   },
 };
@@ -57,7 +87,7 @@ export default {
     <input type="text" v-model="item.nome" placeholder="Descrição" />
     <input type="text" v-model="item.quantidade" placeholder="Quantidade" />
     <input type="text" v-model="item.preco" placeholder="Preço" />
-    <select v-model="item.categoriaId">
+    <select v-model="item.categoria">
       <option
         v-for="categoria in categorias"
         :key="categoria.id"
@@ -66,21 +96,28 @@ export default {
         {{ categoria.descricao }}
       </option>
     </select>
-    <select v-model="item.corId">
-      <option v-for="cor in cores" :key="cor.id" :value="cor.id">
+    <select v-model="item.cor">
+      <option
+        v-for="cor in cores"
+        :key="cor.id"
+        :value="cor"
+        :selected="cor.id === item.cor.id ? true : false"
+      >
         {{ cor.nome_cor }}
       </option>
     </select>
-    <select v-model="item.marcaId">
-      <option v-for="marca in marcas" :key="marca.id" :value="marca.id">
+    <select v-model="item.marca">
+      <option v-for="marca in marcas" :key="marca.id" :value="marca" :selected="marca.id === item.marca.id ? true : false">
         {{ marca.nome_marca }}
       </option>
     </select>
-    <select v-model="item.tamanhoId">
+    <select v-model="item.tamanho">
       <option v-for="tamanho in tamanhos" :key="tamanho.id" :value="tamanho.id">
         {{ tamanho.especificacao }}
       </option>
     </select>
+    <!-- <input type="file" @change="selecionarImagem" />
+    <button @click="inserirImagem">Inserir Imagem</button> -->
     <button @click="salvar">Salvar</button>
   </div>
   <hr />
@@ -91,7 +128,7 @@ export default {
         Categoria: {{ item.categoria.descricao }} - Marca:
         {{ item.marca.nome_marca }} - Tamanho:
         {{ item.tamanho.especificacao }} - Estoque: {{ item.quantidade }} -
-        Preço: {{ item.preco }}
+        Preço: {{ item.preco }} <img v-if="item.capa" :src="item.capa.file" />
       </span>
       <button @click="excluir(item)">X</button>
     </li>
