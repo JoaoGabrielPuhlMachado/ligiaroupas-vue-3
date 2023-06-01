@@ -16,6 +16,8 @@ export default {
       item: {
         cor: "",
         marca: "",
+        categoria: "",
+        tamanho: "",
       },
       marcas: [],
       cores: [],
@@ -37,6 +39,8 @@ export default {
       if (this.item.id) {
         this.item.cor = this.item.cor.id;
         this.item.marca = this.item.marca.id;
+        this.item.categoria = this.item.categoria.id;
+        this.item.tamanho = this.item.tamanho.id;
         await itensApi.atualizarItem(this.item);
       } else {
         await itensApi.adicionarItem(this.item);
@@ -50,39 +54,12 @@ export default {
       await itensApi.excluirItem(item.id);
       this.itens = await itensApi.buscarTodosOsItens();
     },
-    // selecionarImagem(event) {
-    //   this.item.imagem = event.target.files[0];
-    // },
-    // async inserirImagem() {
-    //   const formData = new FormData();
-    //   formData.append("imagem", this.item.imagem);
-    //   try {
-    //     const response = await axios.post(
-    //       "http://joaosttirlley.pythonanywhere.com/",
-    //       formData,
-    //       {
-    //         headers: {
-    //           "Content-Type": "multipart/form-data",
-    //         },
-    //       }
-    //     );
-    //     this.item.imagemUrl = response.data.url;
-    //     this.item.imagem = {};
-    //   } catch (error) {
-    //     console.error("Erro ao inserir imagem:", error);
-    //   }
-    // },
-
-    verificar(cor) {
-      return cor.id === this.item.cor.id;
-    },
   },
 };
 </script>
 
 <template>
   <h1>Item</h1>
-  <hr />
   <div class="form">
     <input type="text" v-model="item.nome" placeholder="Descrição" />
     <input type="text" v-model="item.quantidade" placeholder="Quantidade" />
@@ -91,7 +68,8 @@ export default {
       <option
         v-for="categoria in categorias"
         :key="categoria.id"
-        :value="categoria.id"
+        :value="categoria"
+        :selected="categoria.id === item.categoria.id ? true : false"
       >
         {{ categoria.descricao }}
       </option>
@@ -107,32 +85,74 @@ export default {
       </option>
     </select>
     <select v-model="item.marca">
-      <option v-for="marca in marcas" :key="marca.id" :value="marca" :selected="marca.id === item.marca.id ? true : false">
+      <option
+        v-for="marca in marcas"
+        :key="marca.id"
+        :value="marca"
+        :selected="marca.id === item.marca.id ? true : false"
+      >
         {{ marca.nome_marca }}
       </option>
     </select>
     <select v-model="item.tamanho">
-      <option v-for="tamanho in tamanhos" :key="tamanho.id" :value="tamanho.id">
+      <option
+        v-for="tamanho in tamanhos"
+        :key="tamanho.id"
+        :value="tamanho"
+        :selected="tamanho.id === item.tamanho.id ? true : false"
+      >
         {{ tamanho.especificacao }}
       </option>
     </select>
-    <!-- <input type="file" @change="selecionarImagem" />
-    <button @click="inserirImagem">Inserir Imagem</button> -->
     <button @click="salvar">Salvar</button>
   </div>
-  <hr />
-  <ul>
-    <li v-for="item in itens" :key="item.id">
-      <span @click="editar(item)">
-        ({{ item.id }}) - {{ item.nome }} - Cor: {{ item.cor.nome_cor }} -
-        Categoria: {{ item.categoria.descricao }} - Marca:
-        {{ item.marca.nome_marca }} - Tamanho:
-        {{ item.tamanho.especificacao }} - Estoque: {{ item.quantidade }} -
-        Preço: {{ item.preco }} <img v-if="item.capa" :src="item.capa.file" />
-      </span>
-      <button @click="excluir(item)">X</button>
-    </li>
-  </ul>
+  <div class="item-card-container">
+    <div class="item-card" v-for="item in itens" :key="item.id">
+      <div class="item-card-content">
+        <div class="item-card-text" @click="editar(item)">
+          <img v-if="item.capa" :src="item.capa.file" alt="Imagem" />
+          <span v-else>Sem Imagem</span>
+        </div>
+        <div class="item-card-text" @click="editar(item)">
+          ID: ({{ item.id }}) - {{ item.nome }} - Cor: {{ item.cor.nome_cor }} -
+          Categoria: {{ item.categoria.descricao }} - Marca:
+          {{ item.marca.nome_marca }} - Tamanho:
+          {{ item.tamanho.especificacao }} - Estoque: {{ item.quantidade }} -
+          Preço: {{ item.preco }}
+        </div>
+      </div>
+      <button class="item-card-button" @click="excluir(item)">X</button>
+    </div>
+  </div>
 </template>
-
-<style></style>
+<style scoped>
+.item-card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.item-card {
+  width: 17%;
+  height: 350px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+}
+/* .item-card-content {
+  justify-content: space-between;
+} */
+.item-card-text {
+  cursor: pointer;
+}
+.item-card-button {
+  font-weight: bold;
+  background-color: black;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+</style>

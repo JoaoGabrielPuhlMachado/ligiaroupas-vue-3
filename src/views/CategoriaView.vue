@@ -31,23 +31,19 @@ export default {
   },
 };
 </script>
-
 <template>
   <h1>Categoria</h1>
-  <hr />
   <div class="form">
     <input type="text" v-model="categoria.descricao" placeholder="Descrição" />
     <button @click="salvar">Salvar</button>
   </div>
-  <hr />
-  <ul>
-    <li v-for="categoria in categorias" :key="categoria.id">
-      <span @click="editar(categoria)">
-        ({{ categoria.id }}) - {{ categoria.descricao }} -
-      </span>
-      <button @click="excluir(categoria)">X</button>
-    </li>
-  </ul>
+  <div class="card" v-for="categoria in categorias" :key="categoria.id">
+    <div class="card-content">
+      <div class="card-text" @click="editar(categoria)">
+        ID: ({{ categoria.id }}) - {{ categoria.descricao }}
+      </div>
+      <button class="card-button" @click="excluir(categoria)">X</button>
+    </div>
+  </div>
 </template>
-
 <style></style>

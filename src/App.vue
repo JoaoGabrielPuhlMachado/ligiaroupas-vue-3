@@ -1,13 +1,15 @@
+<script setup>
+import CabecalhoComp from "./components/CabecalhoComp.vue";
+</script>
+
 <template>
-  <header>
-    <router-link :to="{ name: 'home' }">Home</router-link>
-    <router-link to="/itens">Itens</router-link>
-    <router-link to="/categorias">Categorias</router-link>
-    <router-link to="/cores">Cores</router-link>
-    <router-link to="/marcas">Marcas</router-link>
-    <router-link to="/tamanhos">Tamanhos</router-link>
-  </header>
+  <CabecalhoComp />
   <main>
     <RouterView />
   </main>
 </template>
+<style>
+#app {
+  height: 100vh;
+}
+</style>

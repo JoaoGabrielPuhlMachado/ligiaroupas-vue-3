@@ -1,11 +1,11 @@
-import axios from 'axios';
+import axios from "axios";
 export default class CoresApi {
   async buscarTodasAsCores() {
-    const { data } = await axios.get('cores/');
+    const { data } = await axios.get("cores/");
     return data;
   }
   async adicionarCor(cor) {
-    const { data } = await axios.post('cores/', cor);
+    const { data } = await axios.post("cores/", cor);
     return data;
   }
   async atualizarCor(cor) {

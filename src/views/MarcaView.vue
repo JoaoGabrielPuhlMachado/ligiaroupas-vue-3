@@ -25,7 +25,7 @@ export default {
       Object.assign(this.marca, marca);
     },
     async excluir(marca) {
-      await marcasApi.excluirCategoria(marca.id);
+      await marcasApi.excluirMarca(marca.id);
       this.marcas = await marcasApi.buscarTodasAsMarcas();
     },
   },
@@ -34,20 +34,17 @@ export default {
 
 <template>
   <h1>Marca</h1>
-  <hr />
   <div class="form">
     <input type="text" v-model="marca.nome_marca" placeholder="Descrição" />
     <button @click="salvar">Salvar</button>
   </div>
-  <hr />
-  <ul>
-    <li v-for="marca in marcas" :key="marca.id">
-      <span @click="editar(marca)">
-        ({{ marca.id }}) - {{ marca.nome_marca }} -
-      </span>
-      <button @click="excluir(marca)">X</button>
-    </li>
-  </ul>
+  <div class="card" v-for="marca in marcas" :key="marca.id">
+    <div class="card-content">
+      <div class="card-text" @click="editar(marca)">
+        ID: ({{ marca.id }}) - {{ marca.nome_marca }}
+      </div>
+      <button class="card-button" @click="excluir(marca)">X</button>
+    </div>
+  </div>
 </template>
-
 <style></style>

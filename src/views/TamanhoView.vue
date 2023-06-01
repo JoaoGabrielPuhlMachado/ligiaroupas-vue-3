@@ -34,7 +34,6 @@ export default {
 
 <template>
   <h1>Tamanho</h1>
-  <hr />
   <div class="form">
     <input
       type="text"
@@ -43,15 +42,13 @@ export default {
     />
     <button @click="salvar">Salvar</button>
   </div>
-  <hr />
-  <ul>
-    <li v-for="tamanho in tamanhos" :key="tamanho.id">
-      <span @click="editar(tamanho)">
-        ({{ tamanho.id }}) - {{ tamanho.especificacao }} -
-      </span>
-      <button @click="excluir(tamanho)">X</button>
-    </li>
-  </ul>
+  <div class="card" v-for="tamanho in tamanhos" :key="tamanho.id">
+    <div class="card-content">
+      <div class="card-text" @click="editar(tamanho)">
+        ID: ({{ tamanho.id }}) - {{ tamanho.especificacao }}
+      </div>
+      <button class="card-button" @click="excluir(tamanho)">X</button>
+    </div>
+  </div>
 </template>
-
 <style></style>

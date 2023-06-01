@@ -34,18 +34,17 @@ export default {
 
 <template>
   <h1>Cor</h1>
-  <hr />
   <div class="form">
     <input type="text" v-model="cor.nome_cor" placeholder="Descrição" />
     <button @click="salvar">Salvar</button>
   </div>
-  <hr />
-  <ul>
-    <li v-for="cor in cores" :key="cor.id">
-      <span @click="editar(cor)"> ({{ cor.id }}) - {{ cor.nome_cor }} - </span>
-      <button @click="excluir(cor)">X</button>
-    </li>
-  </ul>
+  <div class="card" v-for="cor in cores" :key="cor.id">
+    <div class="card-content">
+      <div class="card-text" @click="editar(cor)">
+        ID: ({{ cor.id }}) - {{ cor.nome_cor }}
+      </div>
+      <button class="card-button" @click="excluir(cor)">X</button>
+    </div>
+  </div>
 </template>
-
 <style></style>
