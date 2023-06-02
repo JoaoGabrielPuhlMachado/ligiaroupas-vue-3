@@ -32,17 +32,22 @@ export default {
 };
 </script>
 <template>
-  <h1>Categoria</h1>
   <div class="form">
-    <input type="text" v-model="categoria.descricao" placeholder="Descrição" />
-    <button @click="salvar">Salvar</button>
+    <div class="categoria">
+      <label for="Categoria">Categorias: </label>
+      <input type="text" v-model="categoria.descricao" />
+    </div>
+    <div class="header-botao">
+      <button class="botao" @click="salvar">Salvar</button>
+    </div>
   </div>
-  <div class="card" v-for="categoria in categorias" :key="categoria.id">
-    <div class="card-content">
-      <div class="card-text" @click="editar(categoria)">
+  <div class="card-container">
+    <div class="card" v-for="categoria in categorias" :key="categoria.id">
+      <div class="card-content">
         ID: ({{ categoria.id }}) - {{ categoria.descricao }}
+        <button @click="editar(categoria)">Editar</button>
+        <button class="card-button" @click="excluir(categoria)">X</button>
       </div>
-      <button class="card-button" @click="excluir(categoria)">X</button>
     </div>
   </div>
 </template>

@@ -33,17 +33,22 @@ export default {
 </script>
 
 <template>
-  <h1>Cor</h1>
   <div class="form">
-    <input type="text" v-model="cor.nome_cor" placeholder="Descrição" />
-    <button @click="salvar">Salvar</button>
+    <div class="cor">
+      <label for="Cor">Cores: </label>
+      <input type="text" v-model="cor.nome_cor" />
+    </div>
+    <div class="header-botao">
+      <button class="botao" @click="salvar">Salvar</button>
+    </div>
   </div>
-  <div class="card" v-for="cor in cores" :key="cor.id">
-    <div class="card-content">
-      <div class="card-text" @click="editar(cor)">
+  <div class="card-container">
+    <div class="card" v-for="cor in cores" :key="cor.id">
+      <div class="card-content">
         ID: ({{ cor.id }}) - {{ cor.nome_cor }}
+        <button @click="editar(cor)">Editar</button>
+        <button class="card-button" @click="excluir(cor)">X</button>
       </div>
-      <button class="card-button" @click="excluir(cor)">X</button>
     </div>
   </div>
 </template>

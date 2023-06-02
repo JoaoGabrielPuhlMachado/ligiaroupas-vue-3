@@ -33,21 +33,22 @@ export default {
 </script>
 
 <template>
-  <h1>Tamanho</h1>
   <div class="form">
-    <input
-      type="text"
-      v-model="tamanho.especificacao"
-      placeholder="Descrição"
-    />
-    <button @click="salvar">Salvar</button>
+    <div class="tamanho">
+      <label for="Tamanho">Tamanhos: </label>
+      <input type="text" v-model="tamanho.especificacao" />
+    </div>
+    <div class="header-botao">
+      <button class="botao" @click="salvar">Salvar</button>
+    </div>
   </div>
-  <div class="card" v-for="tamanho in tamanhos" :key="tamanho.id">
-    <div class="card-content">
-      <div class="card-text" @click="editar(tamanho)">
+  <div class="card-container">
+    <div class="card" v-for="tamanho in tamanhos" :key="tamanho.id">
+      <div class="card-content">
         ID: ({{ tamanho.id }}) - {{ tamanho.especificacao }}
+        <button @click="editar(tamanho)">Editar</button>
+        <button class="card-button" @click="excluir(tamanho)">X</button>
       </div>
-      <button class="card-button" @click="excluir(tamanho)">X</button>
     </div>
   </div>
 </template>

@@ -1,10 +1,11 @@
 * {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Verdana, sans-serif;
   margin: 0;
 }
 header {
   display: flex;
-  height: 8%;
+  height: 60px;
   width: 100%;
   background-color: rgb(183, 240, 220);
   color: black;
@@ -14,12 +15,19 @@ header {
 header span {
   padding: 0 20px;
 }
-img {
-  width: 75%;
-  height: 230px;
+img,
+.sem-imagem {
+  border: 1px solid #ccc;
+  width: 95%;
+  height: 350px;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  margin-left: auto;
+  margin-right: auto;
 }
 .card {
-  width: 200px;
+  width: 250px;
   margin: 10px;
   padding: 10px;
   border: 1px solid #ccc;
@@ -33,7 +41,6 @@ img {
   justify-content: space-between;
   align-items: center;
 }
-
 .card-text {
   cursor: pointer;
 }
@@ -45,4 +52,55 @@ img {
   border-radius: 5px;
   padding: 5px 10px;
   cursor: pointer;
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+input {
+  height: 24px;
+  border: 1px solid black;
+  font-size: 15px;
+  border-radius: 2px;
+}
+select {
+  height: 28px;
+  border: 1px solid black;
+  font-size: 15px;
+  border-radius: 2px;
+}
+label {
+  font-size: 18px;
+  cursor: pointer;
+  text-align: center;
+}
+button {
+  height: 28px;
+}
+.descricao,
+.estoque,
+.preco,
+.categoria,
+.cor,
+.marca,
+.tamanho {
+  display: flex;
+  flex-direction: column;
+  width: 12%;
+  margin: 0 10px;
+}
+.header-botao {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  width: 5%;
+}
+.botao {
+  width: 100%;
+  height: 28px;
+  cursor: pointer;
+}
+.form {
+  display: flex;
+  margin: 25px 0;
 }
