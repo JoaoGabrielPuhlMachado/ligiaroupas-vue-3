@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import LoginView from "../views/LoginView.vue";
 import CadastroView from "../views/CadastroView.vue";
+import LoginadminView from "../views/LoginadminView.vue";
+import CadastroadminView from "../views/CadastroadminView.vue";
 import CategoriaView from "../views/CategoriaView.vue";
 import CorView from "../views/CorView.vue";
 import ItemView from "../views/ItemView.vue";
@@ -25,6 +27,16 @@ const router = createRouter({
       path: "/cadastro",
       name: "cadastro",
       component: CadastroView,
+    },
+    {
+      path: "/login/admin",
+      name: "login-admin",
+      component: LoginadminView,
+    },
+    {
+      path: "/cadastro/admin",
+      name: "cadastro-admin",
+      component: CadastroadminView,
     },
     {
       path: "/categorias",

@@ -47,7 +47,7 @@ export default {
 <template>
   <div class="cadastro-container">
     <div class="cadastro-content">
-      <h1>Cadastro</h1>
+      <h1>Cadastro Admin</h1>
       <form @submit.prevent="cadastro">
         <label for="usuario">Usuario:</label>
         <input type="text" id="usuario" v-model="usuario" required />
