@@ -9,7 +9,7 @@ export default class ItensApi {
     return data;
   }
   async atualizarItem(item) {
-    const { data } = await axios.put(`itens/${item.id}/`, item);
+    const { data } = await axios.patch(`itens/${item.id}/`, item);
     return data;
   }
   async excluirItem(id) {

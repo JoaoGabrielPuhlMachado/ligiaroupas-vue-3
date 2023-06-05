@@ -8,10 +8,9 @@
         <span><RouterLink to="/marcas">Marcas</RouterLink></span>
         <span><RouterLink to="/tamanhos">Tamanhos</RouterLink></span>
         <span><RouterLink to="/cores">Cores</RouterLink></span>
-      </div>
-      <div class="nome-site">
         <span class="ligia">Lígia Roupas</span>
       </div>
+      <div class="nome-site"></div>
       <div class="login">
         <span><RouterLink to="/login">Login</RouterLink></span>
       </div>
@@ -22,10 +21,7 @@
 .menu {
   display: flex;
   justify-content: space-between;
-}
-.router-link-active {
-  color: black;
-  font-weight: bold;
+  width: 100%;
 }
 .links,
 .login {
@@ -35,5 +31,10 @@
 .ligia {
   font-weight: bold;
   font-size: 40px;
+}
+
+.router-link-active {
+  color: black;
+  font-weight: bold;
 }
 </style>

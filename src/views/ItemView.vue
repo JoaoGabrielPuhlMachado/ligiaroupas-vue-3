@@ -1,61 +1,68 @@
-<script>
-import ItensApi from "@/api/itens";
-const itensApi = new ItensApi();
+<script setup>
+import { onMounted, ref } from "vue";
+
+import ItensApi from "/src/api/itens.js";
 import CategoriasApi from "@/api/categorias";
-const categoriasApi = new CategoriasApi();
 import MarcasApi from "@/api/marcas";
-const marcasApi = new MarcasApi();
 import TamanhosApi from "@/api/tamanhos";
-const tamanhosApi = new TamanhosApi();
 import CoresApi from "@/api/cores";
+
+const itensApi = new ItensApi();
+const categoriasApi = new CategoriasApi();
+const marcasApi = new MarcasApi();
+const tamanhosApi = new TamanhosApi();
 const coresApi = new CoresApi();
-export default {
-  data() {
-    return {
-      itens: [],
-      item: {
-        cor: "",
-        marca: "",
-        categoria: "",
-        tamanho: "",
-      },
-      marcas: [],
-      cores: [],
-      tamanhos: [],
-      categorias: [],
-      preco: {},
-      quantidade: {},
-    };
-  },
-  async created() {
-    this.itens = await itensApi.buscarTodosOsItens();
-    this.marcas = await marcasApi.buscarTodasAsMarcas();
-    this.cores = await coresApi.buscarTodasAsCores();
-    this.tamanhos = await tamanhosApi.buscarTodosOsTamanhos();
-    this.categorias = await categoriasApi.buscarTodasAsCategorias();
-  },
-  methods: {
-    async salvar() {
-      if (this.item.id) {
-        this.item.cor = this.item.cor.id;
-        this.item.marca = this.item.marca.id;
-        this.item.categoria = this.item.categoria.id;
-        this.item.tamanho = this.item.tamanho.id;
-        await itensApi.atualizarItem(this.item);
-      } else {
-        await itensApi.adicionarItem(this.item);
-      }
-      this.itens = await itensApi.buscarTodosOsItens();
-    },
-    editar(item) {
-      this.item = { ...item, cor: { ...item.cor } };
-    },
-    async excluir(item) {
-      await itensApi.excluirItem(item.id);
-      this.itens = await itensApi.buscarTodosOsItens();
-    },
-  },
-};
+
+const itens = ref([]);
+const item = ref({
+  nome: "",
+  preco: "",
+  quantidade: "",
+  cor: {},
+  marca: {},
+  categoria: {},
+  tamanho: {},
+});
+const marcas = ref([]);
+const cores = ref([]);
+const tamanhos = ref([]);
+const categorias = ref([]);
+
+onMounted(async () => {
+  itens.value = await itensApi.buscarTodosOsItens();
+  marcas.value = await marcasApi.buscarTodasAsMarcas();
+  cores.value = await coresApi.buscarTodasAsCores();
+  tamanhos.value = await tamanhosApi.buscarTodosOsTamanhos();
+  categorias.value = await categoriasApi.buscarTodasAsCategorias();
+});
+
+async function salvar() {
+  item.value.cor = item.value.cor.id;
+  item.value.marca = item.value.marca.id;
+  item.value.categoria = item.value.categoria.id;
+  item.value.tamanho = item.value.tamanho.id;
+  if (item.value.id) {
+    await itensApi.atualizarItem(item.value);
+  } else {
+    await itensApi.adicionarItem(item.value);
+  }
+  item.value = {
+    cor: "",
+    marca: "",
+    categoria: "",
+    tamanho: "",
+  };
+  itens.value = await itensApi.buscarTodosOsItens();
+}
+
+function editar(editItem) {
+  item.value = { ...editItem };
+}
+
+async function excluir(item) {
+  await itensApi.excluirItem(item.id);
+  itens.value = await itensApi.buscarTodosOsItens();
+}
 </script>
 
 <template>
@@ -131,7 +138,7 @@ export default {
   <div class="item-card-container">
     <div class="item-card" v-for="item in itens" :key="item.id">
       <div class="item-card-content">
-        <img v-if="item.capa" :src="item.capa.file" alt="Imagem" />
+        <img v-if="item.capa" :src="item.capa.file" />
         <div v-else class="sem-imagem">Produto Sem Imagem</div>
         <br />
         ID: ({{ item.id }})
