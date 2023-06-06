@@ -169,7 +169,7 @@ async function excluir(item) {
 }
 .item-card {
   width: 20%;
-  height: 530px;
+  max-height: 530px;
   margin: 10px;
   padding: 10px;
   border: 1px solid #ccc;

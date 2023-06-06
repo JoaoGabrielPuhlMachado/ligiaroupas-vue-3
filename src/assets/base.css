@@ -104,3 +104,21 @@ button {
   display: flex;
   margin: 25px 0;
 }
+.cliente-card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+.cliente-card-content {
+  display: flex;
+  justify-content: center;
+  cursor: pointer;
+}
+.cliente-card {
+  width: 100px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+}

@@ -1,13 +1,15 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import LoginView from "../views/LoginView.vue";
-import CadastroView from "../views/CadastroView.vue";
-import LoginadminView from "../views/LoginadminView.vue";
-import CadastroadminView from "../views/CadastroadminView.vue";
-import CategoriaView from "../views/CategoriaView.vue";
+import LoginClienteView from "../views/LoginClienteView.vue";
+import LoginAdminView from "../views/LoginAdminView.vue";
+import CadastroClienteView from "../views/CadastroClienteView.vue";
+import CadastroAdminView from "../views/CadastroAdminView.vue";
+import CategoriaAdminView from "../views/CategoriaAdminView.vue";
+import CategoriaClienteView from "../views/CategoriaClienteView.vue";
 import CorView from "../views/CorView.vue";
 import ItemView from "../views/ItemView.vue";
-import MarcaView from "../views/MarcaView.vue";
+import MarcaAdminView from "../views/MarcaAdminView.vue";
+import MarcaClienteView from "../views/MarcaClienteView.vue";
 import TamanhoView from "../views/TamanhoView.vue";
 
 const router = createRouter({
@@ -21,27 +23,42 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
-      component: LoginView,
+      component: LoginClienteView,
     },
     {
       path: "/cadastro",
       name: "cadastro",
-      component: CadastroView,
-    },
-    {
-      path: "/login/admin",
-      name: "login-admin",
-      component: LoginadminView,
-    },
-    {
-      path: "/cadastro/admin",
-      name: "cadastro-admin",
-      component: CadastroadminView,
+      component: CadastroClienteView,
     },
     {
       path: "/categorias",
       name: "categorias",
-      component: CategoriaView,
+      component: CategoriaClienteView,
+    },
+    {
+      path: "/marcas",
+      name: "marcas",
+      component: MarcaClienteView,
+    },
+    {
+      path: "/admin/login",
+      name: "login-admin",
+      component: LoginAdminView,
+    },
+    {
+      path: "/admin/cadastro",
+      name: "cadastro-admin",
+      component: CadastroAdminView,
+    },
+    {
+      path: "/admin/categorias",
+      name: "categorias-admin",
+      component: CategoriaAdminView,
+    },
+    {
+      path: "/admin/marcas",
+      name: "marcas-admin",
+      component: MarcaAdminView,
     },
     {
       path: "/cores",
@@ -52,11 +69,6 @@ const router = createRouter({
       path: "/itens",
       name: "itens",
       component: ItemView,
-    },
-    {
-      path: "/marcas",
-      name: "marcas",
-      component: MarcaView,
     },
     {
       path: "/tamanhos",
