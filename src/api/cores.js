@@ -4,6 +4,10 @@ export default class CoresApi {
     const { data } = await axios.get("cores/");
     return data;
   }
+  async buscarCorPorId(id) {
+    const { data } = await axios.get(`cores/${id}/`);
+    return data;
+  }
   async adicionarCor(cor) {
     const { data } = await axios.post("cores/", cor);
     return data;

@@ -11,6 +11,7 @@ import ItemView from "../views/ItemView.vue";
 import MarcaAdminView from "../views/MarcaAdminView.vue";
 import MarcaClienteView from "../views/MarcaClienteView.vue";
 import TamanhoView from "../views/TamanhoView.vue";
+import DescricaoItemView from "../views/DescricaoItemView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -74,6 +75,12 @@ const router = createRouter({
       path: "/tamanhos",
       name: "tamanhos",
       component: TamanhoView,
+    },
+    {
+      path: "/itens/:id",
+      name: "descricao",
+      component: DescricaoItemView,
+      props: true,
     },
   ],
 });

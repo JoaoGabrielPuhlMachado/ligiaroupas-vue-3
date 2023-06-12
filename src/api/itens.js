@@ -4,6 +4,10 @@ export default class ItensApi {
     const { data } = await axios.get("itens/");
     return data;
   }
+  async buscarItemPorId(id) {
+    const { data } = await axios.get(`itens/${id}/`);
+    return data;
+  }
   async adicionarItem(item) {
     const { data } = await axios.post("itens/", item);
     return data;

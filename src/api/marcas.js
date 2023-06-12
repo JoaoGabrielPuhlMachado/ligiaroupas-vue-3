@@ -4,6 +4,10 @@ export default class MarcasApi {
     const { data } = await axios.get("marcas/");
     return data;
   }
+  async buscarMarcaPorId(id) {
+    const { data } = await axios.get(`marcas/${id}/`);
+    return data;
+  }
   async adicionarMarca(marca) {
     const { data } = await axios.post("marcas/", marca);
     return data;

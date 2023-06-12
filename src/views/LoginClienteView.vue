@@ -47,7 +47,7 @@ export default {
         </p>
         <p>
           Admin?
-          <RouterLink to="/login/admin"><span>Login</span></RouterLink>
+          <RouterLink to="/admin/login"><span>Login</span></RouterLink>
         </p>
       </form>
     </div>

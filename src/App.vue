@@ -1,3 +1,14 @@
+<script setup>
+import CabecalhoCompAdmin from "./components/CabecalhoCompAdmin.vue";
+import CabecalhoCompCliente from "./components/CabecalhoCompCliente.vue";
+import { storeToRefs } from 'pinia'
+
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore()
+const { isAdmin } = storeToRefs(authStore)
+
+</script>
+
 <template>
   <div>
     <div v-if="isAdmin">
@@ -11,22 +22,6 @@
     </main>
   </div>
 </template>
-
-<script>
-import CabecalhoCompAdmin from "./components/CabecalhoCompAdmin.vue";
-import CabecalhoCompCliente from "./components/CabecalhoCompCliente.vue";
-import { mapState } from "vuex";
-
-export default {
-  components: {
-    CabecalhoCompAdmin,
-    CabecalhoCompCliente,
-  },
-  computed: {
-    ...mapState(["isAdmin"]),
-  },
-};
-</script>
 
 <style>
 #app {

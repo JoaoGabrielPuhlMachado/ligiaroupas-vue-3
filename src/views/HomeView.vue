@@ -1,19 +1,17 @@
-<script>
-import { mapState, mapMutations } from "vuex";
+<script setup>
+import { storeToRefs } from 'pinia'
 
-export default {
-  computed: {
-    ...mapState(["isAdmin"]),
-  },
-  methods: {
-    ...mapMutations(["toggleAdmin"]),
-  },
-};
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore()
+
+const {isAdmin} = storeToRefs(authStore) 
+
+
 </script>
 <template>
   <div>
     <h1>Bem-Vindo</h1>
     <p>Status do Admin: {{ isAdmin }}</p>
-    <button @click="toggleAdmin">Alterar Status</button>
+    <button @click="authStore.toggleAdmin">Alterar Status</button>
   </div>
 </template>

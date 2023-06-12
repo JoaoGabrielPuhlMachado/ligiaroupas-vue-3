@@ -43,7 +43,7 @@ export default {
         <br />
         <p>
           Não tem conta?
-          <RouterLink to="/cadastro/admin"
+          <RouterLink to="/admin/cadastro"
             ><span> Cadastre-se</span></RouterLink
           >
         </p>

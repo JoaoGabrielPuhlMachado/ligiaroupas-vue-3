@@ -6,6 +6,7 @@ import CategoriasApi from "@/api/categorias";
 import MarcasApi from "@/api/marcas";
 import TamanhosApi from "@/api/tamanhos";
 import CoresApi from "@/api/cores";
+import router from "../router";
 
 const itensApi = new ItensApi();
 const categoriasApi = new CategoriasApi();
@@ -28,7 +29,12 @@ const cores = ref([]);
 const tamanhos = ref([]);
 const categorias = ref([]);
 
+// const props = defineProps({
+//   id: Number
+// })
+
 onMounted(async () => {
+  // console.log(props.id)
   itens.value = await itensApi.buscarTodosOsItens();
   marcas.value = await marcasApi.buscarTodasAsMarcas();
   cores.value = await coresApi.buscarTodasAsCores();
@@ -62,6 +68,10 @@ function editar(editItem) {
 async function excluir(item) {
   await itensApi.excluirItem(item.id);
   itens.value = await itensApi.buscarTodosOsItens();
+}
+
+function abrir(id) {
+  router.push(`itens/${id}`);
 }
 </script>
 
@@ -136,7 +146,12 @@ async function excluir(item) {
     </div>
   </div>
   <div class="item-card-container">
-    <div class="item-card" v-for="item in itens" :key="item.id">
+    <div
+      class="item-card"
+      v-for="item in itens"
+      :key="item.id"
+      @click="abrir(item.id)"
+    >
       <div class="item-card-content">
         <img v-if="item.capa" :src="item.capa.file" />
         <div v-else class="sem-imagem">Produto Sem Imagem</div>

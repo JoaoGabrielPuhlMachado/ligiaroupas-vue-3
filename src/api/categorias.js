@@ -4,6 +4,10 @@ export default class CategoriasApi {
     const { data } = await axios.get("categorias/");
     return data;
   }
+  async buscarCategoriaPorId(id) {
+    const { data } = await axios.get(`categorias/${id}/`);
+    return data;
+  }
   async adicionarCategoria(categoria) {
     const { data } = await axios.post("categorias/", categoria);
     return data;

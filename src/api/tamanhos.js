@@ -4,6 +4,10 @@ export default class TamanhosApi {
     const { data } = await axios.get("tamanhos/");
     return data;
   }
+  async buscarTamanhoPorId(id) {
+    const { data } = await axios.get(`tamanhos/${id}/`);
+    return data;
+  }
   async adicionarTamanho(tamanho) {
     const { data } = await axios.post("tamanhos/", tamanho);
     return data;
