@@ -1,12 +1,10 @@
 <script setup>
-import { onMounted, ref } from "vue";
-
-import ItensApi from "/src/api/itens.js";
-import CategoriasApi from "@/api/categorias";
-import MarcasApi from "@/api/marcas";
-import TamanhosApi from "@/api/tamanhos";
-import CoresApi from "@/api/cores";
-import router from "../router";
+import { onMounted, ref, defineProps } from "vue";
+import ItensApi from "@/api/itens.js";
+import CategoriasApi from "@/api/categorias.js";
+import MarcasApi from "@/api/marcas.js";
+import TamanhosApi from "@/api/tamanhos.js";
+import CoresApi from "@/api/cores.js";
 
 const itensApi = new ItensApi();
 const categoriasApi = new CategoriasApi();
@@ -14,71 +12,53 @@ const marcasApi = new MarcasApi();
 const tamanhosApi = new TamanhosApi();
 const coresApi = new CoresApi();
 
-const itens = ref([]);
+const props = defineProps({
+  id: {
+    required: true,
+  },
+});
+
 const item = ref({
   nome: "",
   preco: "",
   quantidade: "",
-  cor: {},
-  marca: {},
-  categoria: {},
-  tamanho: {},
 });
-const marcas = ref([]);
-const cores = ref([]);
-const tamanhos = ref([]);
-const categorias = ref([]);
-
-const props = defineProps({
-  id: Number,
+const marca = ref({
+  nome_marca: "",
+});
+const cor = ref({
+  nome_cor: "",
+});
+const tamanho = ref({
+  especificacao: "",
+});
+const categoria = ref({
+  descricao: "",
 });
 
 onMounted(async () => {
-  console.log(props.id);
-  itens.value = await itensApi.buscarTodosOsItens();
-  marcas.value = await marcasApi.buscarTodasAsMarcas();
-  cores.value = await coresApi.buscarTodasAsCores();
-  tamanhos.value = await tamanhosApi.buscarTodosOsTamanhos();
-  categorias.value = await categoriasApi.buscarTodasAsCategorias();
+  item.value = await itensApi.buscarItemPorId(props.id);
+  marca.value = await marcasApi.buscarMarcaPorId(props.id);
+  cor.value = await coresApi.buscarCorPorId(props.id);
+  tamanho.value = await tamanhosApi.buscarTamanhoPorId(props.id);
+  categoria.value = await categoriasApi.buscarCategoriaPorId(props.id);
 });
-
-async function salvar() {
-  item.value.cor = item.value.cor.id;
-  item.value.marca = item.value.marca.id;
-  item.value.categoria = item.value.categoria.id;
-  item.value.tamanho = item.value.tamanho.id;
-  item.value = {
-    cor: "",
-    marca: "",
-    categoria: "",
-    tamanho: "",
-  };
-  itens.value = await itensApi.buscarTodosOsItens();
-  item.value = await itensApi.buscarItemPorId();
-}
-function abrir(id) {
-  router.push(`itens/${id}`);
-}
 </script>
+
 <template>
   <div class="item-card-container">
-    <div
-      class="item-card"
-      v-for="item in itens"
-      :key="item.id"
-      @click="abrir(item.id)"
-    >
+    <div class="item-card">
       <div class="item-card-content">
         <img v-if="item.capa" :src="item.capa.file" />
         <div v-else class="sem-imagem">Produto Sem Imagem</div>
         <br />
-        Cor: {{ item.cor.nome_cor }}
+        Cor: {{ cor.nome_cor }}
         <br />
-        Categoria: {{ item.categoria.descricao }}
+        Categoria: {{ categoria.descricao }}
         <br />
-        Marca: {{ item.marca.nome_marca }}
+        Marca: {{ marca.nome_marca }}
         <br />
-        Tamanho: {{ item.tamanho.especificacao }}
+        Tamanho: {{ tamanho.especificacao }}
         <br />
         Estoque: {{ item.quantidade }}
         <br />
@@ -87,4 +67,41 @@ function abrir(id) {
     </div>
   </div>
 </template>
-<style scoped></style>
+
+<style scoped>
+.item-card-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.item-card {
+  width: 20%;
+  max-height: 530px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+}
+
+.item-card-text {
+  cursor: pointer;
+}
+
+.item-card-button {
+  font-weight: bold;
+  background-color: black;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+
+.botao-espaco {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+</style>

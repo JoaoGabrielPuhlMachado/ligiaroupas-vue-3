@@ -29,12 +29,7 @@ const cores = ref([]);
 const tamanhos = ref([]);
 const categorias = ref([]);
 
-// const props = defineProps({
-//   id: Number
-// })
-
 onMounted(async () => {
-  // console.log(props.id)
   itens.value = await itensApi.buscarTodosOsItens();
   marcas.value = await marcasApi.buscarTodasAsMarcas();
   cores.value = await coresApi.buscarTodasAsCores();
@@ -146,13 +141,8 @@ function abrir(id) {
     </div>
   </div>
   <div class="item-card-container">
-    <div
-      class="item-card"
-      v-for="item in itens"
-      :key="item.id"
-      @click="abrir(item.id)"
-    >
-      <div class="item-card-content">
+    <div class="item-card" v-for="item in itens" :key="item.id">
+      <div class="item-card-content" @click="abrir(item.id)">
         <img v-if="item.capa" :src="item.capa.file" />
         <div v-else class="sem-imagem">Produto Sem Imagem</div>
         <br />

@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import LoginClienteView from "../views/LoginClienteView.vue";
-import LoginAdminView from "../views/LoginAdminView.vue";
-import CadastroClienteView from "../views/CadastroClienteView.vue";
-import CadastroAdminView from "../views/CadastroAdminView.vue";
-import CategoriaAdminView from "../views/CategoriaAdminView.vue";
-import CategoriaClienteView from "../views/CategoriaClienteView.vue";
 import CorView from "../views/CorView.vue";
 import ItemView from "../views/ItemView.vue";
-import MarcaAdminView from "../views/MarcaAdminView.vue";
-import MarcaClienteView from "../views/MarcaClienteView.vue";
 import TamanhoView from "../views/TamanhoView.vue";
+import LoginAdminView from "../views/LoginAdminView.vue";
+import CadastroAdminView from "../views/CadastroAdminView.vue";
+import CategoriaAdminView from "../views/CategoriaAdminView.vue";
+import MarcaAdminView from "../views/MarcaAdminView.vue";
 import DescricaoItemView from "../views/DescricaoItemView.vue";
+import CategoriaClienteView from "../views/CategoriaClienteView.vue";
+import LoginClienteView from "../views/LoginClienteView.vue";
+import CadastroClienteView from "../views/CadastroClienteView.vue";
+import MarcaClienteView from "../views/MarcaClienteView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
