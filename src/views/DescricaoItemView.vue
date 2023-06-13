@@ -14,6 +14,7 @@ const coresApi = new CoresApi();
 
 const props = defineProps({
   id: {
+    type: Number,
     required: true,
   },
 });
@@ -38,10 +39,12 @@ const categoria = ref({
 
 onMounted(async () => {
   item.value = await itensApi.buscarItemPorId(props.id);
-  marca.value = await marcasApi.buscarMarcaPorId(props.id);
-  cor.value = await coresApi.buscarCorPorId(props.id);
-  tamanho.value = await tamanhosApi.buscarTamanhoPorId(props.id);
-  categoria.value = await categoriasApi.buscarCategoriaPorId(props.id);
+  cor.value = await coresApi.buscarCorPorId(item.value.cor);
+  categoria.value = await categoriasApi.buscarCategoriaPorId(
+    item.value.categoria
+  );
+  marca.value = await marcasApi.buscarMarcaPorId(item.value.marca);
+  tamanho.value = await tamanhosApi.buscarTamanhoPorId(item.value.tamanho);
 });
 </script>
 
@@ -49,7 +52,7 @@ onMounted(async () => {
   <div class="item-card-container">
     <div class="item-card">
       <div class="item-card-content">
-        <img v-if="item.capa" :src="item.capa.file" />
+        <img v-if="item.capa" :src="item.capa.url" />
         <div v-else class="sem-imagem">Produto Sem Imagem</div>
         <br />
         Cor: {{ cor.nome_cor }}
