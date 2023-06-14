@@ -7,7 +7,7 @@ header {
   display: flex;
   height: 60px;
   width: 100%;
-  background-color: rgb(183, 240, 220);
+  background-color: rgb(192, 214, 255);
   color: black;
   align-items: center;
   font-size: 1.3em;
@@ -17,7 +17,6 @@ header span {
 }
 img,
 .sem-imagem {
-  border: 1px solid #ccc;
   width: 95%;
   height: 350px;
   justify-content: center;
@@ -35,7 +34,6 @@ img,
   font-weight: bold;
   background-color: #f5f5f5;
 }
-
 .card-content {
   display: flex;
   justify-content: space-between;
@@ -88,17 +86,6 @@ button {
   flex-direction: column;
   width: 12%;
   margin: 0 10px;
-}
-.header-botao {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  width: 5%;
-}
-.botao {
-  width: 100%;
-  height: 28px;
-  cursor: pointer;
 }
 .form {
   display: flex;
