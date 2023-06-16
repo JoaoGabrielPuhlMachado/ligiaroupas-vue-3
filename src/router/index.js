@@ -32,16 +32,6 @@ const router = createRouter({
       component: CadastroClienteView,
     },
     {
-      path: "/categorias",
-      name: "categorias",
-      component: CategoriaClienteView,
-    },
-    {
-      path: "/marcas",
-      name: "marcas",
-      component: MarcaClienteView,
-    },
-    {
       path: "/admin/login",
       name: "login-admin",
       component: LoginAdminView,
@@ -62,19 +52,29 @@ const router = createRouter({
       component: MarcaAdminView,
     },
     {
+      path: "/categorias",
+      name: "categorias",
+      component: CategoriaClienteView,
+    },
+    {
+      path: "/marcas",
+      name: "marcas",
+      component: MarcaClienteView,
+    },
+    {
       path: "/cores",
       name: "cores",
       component: CorView,
     },
     {
-      path: "/itens",
-      name: "itens",
-      component: ItemView,
-    },
-    {
       path: "/tamanhos",
       name: "tamanhos",
       component: TamanhoView,
+    },
+    {
+      path: "/itens",
+      name: "itens",
+      component: ItemView,
     },
     {
       path: "/itens/:id",

@@ -14,7 +14,6 @@ const coresApi = new CoresApi();
 
 const props = defineProps({
   id: {
-    type: Number,
     required: true,
   },
 });
@@ -36,8 +35,18 @@ const tamanho = ref({
 const categoria = ref({
   descricao: "",
 });
-
+const itens = ref([]);
+const marcas = ref([]);
+const cores = ref([]);
+const tamanhos = ref([]);
+const categorias = ref([]);
 onMounted(async () => {
+  itens.value = await itensApi.buscarTodosOsItens();
+  marcas.value = await marcasApi.buscarTodasAsMarcas();
+  cores.value = await coresApi.buscarTodasAsCores();
+  tamanhos.value = await tamanhosApi.buscarTodosOsTamanhos();
+  categorias.value = await categoriasApi.buscarTodasAsCategorias();
+
   item.value = await itensApi.buscarItemPorId(props.id);
   cor.value = await coresApi.buscarCorPorId(item.value.cor);
   categoria.value = await categoriasApi.buscarCategoriaPorId(
@@ -52,27 +61,60 @@ onMounted(async () => {
   <div class="desc-do-item">
     <div class="imagem-item-desc">
       <img v-if="item.capa" :src="item.capa.url" alt="" class="imagem-item" />
-      <img v-else class="imagem-item" />
+      <p v-else class="imagem-item sem-imagem">Produto Sem Imagem</p>
     </div>
     <div class="item-desc">
       <div class="desc-nome">
         <h1 class="item-nome centralizado">{{ item.nome }}</h1>
       </div>
       <div class="desc-partes">
-        <br />
         <h3 class="item-info">Preço Unitário: {{ item.preco }}</h3>
-        <h3 class="item-info">Quantidade em Estoque: {{ item.quantidade }}</h3>
-
         <h3 class="item-info">Categoria: {{ categoria.descricao }}</h3>
         <h3 class="item-info">Marca: {{ marca.nome_marca }}</h3>
-        <h3 class="item-info">Tamanho: {{ tamanho.especificacao }}</h3>
-        <h3 class="item-info">Cor {{ cor.nome_cor }}</h3>
+        <h3 class="item-info">Cor: {{ cor.nome_cor }}</h3>
+      </div>
+      <div class="desc-select">
+        <div class="item-quantidade">
+          <label for="Quantidade">Quantidade: </label>
+          <input id="Quantidade" type="text" />
+        </div>
+        <div class="item-tamanho">
+          <label for="Tamanho">Tamanhos: </label>
+          <select id="Tamanho" v-model="item.tamanho">
+            <option
+              v-for="tamanho in tamanhos"
+              :key="tamanho.id"
+              :value="tamanho"
+              :selected="tamanho.id === item.tamanho.id ? true : false"
+            >
+              {{ tamanho.especificacao }}
+            </option>
+          </select>
+        </div>
+        <button class="botao-comprar">Adicionar ao Carrinho</button>
       </div>
     </div>
   </div>
 </template>
 
 <style scoped>
+input,
+select,
+label {
+  margin: 0 30px;
+  display: flex;
+  width: 100px;
+}
+.botao-comprar {
+  width: 150px;
+  margin: 0 30px;
+}
+.desc-select {
+  height: 100%;
+  align-items: flex-end;
+  display: flex;
+  justify-content: center;
+}
 .desc-do-item {
   margin: 2% 0;
   display: flex;
@@ -83,13 +125,13 @@ onMounted(async () => {
   margin-top: 2%;
 }
 .imagem-item-desc {
-  width: 50%;
+  width: 45%;
   margin-right: 1%;
 }
 .imagem-item {
   border: 1px solid rgb(206, 206, 206);
   width: 100%;
-  height: 660px;
+  height: 780px;
 }
 .item-info {
   color: rgb(0, 0, 0);
@@ -99,9 +141,7 @@ onMounted(async () => {
 .item-nome {
   color: rgb(0, 0, 0);
   padding: 0 2%;
-}
-.desc {
-  margin: 0;
+  word-wrap: break-word;
 }
 .item-desc {
   background-color: rgb(213, 228, 255);
@@ -109,6 +149,8 @@ onMounted(async () => {
   height: 660px;
   margin-left: 1%;
   border: 1px solid rgb(206, 206, 206);
+  display: flex;
+  flex-direction: column;
 }
 .centralizado {
   text-align: center;
