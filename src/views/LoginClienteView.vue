@@ -8,12 +8,8 @@ export default {
     const password = ref("");
 
     const login = () => {
-      // Aqui você pode adicionar a lógica de autenticação
-      // Por exemplo, enviar uma solicitação para o servidor para verificar as credenciais
-
       if (username.value && password.value) {
         console.log("Usuário autenticado com sucesso!");
-        // Redirecionar para a página de dashboard, por exemplo
       } else {
         console.log("Credenciais inválidas!");
       }

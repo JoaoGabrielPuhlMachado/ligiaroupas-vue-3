@@ -65,6 +65,9 @@ function abrir(id) {
   font-weight: bold;
   background-color: #f5f5f5;
 }
+.item-card-content {
+  cursor: pointer;
+}
 img {
   width: 100%;
   height: 350px;
