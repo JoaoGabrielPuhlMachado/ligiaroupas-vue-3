@@ -1,12 +1,12 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import ItensApi from "@/api/itens.js";
+import ProdutosApi from "@/api/produtos.js";
 import CategoriasApi from "@/api/categorias.js";
 import MarcasApi from "@/api/marcas.js";
 import TamanhosApi from "@/api/tamanhos.js";
 import CoresApi from "@/api/cores.js";
 
-const itensApi = new ItensApi();
+const produtosApi = new ProdutosApi();
 const categoriasApi = new CategoriasApi();
 const marcasApi = new MarcasApi();
 const tamanhosApi = new TamanhosApi();
@@ -18,7 +18,7 @@ const props = defineProps({
   },
 });
 
-const item = ref({
+const produto = ref({
   nome: "",
   preco: "",
   quantidade: "",
@@ -35,57 +35,62 @@ const tamanho = ref({
 const categoria = ref({
   descricao: "",
 });
-const itens = ref([]);
+const produtos = ref([]);
 const marcas = ref([]);
 const cores = ref([]);
 const tamanhos = ref([]);
 const categorias = ref([]);
 onMounted(async () => {
-  itens.value = await itensApi.buscarTodosOsItens();
+  produtos.value = await produtosApi.buscarTodosOsProdutos();
   marcas.value = await marcasApi.buscarTodasAsMarcas();
   cores.value = await coresApi.buscarTodasAsCores();
   tamanhos.value = await tamanhosApi.buscarTodosOsTamanhos();
   categorias.value = await categoriasApi.buscarTodasAsCategorias();
 
-  item.value = await itensApi.buscarItemPorId(props.id);
-  cor.value = await coresApi.buscarCorPorId(item.value.cor);
+  produto.value = await produtosApi.buscarProdutoPorId(props.id);
+  cor.value = await coresApi.buscarCorPorId(produto.value.cor);
   categoria.value = await categoriasApi.buscarCategoriaPorId(
-    item.value.categoria
+    produto.value.categoria
   );
-  marca.value = await marcasApi.buscarMarcaPorId(item.value.marca);
-  tamanho.value = await tamanhosApi.buscarTamanhoPorId(item.value.tamanho);
+  marca.value = await marcasApi.buscarMarcaPorId(produto.value.marca);
+  tamanho.value = await tamanhosApi.buscarTamanhoPorId(produto.value.tamanho);
 });
 </script>
 
 <template>
-  <div class="desc-do-item">
-    <div class="imagem-item-desc">
-      <img v-if="item.capa" :src="item.capa.url" alt="" class="imagem-item" />
-      <p v-else class="imagem-item sem-imagem">Produto Sem Imagem</p>
+  <div class="desc-do-produto">
+    <div class="imagem-produto-desc">
+      <img
+        v-if="produto.capa"
+        :src="produto.capa.url"
+        alt=""
+        class="imagem-produto"
+      />
+      <p v-else class="imagem-produto sem-imagem">Produto Sem Imagem</p>
     </div>
-    <div class="item-desc">
+    <div class="produto-desc">
       <div class="desc-nome">
-        <h1 class="item-nome centralizado">{{ item.nome }}</h1>
+        <h1 class="produto-nome centralizado">{{ produto.nome }}</h1>
       </div>
       <div class="desc-partes">
-        <h3 class="item-info">Preço Unitário: {{ item.preco }}</h3>
-        <h3 class="item-info">Categoria: {{ categoria.descricao }}</h3>
-        <h3 class="item-info">Marca: {{ marca.nome_marca }}</h3>
-        <h3 class="item-info">Cor: {{ cor.nome_cor }}</h3>
+        <h3 class="produto-info">Preço Unitário: {{ produto.preco }}</h3>
+        <h3 class="produto-info">Categoria: {{ categoria.descricao }}</h3>
+        <h3 class="produto-info">Marca: {{ marca.nome_marca }}</h3>
+        <h3 class="produto-info">Cor: {{ cor.nome_cor }}</h3>
       </div>
       <div class="desc-select">
-        <div class="item-quantidade">
+        <div class="produto-quantidade">
           <label for="Quantidade">Quantidade: </label>
           <input id="Quantidade" type="text" />
         </div>
-        <div class="item-tamanho">
+        <div class="produto-tamanho">
           <label for="Tamanho">Tamanhos: </label>
-          <select id="Tamanho" v-model="item.tamanho">
+          <select id="Tamanho" v-model="produto.tamanho">
             <option
               v-for="tamanho in tamanhos"
               :key="tamanho.id"
               :value="tamanho"
-              :selected="tamanho.id === item.tamanho.id ? true : false"
+              :selected="tamanho.id === produto.tamanho.id ? true : false"
             >
               {{ tamanho.especificacao }}
             </option>
@@ -115,7 +120,7 @@ label {
   display: flex;
   justify-content: center;
 }
-.desc-do-item {
+.desc-do-produto {
   margin: 2% 0;
   display: flex;
   justify-content: center;
@@ -124,26 +129,26 @@ label {
 .desc-nome {
   margin-top: 2%;
 }
-.imagem-item-desc {
+.imagem-produto-desc {
   width: 45%;
   margin-right: 1%;
 }
-.imagem-item {
+.imagem-produto {
   border: 1px solid rgb(206, 206, 206);
   width: 100%;
   height: 780px;
 }
-.item-info {
+.produto-info {
   color: rgb(0, 0, 0);
   padding: 0 2%;
   display: inline-block;
 }
-.item-nome {
+.produto-nome {
   color: rgb(0, 0, 0);
   padding: 0 2%;
   word-wrap: break-word;
 }
-.item-desc {
+.produto-desc {
   background-color: rgb(213, 228, 255);
   width: 40%;
   height: 660px;

@@ -1,21 +1,21 @@
 <script setup>
 import { onMounted, ref } from "vue";
 
-import ItensApi from "/src/api/itens.js";
+import ProdutosApi from "/src/api/produtos.js";
 import CategoriasApi from "@/api/categorias";
 import MarcasApi from "@/api/marcas";
 import TamanhosApi from "@/api/tamanhos";
 import CoresApi from "@/api/cores";
 import router from "../router";
 
-const itensApi = new ItensApi();
+const produtosApi = new ProdutosApi();
 const categoriasApi = new CategoriasApi();
 const marcasApi = new MarcasApi();
 const tamanhosApi = new TamanhosApi();
 const coresApi = new CoresApi();
 
-const itens = ref([]);
-const item = ref({
+const produtos = ref([]);
+const produto = ref({
   nome: "",
   preco: "",
   quantidade: "",
@@ -30,7 +30,7 @@ const tamanhos = ref([]);
 const categorias = ref([]);
 
 onMounted(async () => {
-  itens.value = await itensApi.buscarTodosOsItens();
+  produtos.value = await produtosApi.buscarTodosOsProdutos();
   marcas.value = await marcasApi.buscarTodasAsMarcas();
   cores.value = await coresApi.buscarTodasAsCores();
   tamanhos.value = await tamanhosApi.buscarTodosOsTamanhos();
@@ -38,35 +38,35 @@ onMounted(async () => {
 });
 
 async function salvar() {
-  item.value.cor = item.value.cor.id;
-  item.value.marca = item.value.marca.id;
-  item.value.categoria = item.value.categoria.id;
-  item.value.tamanho = item.value.tamanho.id;
-  if (item.value.id) {
-    await itensApi.atualizarItem(item.value);
+  produto.value.cor = produto.value.cor.id;
+  produto.value.marca = produto.value.marca.id;
+  produto.value.categoria = produto.value.categoria.id;
+  produto.value.tamanho = produto.value.tamanho.id;
+  if (produto.value.id) {
+    await produtosApi.atualizarProduto(produto.value);
   } else {
-    await itensApi.adicionarItem(item.value);
+    await produtosApi.adicionarProduto(produto.value);
   }
-  item.value = {
+  produto.value = {
     cor: "",
     marca: "",
     categoria: "",
     tamanho: "",
   };
-  itens.value = await itensApi.buscarTodosOsItens();
+  produtos.value = await produtosApi.buscarTodosOsProdutos();
 }
 
-function editar(editItem) {
-  item.value = { ...editItem };
+function editar(editproduto) {
+  produto.value = { ...editproduto };
 }
 
-async function excluir(item) {
-  await itensApi.excluirItem(item.id);
-  itens.value = await itensApi.buscarTodosOsItens();
+async function excluir(produto) {
+  await produtosApi.excluirProduto(produto.id);
+  produtos.value = await produtosApi.buscarTodosOsProdutos();
 }
 
 function abrir(id) {
-  router.push(`itens/${id}`);
+  router.push(`produtos/${id}`);
 }
 </script>
 
@@ -74,24 +74,24 @@ function abrir(id) {
   <div class="form">
     <div class="descricao">
       <label for="Descricao">Descrição: </label>
-      <input id="Descricao" type="text" v-model="item.nome" />
+      <input id="Descricao" type="text" v-model="produto.nome" />
     </div>
     <div class="estoque">
       <label for="Estoque">Estoque: </label>
-      <input id="Estoque" type="text" v-model="item.quantidade" />
+      <input id="Estoque" type="text" v-model="produto.quantidade" />
     </div>
     <div class="preco">
       <label for="Preco">Preço: </label>
-      <input id="Preco" type="text" v-model="item.preco" />
+      <input id="Preco" type="text" v-model="produto.preco" />
     </div>
     <div class="categoria">
       <label for="Categoria">Categorias: </label>
-      <select id="Categoria" v-model="item.categoria">
+      <select id="Categoria" v-model="produto.categoria">
         <option
           v-for="categoria in categorias"
           :key="categoria.id"
           :value="categoria"
-          :selected="categoria.id === item.categoria.id ? true : false"
+          :selected="categoria.id === produto.categoria.id ? true : false"
         >
           {{ categoria.descricao }}
         </option>
@@ -99,12 +99,12 @@ function abrir(id) {
     </div>
     <div class="cor">
       <label for="Cor">Cores: </label>
-      <select id="Cor" v-model="item.cor">
+      <select id="Cor" v-model="produto.cor">
         <option
           v-for="cor in cores"
           :key="cor.id"
           :value="cor"
-          :selected="cor.id === item.cor.id ? true : false"
+          :selected="cor.id === produto.cor.id ? true : false"
         >
           {{ cor.nome_cor }}
         </option>
@@ -112,12 +112,12 @@ function abrir(id) {
     </div>
     <div class="marca">
       <label for="Marca">Marcas: </label>
-      <select id="Marca" v-model="item.marca">
+      <select id="Marca" v-model="produto.marca">
         <option
           v-for="marca in marcas"
           :key="marca.id"
           :value="marca"
-          :selected="marca.id === item.marca.id ? true : false"
+          :selected="marca.id === produto.marca.id ? true : false"
         >
           {{ marca.nome_marca }}
         </option>
@@ -125,12 +125,12 @@ function abrir(id) {
     </div>
     <div class="tamanho">
       <label for="Tamanho">Tamanhos: </label>
-      <select id="Tamanho" v-model="item.tamanho">
+      <select id="Tamanho" v-model="produto.tamanho">
         <option
           v-for="tamanho in tamanhos"
           :key="tamanho.id"
           :value="tamanho"
-          :selected="tamanho.id === item.tamanho.id ? true : false"
+          :selected="tamanho.id === produto.tamanho.id ? true : false"
         >
           {{ tamanho.especificacao }}
         </option>
@@ -140,39 +140,39 @@ function abrir(id) {
       <button class="botao" @click="salvar">Salvar</button>
     </div>
   </div>
-  <div class="item-card-container">
-    <div class="item-card" v-for="item in itens" :key="item.id">
-      <div class="item-card-content" @click="abrir(item.id)">
-        <img v-if="item.capa" :src="item.capa.file" />
+  <div class="produto-card-container">
+    <div class="produto-card" v-for="produto in produtos" :key="produto.id">
+      <div class="produto-card-content" @click="abrir(produto.id)">
+        <img v-if="produto.capa" :src="produto.capa.file" />
         <div v-else class="sem-imagem">Produto Sem Imagem</div>
         <br />
-        ID: ({{ item.id }})
+        ID: ({{ produto.id }})
         <br />
-        Cor: {{ item.cor.nome_cor }}
+        Cor: {{ produto.cor.nome_cor }}
         <br />
-        Categoria: {{ item.categoria.descricao }}
+        Categoria: {{ produto.categoria.descricao }}
         <br />
-        Marca: {{ item.marca.nome_marca }}
+        Marca: {{ produto.marca.nome_marca }}
         <br />
-        Tamanho: {{ item.tamanho.especificacao }}
+        Tamanho: {{ produto.tamanho.especificacao }}
         <br />
-        Estoque: {{ item.quantidade }}
+        Estoque: {{ produto.quantidade }}
         <br />
-        Preço: {{ item.preco }}
+        Preço: {{ produto.preco }}
       </div>
       <div class="botao-espaco">
-        <button @click="editar(item)">Editar</button>
-        <button class="item-card-button" @click="excluir(item)">X</button>
+        <button @click="editar(produto)">Editar</button>
+        <button class="produto-card-button" @click="excluir(produto)">X</button>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
-.item-card-container {
+.produto-card-container {
   display: flex;
   flex-wrap: wrap;
 }
-.item-card {
+.produto-card {
   width: 20%;
   max-height: 530px;
   margin: 10px;
@@ -182,10 +182,10 @@ function abrir(id) {
   font-weight: bold;
   background-color: #f5f5f5;
 }
-.item-card-text {
+.produto-card-text {
   cursor: pointer;
 }
-.item-card-button {
+.produto-card-button {
   font-weight: bold;
   background-color: black;
   color: #fff;

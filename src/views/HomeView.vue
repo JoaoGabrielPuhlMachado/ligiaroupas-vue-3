@@ -6,16 +6,16 @@ import router from "../router";
 const authStore = useAuthStore();
 const { isAdmin } = storeToRefs(authStore);
 
-import ItensApi from "/src/api/itens.js";
-const itensApi = new ItensApi();
-const itens = ref([]);
+import ProdutosApi from "/src/api/produtos.js";
+const produtosApi = new ProdutosApi();
+const produtos = ref([]);
 
 onMounted(async () => {
-  itens.value = await itensApi.buscarTodosOsItens();
+  produtos.value = await produtosApi.buscarTodosOsProdutos();
 });
 
 function abrir(id) {
-  router.push(`itens/${id}`);
+  router.push(`produtos/${id}`);
 }
 </script>
 <template>
@@ -24,13 +24,13 @@ function abrir(id) {
   <div class="imagem-background">
     <img class="imagem-ligia" src="@/imagens/loja-de-roupas-online2.jpg" />
   </div>
-  <div class="item-card-container">
-    <div class="item-card" v-for="item in itens" :key="item.id">
-      <div class="item-card-content" @click="abrir(item.id)">
-        <img v-if="item.capa" :src="item.capa.file" />
+  <div class="produto-card-container">
+    <div class="produto-card" v-for="produto in produtos" :key="produto.id">
+      <div class="produto-card-content" @click="abrir(produto.id)">
+        <img v-if="produto.capa" :src="produto.capa.file" />
         <div v-else class="sem-imagem">Produto Sem Imagem</div>
-        <div class="item-card-text">
-          {{ item.nome }}
+        <div class="produto-card-text">
+          {{ produto.nome }}
         </div>
       </div>
     </div>
@@ -44,7 +44,7 @@ function abrir(id) {
 .imagem-background {
   margin: 20px 0;
 }
-.item-card-text {
+.produto-card-text {
   display: flex;
   justify-content: center;
   font-size: 19px;
@@ -52,11 +52,11 @@ function abrir(id) {
   align-items: center;
   margin: 15px;
 }
-.item-card-container {
+.produto-card-container {
   display: flex;
   flex-wrap: wrap;
 }
-.item-card {
+.produto-card {
   width: 18%;
   height: 430px;
   margin: 10px;
@@ -65,7 +65,7 @@ function abrir(id) {
   font-weight: bold;
   background-color: #f5f5f5;
 }
-.item-card-content {
+.produto-card-content {
   cursor: pointer;
 }
 img {

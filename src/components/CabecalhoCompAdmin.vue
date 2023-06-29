@@ -3,7 +3,7 @@
     <div class="menu">
       <div class="links">
         <span><RouterLink to="/">Home</RouterLink></span>
-        <span><RouterLink to="/itens">Itens</RouterLink></span>
+        <span><RouterLink to="/produtos">Produtos</RouterLink></span>
         <span><RouterLink to="/admin/categorias">Categorias</RouterLink></span>
         <span><RouterLink to="/admin/marcas">Marcas</RouterLink></span>
         <span><RouterLink to="/tamanhos">Tamanhos</RouterLink></span>

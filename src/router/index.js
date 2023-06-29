@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import CorView from "../views/CorView.vue";
-import ItemView from "../views/ItemView.vue";
+import ProdutoView from "../views/ProdutoView.vue";
 import TamanhoView from "../views/TamanhoView.vue";
 import LoginAdminView from "../views/LoginAdminView.vue";
 import CadastroAdminView from "../views/CadastroAdminView.vue";
 import CategoriaAdminView from "../views/CategoriaAdminView.vue";
 import MarcaAdminView from "../views/MarcaAdminView.vue";
-import DescricaoItemView from "../views/DescricaoItemView.vue";
+import DescricaoProdutoView from "../views/DescricaoProdutoView.vue";
 import CategoriaClienteView from "../views/CategoriaClienteView.vue";
 import LoginClienteView from "../views/LoginClienteView.vue";
 import CadastroClienteView from "../views/CadastroClienteView.vue";
@@ -72,14 +72,14 @@ const router = createRouter({
       component: TamanhoView,
     },
     {
-      path: "/itens",
-      name: "itens",
-      component: ItemView,
+      path: "/produtos",
+      name: "produtos",
+      component: ProdutoView,
     },
     {
-      path: "/itens/:id",
+      path: "/produtos/:id",
       name: "descricao",
-      component: DescricaoItemView,
+      component: DescricaoProdutoView,
       props: true,
     },
   ],

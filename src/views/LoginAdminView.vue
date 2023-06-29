@@ -1,29 +1,24 @@
 <script>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default {
-  name: "LoginPage",
   setup() {
-    const username = ref("");
+    const router = useRouter();
+    const email = ref("");
     const password = ref("");
+    const errorMessage = ref("");
 
-    const login = () => {
-      // Aqui você pode adicionar a lógica de autenticação
-      // Por exemplo, enviar uma solicitação para o servidor para verificar as credenciais
-
-      if (username.value && password.value) {
-        console.log("Usuário autenticado com sucesso!");
-        // Redirecionar para a página de dashboard, por exemplo
-      } else {
-        console.log("Credenciais inválidas!");
+    const login = async () => {
+      try {
+        const response = await axios.post('http://localhost:8000/token/',{
+          email: email.value,
+          password: password.value
+        });
+        const token = response.data.token;
+        const id = response.data.id
       }
-    };
-
-    return {
-      username,
-      password,
-      login,
-    };
+    }
   },
 };
 </script>

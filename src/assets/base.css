@@ -15,6 +15,10 @@ header {
 header span {
   padding: 0 20px;
 }
+.header-botao {
+  display: flex;
+  align-items: flex-end;
+}
 img,
 .sem-imagem {
   width: 95%;
