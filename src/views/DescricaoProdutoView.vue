@@ -90,7 +90,7 @@ onMounted(async () => {
               v-for="tamanho in tamanhos"
               :key="tamanho.id"
               :value="tamanho"
-              :selected="tamanho.id === produto.tamanho.id ? true : false"
+              :selected="tamanho.id === produto.tamanho ? true : false"
             >
               {{ tamanho.especificacao }}
             </option>

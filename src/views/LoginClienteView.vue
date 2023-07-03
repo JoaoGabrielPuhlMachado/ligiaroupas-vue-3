@@ -1,26 +1,29 @@
-<script>
+<script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import axios from "axios";
+import { useAuthStore } from "@/stores/auth";
 
-export default {
-  name: "LoginPage",
-  setup() {
-    const username = ref("");
-    const password = ref("");
+const router = useRouter();
+const email = ref("");
+const password = ref("");
+const errorMessage = ref("");
 
-    const login = () => {
-      if (username.value && password.value) {
-        console.log("Usuário autenticado com sucesso!");
-      } else {
-        console.log("Credenciais inválidas!");
-      }
-    };
+const authStore = useAuthStore();
 
-    return {
-      username,
-      password,
-      login,
-    };
-  },
+const login = async () => {
+  try {
+    const response = await axios.post("http://localhost:8000/api/token/", {
+      email: email.value,
+      password: password.value,
+    });
+    const token = response.data.access;
+    authStore.setToken(token);
+
+    router.push("/produtos");
+  } catch (error) {
+    errorMessage.value = "Erro ao fazer login";
+  }
 };
 </script>
 <template>
@@ -28,8 +31,8 @@ export default {
     <div class="login-content">
       <h1>Login</h1>
       <form @submit.prevent="login">
-        <label for="username">Usuário</label>
-        <input type="text" id="username" v-model="username" required />
+        <label for="email">Email</label>
+        <input type="text" id="email" v-model="username" required />
 
         <label for="password">Senha:</label>
         <input type="password" id="password" v-model="password" required />
@@ -49,7 +52,6 @@ export default {
     </div>
   </div>
 </template>
-
 <style scoped>
 .login-container {
   display: flex;
@@ -57,34 +59,28 @@ export default {
   align-items: center;
   height: 400px;
 }
-
 .login-content {
   width: 300px;
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
-
 form {
   display: flex;
   flex-direction: column;
 }
-
 label {
   margin-bottom: 5px;
 }
-
 input[type="text"],
 input[type="password"] {
   padding: 5px;
   margin-bottom: 10px;
 }
-
 .div-login {
   display: flex;
   justify-content: center;
 }
-
 .botao-login {
   width: 90px;
   height: 35px;
