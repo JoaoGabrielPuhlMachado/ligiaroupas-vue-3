@@ -4,7 +4,6 @@ export const useAuthStore = defineStore("auth", {
   state: () => ({
     isAdmin: false,
     token: "",
-    id: "",
   }),
   actions: {
     toggleAdmin() {
@@ -13,8 +12,9 @@ export const useAuthStore = defineStore("auth", {
     setToken(token) {
       this.token = token;
     },
-    setId(id) {
-      this.id = id;
+    LogOut() {
+      this.isAdmin = false;
+      this.token = "";
     },
   },
 });

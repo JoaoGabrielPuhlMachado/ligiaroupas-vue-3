@@ -1,3 +1,13 @@
+<script setup>
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
+import router from "../router";
+
+const LogOut = () => {
+  authStore.LogOut();
+  router.push("/login");
+};
+</script>
 <template>
   <header>
     <div class="menu">
@@ -13,6 +23,7 @@
       <div class="nome-site"></div>
       <div class="login">
         <span><RouterLink to="/login">Login</RouterLink></span>
+        <button class="logout" @click="LogOut">Sair</button>
       </div>
     </div>
   </header>
@@ -23,8 +34,16 @@
   justify-content: space-between;
   width: 100%;
 }
+.logout {
+  border: 1px solid black;
+  background-color: transparent;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.nome-site,
 .links,
 .login {
+  width: 150px;
   display: flex;
   align-items: center;
 }
