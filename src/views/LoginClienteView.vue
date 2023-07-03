@@ -32,7 +32,7 @@ const login = async () => {
       <h1>Login</h1>
       <form @submit.prevent="login">
         <label for="email">Email</label>
-        <input type="text" id="email" v-model="username" required />
+        <input type="text" id="email" v-model="email" required />
 
         <label for="password">Senha:</label>
         <input type="password" id="password" v-model="password" required />
@@ -42,7 +42,7 @@ const login = async () => {
         <br />
         <p>
           Não tem conta?
-          <RouterLink to="/cadastro"><span> Cadastre-se</span></RouterLink>
+          <RouterLink to="/cadastro"><span>Cadastre-se</span></RouterLink>
         </p>
         <p>
           Admin?
