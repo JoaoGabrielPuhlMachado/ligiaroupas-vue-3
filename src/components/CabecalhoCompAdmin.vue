@@ -20,10 +20,11 @@ const LogOut = () => {
         <span><RouterLink to="/cores">Cores</RouterLink></span>
         <span class="ligia">Lígia Roupas</span>
       </div>
-      <div class="nome-site"></div>
       <div class="login">
         <span><RouterLink to="/login">Login</RouterLink></span>
-        <button class="logout" @click="LogOut">Sair</button>
+        <div v-if="authStore.isLogged == true">
+          <button class="logout" @click="LogOut">Sair</button>
+        </div>
       </div>
     </div>
   </header>

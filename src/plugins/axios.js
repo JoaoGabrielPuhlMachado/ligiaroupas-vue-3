@@ -19,5 +19,5 @@ axios.interceptors.request.use(
 );
 
 // axios.interceptors.response.use(
-//     status === 401..toExponential.apply. refresh.. se erro LoginAdminViewVue. 
+//     status === 401..toExponential.apply. refresh.. se erro LoginAdminViewVue.
 // )

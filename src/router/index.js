@@ -3,13 +3,12 @@ import HomeView from "../views/HomeView.vue";
 import CorView from "../views/CorView.vue";
 import ProdutoView from "../views/ProdutoView.vue";
 import TamanhoView from "../views/TamanhoView.vue";
-import LoginAdminView from "../views/LoginAdminView.vue";
 import CadastroAdminView from "../views/CadastroAdminView.vue";
 import CategoriaAdminView from "../views/CategoriaAdminView.vue";
 import MarcaAdminView from "../views/MarcaAdminView.vue";
 import DescricaoProdutoView from "../views/DescricaoProdutoView.vue";
 import CategoriaClienteView from "../views/CategoriaClienteView.vue";
-import LoginClienteView from "../views/LoginClienteView.vue";
+import LoginView from "../views/LoginView.vue";
 import CadastroClienteView from "../views/CadastroClienteView.vue";
 import MarcaClienteView from "../views/MarcaClienteView.vue";
 
@@ -24,17 +23,12 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
-      component: LoginClienteView,
+      component: LoginView,
     },
     {
       path: "/cadastro",
       name: "cadastro",
       component: CadastroClienteView,
-    },
-    {
-      path: "/admin/login",
-      name: "login-admin",
-      component: LoginAdminView,
     },
     {
       path: "/admin/cadastro",

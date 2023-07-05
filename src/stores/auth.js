@@ -1,19 +1,29 @@
 import { defineStore } from "pinia";
 
+const parseJwt = (token) => {
+  try {
+    return JSON.parse(atob(token.split(".")[1]));
+  } catch (e) {
+    return null;
+  }
+};
+
 export const useAuthStore = defineStore("auth", {
   state: () => ({
-    isAdmin: false,
     token: "",
+    isAdmin: false,
+    isLogged: false,
   }),
   actions: {
-    toggleAdmin() {
-      this.isAdmin = !this.isAdmin;
-    },
     setToken(token) {
       this.token = token;
+      const splittedToken = parseJwt(token);
+      this.isAdmin = splittedToken["isAdmin"];
+      this.isLogged = true;
     },
     LogOut() {
       this.isAdmin = false;
+      this.isLogged = false;
       this.token = "";
     },
   },

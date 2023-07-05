@@ -1,10 +1,6 @@
 <script setup>
-import { storeToRefs } from "pinia";
-import { useAuthStore } from "@/stores/auth";
 import { onMounted, ref } from "vue";
 import router from "../router";
-const authStore = useAuthStore();
-const { isAdmin } = storeToRefs(authStore);
 
 import ProdutosApi from "/src/api/produtos.js";
 const produtosApi = new ProdutosApi();
@@ -19,8 +15,6 @@ function abrir(id) {
 }
 </script>
 <template>
-  <p>Status do Admin: {{ isAdmin }}</p>
-  <button @click="authStore.toggleAdmin">Alterar Status</button>
   <div class="imagem-background">
     <img class="imagem-ligia" src="@/imagens/loja-de-roupas-online2.jpg" />
   </div>

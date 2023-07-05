@@ -20,7 +20,7 @@ const login = async () => {
     const token = response.data.access;
     authStore.setToken(token);
 
-    router.push("/produtos");
+    router.push("/");
   } catch (error) {
     errorMessage.value = "Erro ao fazer login";
   }
@@ -43,10 +43,6 @@ const login = async () => {
         <p>
           Não tem conta?
           <RouterLink to="/cadastro"><span>Cadastre-se</span></RouterLink>
-        </p>
-        <p>
-          Admin?
-          <RouterLink to="/admin/login"><span>Login</span></RouterLink>
         </p>
       </form>
     </div>

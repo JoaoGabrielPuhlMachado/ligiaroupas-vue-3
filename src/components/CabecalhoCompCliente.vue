@@ -20,8 +20,12 @@ const LogOut = () => {
         <span class="ligia">Lígia Roupas</span>
       </div>
       <div class="login">
-        <span><RouterLink to="/login">Login</RouterLink></span>
-        <button class="logout" @click="LogOut">Sair</button>
+        <div v-if="authStore.isLogged == false">
+          <span><RouterLink to="/login">Login</RouterLink></span>
+        </div>
+        <div v-if="authStore.isLogged == true">
+          <button class="logout" @click="LogOut">Sair</button>
+        </div>
       </div>
     </div>
   </header>
@@ -43,6 +47,9 @@ const LogOut = () => {
   width: 150px;
   display: flex;
   align-items: center;
+}
+.login {
+  justify-content: center;
 }
 .ligia {
   font-weight: bold;
