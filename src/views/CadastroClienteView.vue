@@ -1,73 +1,77 @@
-<script>
+<script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import axios from "axios";
+import { useAuthStore } from "@/stores/auth";
 
-export default {
-  name: "cadastroPage",
-  setup() {
-    const usuario = ref("");
-    const senha = ref("");
-    const confirmarsenha = ref("");
-    const email = ref("");
-    const telefone = ref("");
+const authStore = useAuthStore();
 
-    const cadastro = () => {
-      // Aqui você pode adicionar a lógica de registro
-      // Por exemplo, enviar os dados para o servidor para criar uma nova conta
+const router = useRouter();
+const email = ref("");
+const password = ref("");
+const first_name = ref("");
+const last_name = ref("");
+const telefone = ref("");
+const cpf = ref("");
+const data_nascimento = ref("");
+const errorMessage = ref("");
 
-      if (
-        usuario.value &&
-        senha.value &&
-        confirmarsenha.value &&
-        email.value &&
-        telefone.value
-      ) {
-        if (senha.value !== confirmarsenha.value) {
-          console.log("As senhas não coincidem!");
-          return;
-        }
+const cadastro = async () => {
+  try {
+    await axios.post("http://localhost:8000/api/usuarios/", {
+      email: email.value,
+      password: password.value,
+      first_name: first_name.value,
+      last_name: last_name.value,
+      telefone: telefone.value,
+      cpf: cpf.value,
+      data_nascimento: data_nascimento.value,
+      groups: [2],
+    });
+    const response = await axios.post("http://localhost:8000/api/token/", {
+      email: email.value,
+      password: password.value,
+    });
+    const token = response.data.access;
+    authStore.setToken(token);
 
-        console.log("Nova conta criada com sucesso!");
-        // Redirecionar para a página de login ou para outra página de sua escolha
-      } else {
-        console.log("Por favor, preencha todos os campos!");
-      }
-    };
-
-    return {
-      usuario,
-      senha,
-      confirmarsenha,
-      email,
-      telefone,
-      cadastro,
-    };
-  },
+    router.push("/");
+  } catch (error) {
+    console.log(error);
+    errorMessage.value = "Erro ao fazer login";
+  }
 };
 </script>
 <template>
   <div class="cadastro-container">
     <div class="cadastro-content">
-      <h1>Cadastro</h1>
       <form @submit.prevent="cadastro">
-        <label for="usuario">Usuario:</label>
-        <input type="text" id="usuario" v-model="usuario" required />
+        <h1>Cadastro</h1>
+        <label for="primeironome">Primeiro Nome:</label>
+        <input type="text" id="primeironome" v-model="first_name" required />
 
-        <label for="senha">Senha:</label>
-        <input type="senha" id="senha" v-model="senha" required />
-
-        <label for="confirmarsenha">Confirmarar senha:</label>
-        <input
-          type="senha"
-          id="confirmarsenha"
-          v-model="confirmarsenha"
-          required
-        />
+        <label for="ultimonome">Último Nome:</label>
+        <input type="text" id="ultimonome" v-model="last_name" required />
 
         <label for="email">Email:</label>
         <input type="email" id="email" v-model="email" required />
 
         <label for="telefone">Telefone:</label>
         <input type="tel" id="telefone" v-model="telefone" required />
+
+        <label for="cpf">CPF:</label>
+        <input type="text" id="cpf" v-model="cpf" required />
+
+        <label for="datanascimento">Data de Nascimento:</label>
+        <input
+          type="date"
+          id="datanascimento"
+          v-model="data_nascimento"
+          required
+        />
+
+        <label for="senha">Senha:</label>
+        <input type="password" id="senha" v-model="password" required />
 
         <div class="div-cadastro">
           <button class="botao-cadastro" type="submit">Registrar</button>
@@ -83,6 +87,7 @@ export default {
   justify-content: center;
   align-items: center;
   height: 600px;
+  margin: 100px 0;
 }
 
 .cadastro-content {

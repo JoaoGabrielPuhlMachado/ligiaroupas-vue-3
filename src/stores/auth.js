@@ -7,12 +7,12 @@ const parseJwt = (token) => {
     return null;
   }
 };
-
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     token: "",
     isAdmin: false,
     isLogged: false,
+    userId: "",
   }),
   actions: {
     setToken(token) {
@@ -20,11 +20,13 @@ export const useAuthStore = defineStore("auth", {
       const splittedToken = parseJwt(token);
       this.isAdmin = splittedToken["isAdmin"];
       this.isLogged = true;
+      this.userId = splittedToken["user_id"];
     },
     LogOut() {
       this.isAdmin = false;
       this.isLogged = false;
       this.token = "";
+      this.userId = "";
     },
   },
 });

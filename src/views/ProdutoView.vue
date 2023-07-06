@@ -168,6 +168,9 @@ function abrir(id) {
   </div>
 </template>
 <style scoped>
+.produto-card-content {
+  cursor: pointer;
+}
 .produto-card-container {
   display: flex;
   flex-wrap: wrap;

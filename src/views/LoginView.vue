@@ -31,7 +31,7 @@ const login = async () => {
     <div class="login-content">
       <h1>Login</h1>
       <form @submit.prevent="login">
-        <label for="email">Email</label>
+        <label for="email">Email:</label>
         <input type="text" id="email" v-model="email" required />
 
         <label for="password">Senha:</label>

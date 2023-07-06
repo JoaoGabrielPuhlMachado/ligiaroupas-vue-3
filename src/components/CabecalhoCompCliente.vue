@@ -1,12 +1,20 @@
 <script setup>
+import { onMounted, ref } from "vue";
+import router from "../router";
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
-import router from "../router";
 
-const LogOut = () => {
-  authStore.LogOut();
-  router.push("/login");
-};
+import UsuariosApi from "/src/api/usuarios.js";
+const usuariosApi = new UsuariosApi();
+const usuarios = ref([]);
+
+onMounted(async () => {
+  usuarios.value = await usuariosApi.buscarTodosOsUsuarios();
+});
+
+function abrir(id) {
+  router.push(`usuarios/${id}`);
+}
 </script>
 <template>
   <header>
@@ -19,18 +27,20 @@ const LogOut = () => {
       <div class="nome-site">
         <span class="ligia">Lígia Roupas</span>
       </div>
-      <div class="login">
+      <div class="login-cliente">
         <div v-if="authStore.isLogged == false">
           <span><RouterLink to="/login">Login</RouterLink></span>
         </div>
         <div v-if="authStore.isLogged == true">
-          <button class="logout" @click="LogOut">Sair</button>
+          <button class="logout" @click="abrir(authStore.userId)">
+            Perfil
+          </button>
         </div>
       </div>
     </div>
   </header>
 </template>
-<style>
+<style setup>
 .menu {
   display: flex;
   width: 100%;
@@ -43,13 +53,14 @@ const LogOut = () => {
 }
 .nome-site,
 .links,
-.login {
-  width: 150px;
+.login-cliente {
+  width: 300px;
   display: flex;
   align-items: center;
 }
-.login {
-  justify-content: center;
+.login-cliente {
+  margin-right: 0zpx;
+  justify-content: flex-end;
 }
 .ligia {
   font-weight: bold;

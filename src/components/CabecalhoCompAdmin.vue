@@ -18,10 +18,14 @@ const LogOut = () => {
         <span><RouterLink to="/admin/marcas">Marcas</RouterLink></span>
         <span><RouterLink to="/tamanhos">Tamanhos</RouterLink></span>
         <span><RouterLink to="/cores">Cores</RouterLink></span>
+      </div>
+      <div class="nome-site">
         <span class="ligia">Lígia Roupas</span>
       </div>
-      <div class="login">
-        <span><RouterLink to="/login">Login</RouterLink></span>
+      <div class="login-admin">
+        <div v-if="authStore.isLogged == false">
+          <span><RouterLink to="/login">Login</RouterLink></span>
+        </div>
         <div v-if="authStore.isLogged == true">
           <button class="logout" @click="LogOut">Sair</button>
         </div>
@@ -29,7 +33,7 @@ const LogOut = () => {
     </div>
   </header>
 </template>
-<style>
+<style setup>
 .menu {
   display: flex;
   justify-content: space-between;
@@ -43,7 +47,7 @@ const LogOut = () => {
 }
 .nome-site,
 .links,
-.login {
+.login-admin {
   width: 150px;
   display: flex;
   align-items: center;
@@ -52,7 +56,10 @@ const LogOut = () => {
   font-weight: bold;
   font-size: 40px;
 }
-
+.login-admin {
+  margin-right: 30px;
+  justify-content: flex-end;
+}
 .router-link-active {
   color: black;
   font-weight: bold;
