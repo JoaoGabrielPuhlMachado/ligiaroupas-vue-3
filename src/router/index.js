@@ -78,8 +78,8 @@ const router = createRouter({
       props: true,
     },
     {
-      path: "/usuario/:id",
-      name: "usuario",
+      path: "/usuarios/:id",
+      name: "usuarios",
       component: UsuarioView,
       props: true,
     },

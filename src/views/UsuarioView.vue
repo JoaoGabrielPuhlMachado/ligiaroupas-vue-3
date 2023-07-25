@@ -17,6 +17,7 @@ const usuario = ref({
   telefone: "",
   cpf: "",
   data_nascimento: "",
+  foto: "",
 });
 
 onMounted(async () => {
@@ -41,47 +42,124 @@ async function excluir(usuario) {
 }
 </script>
 <template>
-  <div class="form">
-    <div class="descricao">
-      <label for="Descricao">Descrição: {{ usuario.id }}</label>
-    </div>
-    <div class="estoque">
-      <label for="Estoque">Estoque: </label>
-    </div>
-    <div class="preco">
-      <label for="Preco">Preço: </label>
-    </div>
-
-    <div class="header-botao">
-      <button class="botao" @click="salvar">Salvar</button>
-    </div>
-  </div>
-  <div class="usuario-card-container">
-    <div class="usuario-card">
-      <div class="botao-espaco">
-        <button @click="editar(usuario)">Editar</button>
-        <button class="usuario-card-button" @click="excluir()">X</button>
+  <div class="form-centralizado">
+    <div class="form">
+      <div class="usuario-imagem">
+        <img class="foto" v-if="usuario.foto" :src="usuario.foto.url" alt="" />
+        <p v-else>usuario Sem Imagem</p>
+      </div>
+      <div class="usuario-info">
+        <div class="email">
+          <label for="email">Email: </label>
+          <input id="email" type="email" v-model="usuario.email" />
+        </div>
+        <div class="first_name">
+          <label for="first_name">Primeiro Nome: </label>
+          <input id="first_name" type="text" v-model="usuario.first_name" />
+        </div>
+        <div class="last_name">
+          <label for="last_name">Último Nome: </label>
+          <input id="last_name" type="text" v-model="usuario.last_name" />
+        </div>
+        <div class="telefone">
+          <label for="telefone">Telefone: </label>
+          <input id="telefone" type="tel" v-model="usuario.telefone" />
+        </div>
+        <div class="cpf">
+          <label for="cpf">CPF: </label>
+          <input id="cpf" type="text" v-model="usuario.cpf" />
+        </div>
+        <div class="data_nascimento">
+          <label for="data_nascimento">Data de Nascimento: </label>
+          <input
+            type="date"
+            id="data_nascimento"
+            v-model="usuario.data_nascimento"
+            required
+          />
+        </div>
+      </div>
+      <div class="usuario-edit">
+        <div class="botao-espaco">
+          <button class="editar" @click="editar(usuario)">Editar</button>
+          <button class="usuario-card-button confirmacao" @click="excluir()">
+            <span class="excluir">Excluir Conta</span>
+            <span class="certeza">Certeza?</span>
+          </button>
+          <button class="salvar" @click="salvar">Salvar</button>
+        </div>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
-.usuario-card-container {
-  display: flex;
-  flex-wrap: wrap;
+label {
+  width: 200px;
 }
-.usuario-card {
-  width: 20%;
-  max-height: 530px;
+.email,
+.password,
+.first_name,
+.last_name,
+.telefone,
+.cpf,
+.data_nascimento {
+  display: flex;
+  flex-direction: row;
+}
+.editar,
+.confirmacao,
+.salvar {
+  cursor: pointer;
+}
+.form-centralizado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.confirmacao:hover {
+  background-color: rgb(243, 10, 10);
+}
+button .certeza {
+  display: none;
+}
+button:hover .excluir {
+  display: none;
+}
+button:hover .certeza {
+  display: inline;
+}
+.form {
+  background-color: rgb(192, 214, 255);
+  justify-content: center;
+  align-items: center;
+  height: 600px;
+  width: 600px;
+  flex-direction: column;
+}
+.foto {
+  height: 100%;
+  width: 100%;
+}
+.usuario-imagem {
+  border: 2px solid rgb(0, 0, 0);
+  border-radius: 8%;
+  width: 15%;
+  height: 100px;
+}
+.usuario-info {
+  width: 450px;
+  background-color: rgb(249, 251, 255);
+  padding: 4%;
+  border-radius: 3%;
   margin: 10px;
+}
+.usuario-edit {
+  width: 65%;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   font-weight: bold;
   background-color: #f5f5f5;
-}
-.usuario-card-text {
-  cursor: pointer;
 }
 .usuario-card-button {
   font-weight: bold;
@@ -90,7 +168,6 @@ async function excluir(usuario) {
   border: none;
   border-radius: 5px;
   padding: 7px 10px;
-  cursor: pointer;
 }
 .botao-espaco {
   display: flex;
