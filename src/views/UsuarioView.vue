@@ -1,8 +1,13 @@
 <script setup>
 import { onMounted, ref } from "vue";
-
+import router from "../router";
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
 import UsuariosApi from "/src/api/usuarios.js";
 
+const LogOut = () => {
+  authStore.LogOut();
+};
 const usuariosApi = new UsuariosApi();
 const props = defineProps({
   id: {
@@ -27,18 +32,23 @@ onMounted(async () => {
 async function salvar() {
   if (usuario.value.id) {
     await usuariosApi.atualizarUsuario(usuario.value);
+    window.alert("Usuário atualizado com sucesso!");
+    router.push("/");
   } else {
     await usuariosApi.adicionarUsuario(usuario.value);
   }
 }
 
-function editar(editusuario) {
-  usuario.value = { ...editusuario };
-}
-
 async function excluir(usuario) {
-  await usuariosApi.excluirUsuario(usuario.id);
-  usuario.value = await usuariosApi.buscarUsuarioPorId(props.id);
+  const confirmado = window.confirm(
+    "Tem certeza que deseja excluir a conta? Ela será excluída permanentemente!"
+  );
+  if (confirmado) {
+    await usuariosApi.excluirUsuario(usuario.id);
+    window.alert("Sua conta foi excluída com sucesso!");
+    LogOut();
+    router.push("/");
+  }
 }
 </script>
 <template>
@@ -46,7 +56,7 @@ async function excluir(usuario) {
     <div class="form">
       <div class="usuario-imagem">
         <img class="foto" v-if="usuario.foto" :src="usuario.foto.url" alt="" />
-        <p v-else>usuario Sem Imagem</p>
+        <p v-else class="foto sem-imagem">Usuario Sem Imagem</p>
       </div>
       <div class="usuario-info">
         <div class="email">
@@ -81,8 +91,10 @@ async function excluir(usuario) {
       </div>
       <div class="usuario-edit">
         <div class="botao-espaco">
-          <button class="editar" @click="editar(usuario)">Editar</button>
-          <button class="usuario-card-button confirmacao" @click="excluir()">
+          <button
+            class="usuario-card-button confirmacao"
+            @click="excluir(usuario)"
+          >
             <span class="excluir">Excluir Conta</span>
             <span class="certeza">Certeza?</span>
           </button>

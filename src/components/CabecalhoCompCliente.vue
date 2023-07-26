@@ -7,7 +7,10 @@ const authStore = useAuthStore();
 import UsuariosApi from "/src/api/usuarios.js";
 const usuariosApi = new UsuariosApi();
 const usuarios = ref([]);
-
+const LogOut = () => {
+  authStore.LogOut();
+  router.push("/login");
+};
 onMounted(async () => {
   usuarios.value = await usuariosApi.buscarTodosOsUsuarios();
 });
@@ -32,9 +35,10 @@ function abrir(id) {
           <span><RouterLink to="/login">Login</RouterLink></span>
         </div>
         <div v-if="authStore.isLogged == true">
-          <button class="logout" @click="abrir(authStore.userId)">
+          <button class="perfil" @click="abrir(authStore.userId)">
             Perfil
           </button>
+          <button class="perfil" @click="LogOut">LogOut</button>
         </div>
       </div>
     </div>
@@ -45,11 +49,12 @@ function abrir(id) {
   display: flex;
   width: 100%;
 }
-.logout {
+.perfil {
   border: 1px solid black;
   background-color: transparent;
   cursor: pointer;
   border-radius: 4px;
+  margin-right: 10px;
 }
 .nome-site,
 .links,
@@ -59,7 +64,7 @@ function abrir(id) {
   align-items: center;
 }
 .login-cliente {
-  margin-right: 0zpx;
+  margin-right: 0px;
   justify-content: flex-end;
 }
 .ligia {

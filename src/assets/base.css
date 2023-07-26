@@ -19,6 +19,7 @@ header span {
   display: flex;
   align-items: center;
 }
+.img,
 .sem-imagem {
   width: 95%;
   height: 350px;

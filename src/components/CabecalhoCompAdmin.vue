@@ -1,12 +1,23 @@
 <script setup>
+import { onMounted, ref } from "vue";
+import router from "../router";
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
-import router from "../router";
 
+import UsuariosApi from "/src/api/usuarios.js";
+const usuariosApi = new UsuariosApi();
+const usuarios = ref([]);
 const LogOut = () => {
   authStore.LogOut();
   router.push("/login");
 };
+onMounted(async () => {
+  usuarios.value = await usuariosApi.buscarTodosOsUsuarios();
+});
+
+function abrir(id) {
+  router.push(`usuarios/${id}`);
+}
 </script>
 <template>
   <header>
@@ -27,7 +38,10 @@ const LogOut = () => {
           <span><RouterLink to="/login">Login</RouterLink></span>
         </div>
         <div v-if="authStore.isLogged == true">
-          <button class="logout" @click="LogOut">Sair</button>
+          <button class="perfil" @click="abrir(authStore.userId)">
+            Perfil
+          </button>
+          <button class="perfil" @click="LogOut">LogOut</button>
         </div>
       </div>
     </div>

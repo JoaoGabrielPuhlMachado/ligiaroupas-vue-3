@@ -143,7 +143,7 @@ function abrir(id) {
   <div class="produto-card-container">
     <div class="produto-card" v-for="produto in produtos" :key="produto.id">
       <div class="produto-card-content" @click="abrir(produto.id)">
-        <img v-if="produto.capa" :src="produto.capa.file" />
+        <img class="img" v-if="produto.capa" :src="produto.capa.file" />
         <div v-else class="sem-imagem">Produto Sem Imagem</div>
         <br />
         ID: ({{ produto.id }})
