@@ -4,11 +4,14 @@ import CabecalhoCompCliente from "./components/CabecalhoCompCliente.vue";
 
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
+import { checkTokenExpiration } from "./tokenExpiration";
+
+setInterval(checkTokenExpiration, 10000);
 </script>
 
 <template>
   <div>
-    <div v-if="authStore.isAdmin == true">
+    <div v-if="authStore.isAdmin === true">
       <CabecalhoCompAdmin />
     </div>
     <div v-else>
