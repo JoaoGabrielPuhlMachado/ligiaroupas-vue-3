@@ -12,6 +12,7 @@ import LoginView from "../views/LoginView.vue";
 import CadastroClienteView from "../views/CadastroClienteView.vue";
 import MarcaClienteView from "../views/MarcaClienteView.vue";
 import UsuarioView from "../views/UsuarioView.vue";
+import ComprasView from "../views/ComprasView.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -80,6 +81,12 @@ const router = createRouter({
       path: "/usuarios/:id",
       name: "usuarios",
       component: UsuarioView,
+      props: true,
+    },
+    {
+      path: "/compras/:id",
+      name: "compras",
+      component: ComprasView,
       props: true,
     },
   ],

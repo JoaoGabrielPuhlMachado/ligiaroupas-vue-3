@@ -35,8 +35,8 @@ export default {
 <template>
   <div class="form">
     <div class="marca">
-      <label for="Marca">Marcas: </label>
-      <input type="text" v-model="marca.nome_marca" />
+      <label for="marca">Marcas: </label>
+      <input id="marca" type="text" v-model="marca.nome_marca" />
     </div>
     <div class="header-botao">
       <button class="botao" @click="salvar">Salvar</button>

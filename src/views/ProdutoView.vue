@@ -1,11 +1,11 @@
 <script setup>
 import { onMounted, ref } from "vue";
-
 import ProdutosApi from "/src/api/produtos.js";
 import CategoriasApi from "@/api/categorias";
 import MarcasApi from "@/api/marcas";
 import TamanhosApi from "@/api/tamanhos";
 import CoresApi from "@/api/cores";
+import ImagensApi from "../api/imagens";
 import router from "../router";
 
 const produtosApi = new ProdutosApi();
@@ -13,6 +13,7 @@ const categoriasApi = new CategoriasApi();
 const marcasApi = new MarcasApi();
 const tamanhosApi = new TamanhosApi();
 const coresApi = new CoresApi();
+const imagensApi = new ImagensApi();
 
 const produtos = ref([]);
 const produto = ref({
@@ -36,8 +37,15 @@ onMounted(async () => {
   tamanhos.value = await tamanhosApi.buscarTodosOsTamanhos();
   categorias.value = await categoriasApi.buscarTodasAsCategorias();
 });
-
 async function salvar() {
+  if (produto.value.capa) {
+    const urlImagemNoServidor = await imagensApi.adicionarImagem(
+      produto.value.capa
+    );
+    produto.value.capa = {
+      file: urlImagemNoServidor,
+    };
+  }
   produto.value.cor = produto.value.cor.id;
   produto.value.marca = produto.value.marca.id;
   produto.value.categoria = produto.value.categoria.id;
@@ -52,26 +60,45 @@ async function salvar() {
     marca: "",
     categoria: "",
     tamanho: "",
+    capa: null,
   };
   produtos.value = await produtosApi.buscarTodosOsProdutos();
 }
-
 function editar(editproduto) {
   produto.value = { ...editproduto };
 }
-
 async function excluir(produto) {
   await produtosApi.excluirProduto(produto.id);
   produtos.value = await produtosApi.buscarTodosOsProdutos();
 }
-
 function abrir(id) {
   router.push(`produtos/${id}`);
+}
+function selecionarCapa(event) {
+  const file = event.target.files[0];
+  if (file) {
+    produto.value.capa = URL.createObjectURL(file);
+  } else {
+    produto.value.capa = null;
+  }
 }
 </script>
 
 <template>
   <div class="form">
+    <div class="capa">
+      <label for="Capa">Foto de Capa: </label>
+      <input
+        class="capa2"
+        id="Capa"
+        type="file"
+        accept="image/*"
+        @change="selecionarCapa"
+      />
+      <div v-if="produto.capa">
+        <img class="capa3" :src="produto.capa" />
+      </div>
+    </div>
     <div class="descricao">
       <label for="Descricao">Descrição: </label>
       <input id="Descricao" type="text" v-model="produto.nome" />
@@ -168,6 +195,14 @@ function abrir(id) {
   </div>
 </template>
 <style scoped>
+.capa2 {
+  height: 28px;
+  width: 200px;
+}
+.capa3 {
+  height: 200px;
+  width: 200px;
+}
 .produto-card-content {
   cursor: pointer;
 }

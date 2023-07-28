@@ -35,8 +35,8 @@ export default {
 <template>
   <div class="form">
     <div class="tamanho">
-      <label for="Tamanho">Tamanhos: </label>
-      <input type="text" v-model="tamanho.especificacao" />
+      <label for="tamanho">Tamanhos: </label>
+      <input id="tamanho" type="text" v-model="tamanho.especificacao" />
     </div>
     <div class="header-botao">
       <button class="botao" @click="salvar">Salvar</button>

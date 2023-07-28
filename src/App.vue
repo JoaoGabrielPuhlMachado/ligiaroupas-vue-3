@@ -6,7 +6,7 @@ import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
 import { checkTokenExpiration } from "./tokenExpiration";
 
-setInterval(checkTokenExpiration, 10000);
+setInterval(checkTokenExpiration, 60000);
 </script>
 
 <template>

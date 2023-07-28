@@ -35,8 +35,8 @@ export default {
 <template>
   <div class="form">
     <div class="cor">
-      <label for="Cor">Cores: </label>
-      <input type="text" v-model="cor.nome_cor" />
+      <label for="cor">Cores: </label>
+      <input id="cor" type="text" v-model="cor.nome_cor" />
     </div>
     <div class="header-botao">
       <button class="botao" @click="salvar">Salvar</button>

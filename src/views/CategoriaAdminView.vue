@@ -34,8 +34,8 @@ export default {
 <template>
   <div class="form">
     <div class="categoria">
-      <label for="Categoria">Categorias: </label>
-      <input type="text" v-model="categoria.descricao" />
+      <label for="categoria">Categorias: </label>
+      <input id="categoria" type="text" v-model="categoria.descricao" />
     </div>
     <div class="header-botao">
       <button class="botao" @click="salvar">Salvar</button>
