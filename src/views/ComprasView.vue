@@ -1,165 +1,241 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import ProdutosApi from "@/api/produtos.js";
-import CategoriasApi from "@/api/categorias.js";
-import MarcasApi from "@/api/marcas.js";
-import TamanhosApi from "@/api/tamanhos.js";
-import CoresApi from "@/api/cores.js";
+import ProdutosApi from "/src/api/produtos.js";
+import CategoriasApi from "@/api/categorias";
+import MarcasApi from "@/api/marcas";
+import TamanhosApi from "@/api/tamanhos";
+import CoresApi from "@/api/cores";
+import ImagensApi from "../api/imagens";
+import router from "../router";
 
 const produtosApi = new ProdutosApi();
 const categoriasApi = new CategoriasApi();
 const marcasApi = new MarcasApi();
 const tamanhosApi = new TamanhosApi();
 const coresApi = new CoresApi();
+const imagensApi = new ImagensApi();
 
-const props = defineProps({
-  id: {
-    required: true,
-  },
-});
-
+const produtos = ref([]);
 const produto = ref({
   nome: "",
   preco: "",
   quantidade: "",
+  cor: {},
+  marca: {},
+  categoria: {},
+  tamanho: {},
+  capa: null,
 });
-const marca = ref({
-  nome_marca: "",
-});
-const cor = ref({
-  nome_cor: "",
-});
-const tamanho = ref({
-  especificacao: "",
-});
-const categoria = ref({
-  descricao: "",
-});
-const produtos = ref([]);
 const marcas = ref([]);
 const cores = ref([]);
 const tamanhos = ref([]);
 const categorias = ref([]);
+
 onMounted(async () => {
   produtos.value = await produtosApi.buscarTodosOsProdutos();
   marcas.value = await marcasApi.buscarTodasAsMarcas();
   cores.value = await coresApi.buscarTodasAsCores();
   tamanhos.value = await tamanhosApi.buscarTodosOsTamanhos();
   categorias.value = await categoriasApi.buscarTodasAsCategorias();
-
-  produto.value = await produtosApi.buscarProdutoPorId(props.id);
-  cor.value = await coresApi.buscarCorPorId(produto.value.cor);
-  categoria.value = await categoriasApi.buscarCategoriaPorId(
-    produto.value.categoria
-  );
-  marca.value = await marcasApi.buscarMarcaPorId(produto.value.marca);
-  tamanho.value = await tamanhosApi.buscarTamanhoPorId(produto.value.tamanho);
 });
+async function salvar() {
+  if (produto.value.capa) {
+    const urlImagemNoServidor = await imagensApi.adicionarImagem(
+      produto.value.capa
+    );
+    produto.value.capa = {
+      file: urlImagemNoServidor,
+    };
+  }
+  produto.value.cor = produto.value.cor.id;
+  produto.value.marca = produto.value.marca.id;
+  produto.value.categoria = produto.value.categoria.id;
+  produto.value.tamanho = produto.value.tamanho.id;
+  if (produto.value.id) {
+    await produtosApi.atualizarProduto(produto.value);
+  } else {
+    await produtosApi.adicionarProduto(produto.value);
+  }
+  produto.value = {
+    cor: "",
+    marca: "",
+    categoria: "",
+    tamanho: "",
+    capa: null,
+  };
+  produtos.value = await produtosApi.buscarTodosOsProdutos();
+}
+function editar(editproduto) {
+  produto.value = { ...editproduto };
+}
+async function excluir(produto) {
+  await produtosApi.excluirProduto(produto.id);
+  produtos.value = await produtosApi.buscarTodosOsProdutos();
+}
+function abrir(id) {
+  router.push(`produtos/${id}`);
+}
+function selecionarCapa(event) {
+  const file = event.target.files[0];
+  if (file) {
+    produto.value.capa = URL.createObjectURL(file);
+  } else {
+    produto.value.capa = null;
+  }
+}
 </script>
 
 <template>
-  <!-- 
-  <div class="desc-do-produto">
-    <div class="imagem-produto-desc">
-      <img
-        v-if="produto.capa"
-        :src="produto.capa.url"
-        alt=""
-        class="imagem-produto"
+  <div class="form">
+    <div class="capa">
+      <label for="Capa">Foto de Capa: </label>
+      <input
+        class="capa2"
+        id="Capa"
+        type="file"
+        accept="image/*"
+        @change="selecionarCapa"
       />
-      <p v-else class="imagem-produto sem-imagem">Produto Sem Imagem</p>
-    </div>
-    <div class="produto-desc">
-      <div class="desc-nome">
-        <h1 class="produto-nome centralizado">{{ produto.nome }}</h1>
-      </div>
-      <div class="desc-partes">
-        <h3 class="produto-info">Preço Unitário: {{ produto.preco }}</h3>
-        <h3 class="produto-info">Categoria: {{ categoria.descricao }}</h3>
-        <h3 class="produto-info">Marca: {{ marca.nome_marca }}</h3>
-        <h3 class="produto-info">Cor: {{ cor.nome_cor }}</h3>
-      </div>
-      <div class="desc-select">
-        <div class="produto-quantidade">
-          <label for="Quantidade">Quantidade: </label>
-          <input id="Quantidade" type="text" />
-        </div>
-        <div class="produto-tamanho">
-          <label for="Tamanho">Tamanhos: </label>
-          <select id="Tamanho" v-model="produto.tamanho">
-            <option
-              v-for="tamanho in tamanhos"
-              :key="tamanho.id"
-              :value="tamanho"
-              :selected="tamanho.id === produto.tamanho ? true : false"
-            >
-              {{ tamanho.especificacao }}
-            </option>s
-          </select>
-        </div>
-        <button class="botao-comprar">Adicionar ao Carrinho</button>
+      <div v-if="produto.capa">
+        <img class="capa3" :src="produto.capa" />
       </div>
     </div>
-  </div> -->
-  <h1>BEM VINDO AO CARRINHO</h1>
+    <div class="descricao">
+      <label for="Descricao">Descrição: </label>
+      <input id="Descricao" type="text" v-model="produto.nome" />
+    </div>
+    <div class="estoque">
+      <label for="Estoque">Estoque: </label>
+      <input id="Estoque" type="text" v-model="produto.quantidade" />
+    </div>
+    <div class="preco">
+      <label for="Preco">Preço: </label>
+      <input id="Preco" type="text" v-model="produto.preco" />
+    </div>
+    <div class="categoria">
+      <label for="Categoria">Categorias: </label>
+      <select id="Categoria" v-model="produto.categoria">
+        <option
+          v-for="categoria in categorias"
+          :key="categoria.id"
+          :value="categoria"
+          :selected="categoria.id === produto.categoria.id ? true : false"
+        >
+          {{ categoria.descricao }}
+        </option>
+      </select>
+    </div>
+    <div class="cor">
+      <label for="Cor">Cores: </label>
+      <select id="Cor" v-model="produto.cor">
+        <option
+          v-for="cor in cores"
+          :key="cor.id"
+          :value="cor"
+          :selected="cor.id === produto.cor.id ? true : false"
+        >
+          {{ cor.nome_cor }}
+        </option>
+      </select>
+    </div>
+    <div class="marca">
+      <label for="Marca">Marcas: </label>
+      <select id="Marca" v-model="produto.marca">
+        <option
+          v-for="marca in marcas"
+          :key="marca.id"
+          :value="marca"
+          :selected="marca.id === produto.marca.id ? true : false"
+        >
+          {{ marca.nome_marca }}
+        </option>
+      </select>
+    </div>
+    <div class="tamanho">
+      <label for="Tamanho">Tamanhos: </label>
+      <select id="Tamanho" v-model="produto.tamanho">
+        <option
+          v-for="tamanho in tamanhos"
+          :key="tamanho.id"
+          :value="tamanho"
+          :selected="tamanho.id === produto.tamanho.id ? true : false"
+        >
+          {{ tamanho.especificacao }}
+        </option>
+      </select>
+    </div>
+    <div class="header-botao">
+      <button class="botao" @click="salvar">Salvar</button>
+    </div>
+  </div>
+  <div class="produto-card-container">
+    <div class="produto-card" v-for="produto in produtos" :key="produto.id">
+      <div class="produto-card-content" @click="abrir(produto.id)">
+        <img class="img" v-if="produto.capa" :src="produto.capa.file" />
+        <div v-else class="sem-imagem">Produto Sem Imagem</div>
+        <br />
+        ID: ({{ produto.id }})
+        <br />
+        Cor: {{ produto.cor.nome_cor }}
+        <br />
+        Categoria: {{ produto.categoria.descricao }}
+        <br />
+        Marca: {{ produto.marca.nome_marca }}
+        <br />
+        Tamanho: {{ produto.tamanho.especificacao }}
+        <br />
+        Estoque: {{ produto.quantidade }}
+        <br />
+        Preço: {{ produto.preco }}
+      </div>
+      <div class="botao-espaco">
+        <button @click="editar(produto)">Editar</button>
+        <button class="produto-card-button" @click="excluir(produto)">X</button>
+      </div>
+    </div>
+  </div>
 </template>
-
 <style scoped>
-input,
-select,
-label {
-  margin: 0 30px;
+.capa2 {
+  height: 28px;
+  width: 200px;
+}
+.capa3 {
+  height: 200px;
+  width: 200px;
+}
+.produto-card-content {
+  cursor: pointer;
+}
+.produto-card-container {
   display: flex;
-  width: 100px;
+  flex-wrap: wrap;
 }
-.botao-comprar {
-  width: 150px;
-  margin: 0 30px;
+.produto-card {
+  width: 20%;
+  max-height: 530px;
+  margin: 10px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-weight: bold;
+  background-color: #f5f5f5;
 }
-.desc-select {
-  height: 100%;
-  align-items: flex-end;
+.produto-card-text {
+  cursor: pointer;
+}
+.produto-card-button {
+  font-weight: bold;
+  background-color: black;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 7px 10px;
+  cursor: pointer;
+}
+.botao-espaco {
   display: flex;
-  justify-content: center;
-}
-.desc-do-produto {
-  margin: 2% 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.desc-nome {
-  margin-top: 2%;
-}
-.imagem-produto-desc {
-  width: 45%;
-  margin-right: 1%;
-}
-.imagem-produto {
-  border: 1px solid rgb(206, 206, 206);
-  width: 100%;
-  height: 780px;
-}
-.produto-info {
-  color: rgb(0, 0, 0);
-  padding: 0 2%;
-  display: inline-block;
-}
-.produto-nome {
-  color: rgb(0, 0, 0);
-  padding: 0 2%;
-  word-wrap: break-word;
-}
-.produto-desc {
-  background-color: rgb(213, 228, 255);
-  width: 40%;
-  height: 660px;
-  margin-left: 1%;
-  border: 1px solid rgb(206, 206, 206);
-  display: flex;
-  flex-direction: column;
-}
-.centralizado {
-  text-align: center;
+  justify-content: space-between;
+  margin: 10px 0;
 }
 </style>

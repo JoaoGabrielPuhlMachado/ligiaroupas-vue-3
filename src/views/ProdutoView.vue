@@ -24,6 +24,7 @@ const produto = ref({
   marca: {},
   categoria: {},
   tamanho: {},
+  capa: null,
 });
 const marcas = ref([]);
 const cores = ref([]);
