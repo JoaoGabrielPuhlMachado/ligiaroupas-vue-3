@@ -6,7 +6,6 @@ import MarcasApi from "@/api/marcas";
 import TamanhosApi from "@/api/tamanhos";
 import CoresApi from "@/api/cores";
 import ImagensApi from "../api/imagens";
-import router from "../router";
 
 const produtosApi = new ProdutosApi();
 const categoriasApi = new CategoriasApi();
@@ -71,9 +70,6 @@ function editar(editproduto) {
 async function excluir(produto) {
   await produtosApi.excluirProduto(produto.id);
   produtos.value = await produtosApi.buscarTodosOsProdutos();
-}
-function abrir(id) {
-  router.push(`produtos/${id}`);
 }
 function selecionarCapa(event) {
   const file = event.target.files[0];
@@ -170,7 +166,7 @@ function selecionarCapa(event) {
   </div>
   <div class="produto-card-container">
     <div class="produto-card" v-for="produto in produtos" :key="produto.id">
-      <div class="produto-card-content" @click="abrir(produto.id)">
+      <div class="produto-card-content">
         <img class="img" v-if="produto.capa" :src="produto.capa.file" />
         <div v-else class="sem-imagem">Produto Sem Imagem</div>
         <br />
@@ -189,8 +185,12 @@ function selecionarCapa(event) {
         Preço: {{ produto.preco }}
       </div>
       <div class="botao-espaco">
-        <button @click="editar(produto)">Editar</button>
-        <button class="produto-card-button" @click="excluir(produto)">X</button>
+        <button class="produto-card-button cor-edit" @click="editar(produto)">
+          Editar
+        </button>
+        <button class="produto-card-button cor-del" @click="excluir(produto)">
+          X
+        </button>
       </div>
     </div>
   </div>
@@ -203,9 +203,6 @@ function selecionarCapa(event) {
 .capa3 {
   height: 200px;
   width: 200px;
-}
-.produto-card-content {
-  cursor: pointer;
 }
 .produto-card-container {
   display: flex;
@@ -226,12 +223,17 @@ function selecionarCapa(event) {
 }
 .produto-card-button {
   font-weight: bold;
-  background-color: black;
-  color: #fff;
   border: none;
   border-radius: 5px;
   padding: 7px 10px;
   cursor: pointer;
+  color: white;
+}
+.cor-edit {
+  background-color: black;
+}
+.cor-del {
+  background-color: red;
 }
 .botao-espaco {
   display: flex;

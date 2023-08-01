@@ -7,7 +7,11 @@ import UsuariosApi from "/src/api/usuarios.js";
 
 const LogOut = () => {
   authStore.LogOut();
+  router.push("/login");
 };
+function abrir(id) {
+  router.push(`usuarios/${id}`);
+}
 const usuariosApi = new UsuariosApi();
 const props = defineProps({
   id: {
@@ -47,7 +51,6 @@ async function excluir(usuario) {
     await usuariosApi.excluirUsuario(usuario.id);
     window.alert("Sua conta foi excluída com sucesso!");
     LogOut();
-    router.push("/");
   }
 }
 </script>
@@ -98,7 +101,9 @@ async function excluir(usuario) {
             <span class="excluir">Excluir Conta</span>
             <span class="certeza">Certeza?</span>
           </button>
-          <button class="salvar" @click="salvar">Salvar</button>
+          <button class="sair" @click="LogOut()">Sair</button>
+          <button class="salvar" @click="salvar">Salvar Dados</button>
+          <button class="carrinho" @click="abrir()">Carrinho</button>
         </div>
       </div>
     </div>
@@ -120,7 +125,8 @@ label {
 }
 .editar,
 .confirmacao,
-.salvar {
+.salvar,
+.sair {
   cursor: pointer;
 }
 .form-centralizado {
