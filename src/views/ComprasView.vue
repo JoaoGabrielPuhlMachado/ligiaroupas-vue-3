@@ -1,196 +1,68 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import ProdutosApi from "/src/api/produtos.js";
-import CategoriasApi from "@/api/categorias";
-import MarcasApi from "@/api/marcas";
-import TamanhosApi from "@/api/tamanhos";
-import CoresApi from "@/api/cores";
-import ImagensApi from "../api/imagens";
-import router from "../router";
+import ComprasApi from "/src/api/compras.js";
 
-const produtosApi = new ProdutosApi();
-const categoriasApi = new CategoriasApi();
-const marcasApi = new MarcasApi();
-const tamanhosApi = new TamanhosApi();
-const coresApi = new CoresApi();
-const imagensApi = new ImagensApi();
+const comprasApi = new ComprasApi();
 
-const produtos = ref([]);
-const produto = ref({
-  nome: "",
-  preco: "",
-  quantidade: "",
-  cor: {},
-  marca: {},
-  categoria: {},
-  tamanho: {},
-  capa: null,
+const compras = ref([]);
+const compra = ref({
+  status: "",
+  usuario: "",
+  itens: {
+    produto: "",
+    quantidade: "",
+    total: "",
+  },
+  total: "",
 });
-const marcas = ref([]);
-const cores = ref([]);
-const tamanhos = ref([]);
-const categorias = ref([]);
-
+const props = defineProps({
+  id: {
+    required: true,
+    type: Number,
+  },
+});
 onMounted(async () => {
-  produtos.value = await produtosApi.buscarTodosOsProdutos();
-  marcas.value = await marcasApi.buscarTodasAsMarcas();
-  cores.value = await coresApi.buscarTodasAsCores();
-  tamanhos.value = await tamanhosApi.buscarTodosOsTamanhos();
-  categorias.value = await categoriasApi.buscarTodasAsCategorias();
+  compra.value = await comprasApi.buscarTodasAsCompras();
+  compra.value = await comprasApi.buscarCompraPorId(props.id);
 });
 async function salvar() {
-  if (produto.value.capa) {
-    const urlImagemNoServidor = await imagensApi.adicionarImagem(
-      produto.value.capa
-    );
-    produto.value.capa = {
-      file: urlImagemNoServidor,
-    };
-  }
-  produto.value.cor = produto.value.cor.id;
-  produto.value.marca = produto.value.marca.id;
-  produto.value.categoria = produto.value.categoria.id;
-  produto.value.tamanho = produto.value.tamanho.id;
-  if (produto.value.id) {
-    await produtosApi.atualizarProduto(produto.value);
+  if (compra.value.id) {
+    await comprasApi.atualizarCompra(compra.value);
   } else {
-    await produtosApi.adicionarProduto(produto.value);
+    await comprasApi.adicionarCompra(compra.value);
   }
-  produto.value = {
-    cor: "",
-    marca: "",
-    categoria: "",
-    tamanho: "",
-    capa: null,
-  };
-  produtos.value = await produtosApi.buscarTodosOsProdutos();
+  compra.value = {};
+  compra.value = await comprasApi.buscarTodasAsCompras();
 }
-function editar(editproduto) {
-  produto.value = { ...editproduto };
+function editar(editcompra) {
+  compra.value = { ...editcompra };
 }
-async function excluir(produto) {
-  await produtosApi.excluirProduto(produto.id);
-  produtos.value = await produtosApi.buscarTodosOsProdutos();
-}
-function abrir(id) {
-  router.push(`produtos/${id}`);
-}
-function selecionarCapa(event) {
-  const file = event.target.files[0];
-  if (file) {
-    produto.value.capa = URL.createObjectURL(file);
-  } else {
-    produto.value.capa = null;
-  }
+async function excluir(compra) {
+  await comprasApi.excluirCompra(compra.id);
+  compras.value = await comprasApi.buscarTodasAsCompras();
 }
 </script>
 
 <template>
   <div class="form">
-    <div class="capa">
-      <label for="Capa">Foto de Capa: </label>
-      <input
-        class="capa2"
-        id="Capa"
-        type="file"
-        accept="image/*"
-        @change="selecionarCapa"
-      />
-      <div v-if="produto.capa">
-        <img class="capa3" :src="produto.capa" />
-      </div>
-    </div>
-    <div class="descricao">
-      <label for="Descricao">Descrição: </label>
-      <input id="Descricao" type="text" v-model="produto.nome" />
-    </div>
-    <div class="estoque">
-      <label for="Estoque">Estoque: </label>
-      <input id="Estoque" type="text" v-model="produto.quantidade" />
-    </div>
-    <div class="preco">
-      <label for="Preco">Preço: </label>
-      <input id="Preco" type="text" v-model="produto.preco" />
-    </div>
-    <div class="categoria">
-      <label for="Categoria">Categorias: </label>
-      <select id="Categoria" v-model="produto.categoria">
-        <option
-          v-for="categoria in categorias"
-          :key="categoria.id"
-          :value="categoria"
-          :selected="categoria.id === produto.categoria.id ? true : false"
-        >
-          {{ categoria.descricao }}
-        </option>
-      </select>
-    </div>
-    <div class="cor">
-      <label for="Cor">Cores: </label>
-      <select id="Cor" v-model="produto.cor">
-        <option
-          v-for="cor in cores"
-          :key="cor.id"
-          :value="cor"
-          :selected="cor.id === produto.cor.id ? true : false"
-        >
-          {{ cor.nome_cor }}
-        </option>
-      </select>
-    </div>
-    <div class="marca">
-      <label for="Marca">Marcas: </label>
-      <select id="Marca" v-model="produto.marca">
-        <option
-          v-for="marca in marcas"
-          :key="marca.id"
-          :value="marca"
-          :selected="marca.id === produto.marca.id ? true : false"
-        >
-          {{ marca.nome_marca }}
-        </option>
-      </select>
-    </div>
-    <div class="tamanho">
-      <label for="Tamanho">Tamanhos: </label>
-      <select id="Tamanho" v-model="produto.tamanho">
-        <option
-          v-for="tamanho in tamanhos"
-          :key="tamanho.id"
-          :value="tamanho"
-          :selected="tamanho.id === produto.tamanho.id ? true : false"
-        >
-          {{ tamanho.especificacao }}
-        </option>
-      </select>
-    </div>
     <div class="header-botao">
       <button class="botao" @click="salvar">Salvar</button>
     </div>
   </div>
-  <div class="produto-card-container">
-    <div class="produto-card" v-for="produto in produtos" :key="produto.id">
-      <div class="produto-card-content" @click="abrir(produto.id)">
-        <img class="img" v-if="produto.capa" :src="produto.capa.file" />
-        <div v-else class="sem-imagem">Produto Sem Imagem</div>
+  <div class="compras-card-container">
+    <div class="compras-card" v-for="compra in compras" :key="compra.id">
+      <div class="compras-card-content">
         <br />
-        ID: ({{ produto.id }})
+        ID: ({{ compra.status }})
         <br />
-        Cor: {{ produto.cor.nome_cor }}
-        <br />
-        Categoria: {{ produto.categoria.descricao }}
-        <br />
-        Marca: {{ produto.marca.nome_marca }}
-        <br />
-        Tamanho: {{ produto.tamanho.especificacao }}
-        <br />
-        Estoque: {{ produto.quantidade }}
-        <br />
-        Preço: {{ produto.preco }}
       </div>
       <div class="botao-espaco">
-        <button @click="editar(produto)">Editar</button>
-        <button class="produto-card-button" @click="excluir(produto)">X</button>
+        <button class="compras-card-button cor-edit" @click="editar(compra)">
+          Editar
+        </button>
+        <button class="compras-card-button cor-del" @click="excluir(compra)">
+          X
+        </button>
       </div>
     </div>
   </div>
@@ -204,14 +76,11 @@ function selecionarCapa(event) {
   height: 200px;
   width: 200px;
 }
-.produto-card-content {
-  cursor: pointer;
-}
-.produto-card-container {
+.compras-card-container {
   display: flex;
   flex-wrap: wrap;
 }
-.produto-card {
+.compras-card {
   width: 20%;
   max-height: 530px;
   margin: 10px;
@@ -221,17 +90,22 @@ function selecionarCapa(event) {
   font-weight: bold;
   background-color: #f5f5f5;
 }
-.produto-card-text {
+.compras-card-text {
   cursor: pointer;
 }
-.produto-card-button {
+.compras-card-button {
   font-weight: bold;
-  background-color: black;
-  color: #fff;
   border: none;
   border-radius: 5px;
   padding: 7px 10px;
   cursor: pointer;
+  color: white;
+}
+.cor-edit {
+  background-color: black;
+}
+.cor-del {
+  background-color: red;
 }
 .botao-espaco {
   display: flex;

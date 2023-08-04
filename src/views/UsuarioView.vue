@@ -7,10 +7,11 @@ import UsuariosApi from "/src/api/usuarios.js";
 
 const LogOut = () => {
   authStore.LogOut();
+  window.alert("Usuário encerrou sessão com sucesso!");
   router.push("/login");
 };
 function abrir(id) {
-  router.push(`usuarios/${id}`);
+  router.push(`/compras/${id}`);
 }
 const usuariosApi = new UsuariosApi();
 const props = defineProps({

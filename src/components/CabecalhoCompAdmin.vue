@@ -11,8 +11,8 @@ onMounted(async () => {
   usuarios.value = await usuariosApi.buscarTodosOsUsuarios();
 });
 
-function abrir(id) {
-  router.push(`usuarios/${id}`);
+function abrir() {
+  router.push(`usuarios/${authStore.userId}`);
 }
 </script>
 <template>
@@ -34,9 +34,7 @@ function abrir(id) {
           <span><RouterLink to="/login">Login</RouterLink></span>
         </div>
         <div v-if="authStore.isLogged == true">
-          <button class="perfil" @click="abrir(authStore.userId)">
-            Perfil
-          </button>
+          <button class="perfil" @click="abrir()">Perfil</button>
         </div>
       </div>
     </div>
