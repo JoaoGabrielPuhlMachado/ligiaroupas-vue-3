@@ -5,7 +5,7 @@ import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
 import UsuariosApi from "/src/api/usuarios.js";
 
-const LogOut = () => {
+const Logout = () => {
   authStore.LogOut();
   window.alert("Usuário encerrou sessão com sucesso!");
   router.push("/login");
@@ -51,7 +51,7 @@ async function excluir(usuario) {
   if (confirmado) {
     await usuariosApi.excluirUsuario(usuario.id);
     window.alert("Sua conta foi excluída com sucesso!");
-    LogOut();
+    Logout();
   }
 }
 </script>
@@ -102,7 +102,7 @@ async function excluir(usuario) {
             <span class="excluir">Excluir Conta</span>
             <span class="certeza">Certeza?</span>
           </button>
-          <button class="sair" @click="LogOut()">Sair</button>
+          <button class="sair" @click="Logout()">Sair</button>
           <button class="salvar" @click="salvar">Salvar Dados</button>
           <button class="carrinho" @click="abrir()">Carrinho</button>
         </div>

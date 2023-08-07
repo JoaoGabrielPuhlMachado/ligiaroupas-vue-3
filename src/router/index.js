@@ -84,7 +84,7 @@ const router = createRouter({
       props: true,
     },
     {
-      path: "/compras/",
+      path: "/compras/:id",
       name: "compras",
       component: ComprasView,
       props: true,

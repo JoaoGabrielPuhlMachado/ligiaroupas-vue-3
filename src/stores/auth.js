@@ -29,7 +29,7 @@ export const useAuthStore = defineStore("auth", {
       this.isLogged = false;
       this.token = "";
       this.userId = "";
-      // localStorage.removeItem("token");
+      localStorage.removeItem("token");
     },
     checkAuth() {
       if (this.token) {
