@@ -29,7 +29,7 @@ const login = async () => {
 <template>
   <div class="login-container">
     <div class="login-content">
-      <h1>Login</h1>
+      <h1>Login Admin</h1>
       <form @submit.prevent="login">
         <label for="email">Email:</label>
         <input type="text" id="email" v-model="email" required />
@@ -42,7 +42,7 @@ const login = async () => {
         <br />
         <p>
           Não tem conta?
-          <RouterLink to="/cadastro"><span>Cadastre-se</span></RouterLink>
+          <RouterLink to="/admin/cadastro"><span>Cadastre-se</span></RouterLink>
         </p>
       </form>
     </div>

@@ -1,8 +1,5 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import router from "../router";
-import { useAuthStore } from "@/stores/auth";
-const authStore = useAuthStore();
 
 import UsuariosApi from "/src/api/usuarios.js";
 const usuariosApi = new UsuariosApi();
@@ -10,29 +7,18 @@ const usuarios = ref([]);
 onMounted(async () => {
   usuarios.value = await usuariosApi.buscarTodosOsUsuarios();
 });
-
-function abrir() {
-  router.push(`usuarios/${authStore.userId}`);
-}
 </script>
 <template>
   <header>
     <div class="menu">
       <div class="links">
         <span><RouterLink to="/">Home</RouterLink></span>
-        <span><RouterLink to="/categorias">Categorias</RouterLink></span>
-        <span><RouterLink to="/marcas">Marcas</RouterLink></span>
       </div>
       <div class="nome-site">
         <span class="ligia">Lígia Roupas</span>
       </div>
       <div class="login">
-        <div v-if="authStore.isLogged == false">
-          <span><RouterLink to="/login">Login</RouterLink></span>
-        </div>
-        <div v-if="authStore.isLogged == true">
-          <button class="perfil" @click="abrir()">Perfil</button>
-        </div>
+        <span><RouterLink to="/admin/login">Login</RouterLink></span>
       </div>
     </div>
   </header>

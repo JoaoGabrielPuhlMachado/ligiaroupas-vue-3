@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
-import CorView from "../views/CorView.vue";
-import ProdutoView from "../views/ProdutoView.vue";
-import TamanhoView from "../views/TamanhoView.vue";
+import CorAdminView from "../views/CorAdminView.vue";
+import ProdutoAdminView from "../views/ProdutoAdminView.vue";
+import TamanhoAdminView from "../views/TamanhoAdminView.vue";
 import CadastroAdminView from "../views/CadastroAdminView.vue";
 import CategoriaAdminView from "../views/CategoriaAdminView.vue";
 import MarcaAdminView from "../views/MarcaAdminView.vue";
-import DescricaoProdutoView from "../views/DescricaoProdutoView.vue";
-import CategoriaClienteView from "../views/CategoriaClienteView.vue";
-import LoginView from "../views/LoginView.vue";
-import CadastroClienteView from "../views/CadastroClienteView.vue";
-import MarcaClienteView from "../views/MarcaClienteView.vue";
-import UsuarioView from "../views/UsuarioView.vue";
+import DescricaoProdutoAdminView from "../views/DescricaoProdutoAdminView.vue";
+// import CategoriaClienteView from "../views/CategoriaClienteView.vue";
+import LoginAdminView from "../views/LoginAdminView.vue";
+// import CadastroClienteView from "../views/CadastroClienteView.vue";
+// import MarcaClienteView from "../views/MarcaClienteView.vue";
+import UsuarioAdminView from "../views/UsuarioAdminView.vue";
 import ComprasView from "../views/ComprasView.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -22,65 +22,50 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: "/login",
+      path: "/admin/login",
       name: "login",
-      component: LoginView,
-    },
-    {
-      path: "/cadastro",
-      name: "cadastro",
-      component: CadastroClienteView,
+      component: LoginAdminView,
     },
     {
       path: "/admin/cadastro",
-      name: "cadastro-admin",
+      name: "cadastro",
       component: CadastroAdminView,
     },
     {
       path: "/admin/categorias",
-      name: "categorias-admin",
+      name: "categorias",
       component: CategoriaAdminView,
     },
     {
       path: "/admin/marcas",
-      name: "marcas-admin",
+      name: "marcas",
       component: MarcaAdminView,
     },
     {
-      path: "/categorias",
-      name: "categorias",
-      component: CategoriaClienteView,
-    },
-    {
-      path: "/marcas",
-      name: "marcas",
-      component: MarcaClienteView,
-    },
-    {
-      path: "/cores",
+      path: "/admin/cores",
       name: "cores",
-      component: CorView,
+      component: CorAdminView,
     },
     {
-      path: "/tamanhos",
+      path: "/admin/tamanhos",
       name: "tamanhos",
-      component: TamanhoView,
+      component: TamanhoAdminView,
     },
     {
-      path: "/produtos",
+      path: "/admin/produtos",
       name: "produtos",
-      component: ProdutoView,
+      component: ProdutoAdminView,
     },
     {
-      path: "/produtos/:id",
+      path: "/admin/produtos/:id",
       name: "descricao",
-      component: DescricaoProdutoView,
+      component: DescricaoProdutoAdminView,
       props: true,
     },
     {
-      path: "/usuarios/:id",
+      path: "/admin/usuarios/:id",
       name: "usuarios",
-      component: UsuarioView,
+      component: UsuarioAdminView,
       props: true,
     },
     {

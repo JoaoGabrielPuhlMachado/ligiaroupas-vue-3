@@ -8,7 +8,7 @@ import UsuariosApi from "/src/api/usuarios.js";
 const Logout = () => {
   authStore.LogOut();
   window.alert("Usuário encerrou sessão com sucesso!");
-  router.push("/login");
+  router.push("/admin/login");
 };
 function abrir(id) {
   router.push(`/compras/${id}`);

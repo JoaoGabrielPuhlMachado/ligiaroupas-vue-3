@@ -11,7 +11,7 @@ onMounted(async () => {
 });
 
 function abrir(id) {
-  router.push(`produtos/${id}`);
+  router.push(`admin/produtos/${id}`);
 }
 </script>
 <template>

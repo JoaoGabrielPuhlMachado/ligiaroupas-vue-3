@@ -12,7 +12,7 @@ onMounted(async () => {
 });
 
 function abrir() {
-  router.push(`usuarios/${authStore.userId}`);
+  router.push(`/admin/usuarios/${authStore.userId}`);
 }
 </script>
 <template>
@@ -20,21 +20,21 @@ function abrir() {
     <div class="menu">
       <div class="links">
         <span><RouterLink to="/">Home</RouterLink></span>
-        <span><RouterLink to="/produtos">Produtos</RouterLink></span>
+        <span><RouterLink to="/admin/produtos">Produtos</RouterLink></span>
         <span><RouterLink to="/admin/categorias">Categorias</RouterLink></span>
         <span><RouterLink to="/admin/marcas">Marcas</RouterLink></span>
-        <span><RouterLink to="/tamanhos">Tamanhos</RouterLink></span>
-        <span><RouterLink to="/cores">Cores</RouterLink></span>
+        <span><RouterLink to="/admin/tamanhos">Tamanhos</RouterLink></span>
+        <span><RouterLink to="/admin/cores">Cores</RouterLink></span>
       </div>
       <div class="nome-site">
         <span class="ligia">Lígia Roupas</span>
       </div>
       <div class="login">
         <div v-if="authStore.isLogged == false">
-          <span><RouterLink to="/login">Login</RouterLink></span>
+          <span><RouterLink to="/admin/login">Login</RouterLink></span>
         </div>
         <div v-if="authStore.isLogged == true">
-          <button class="perfil" @click="abrir()">Perfil</button>
+          <button class="perfil" @click="abrir()">Perfil Admin</button>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 <script setup>
 import CabecalhoCompAdmin from "./components/CabecalhoCompAdmin.vue";
-import CabecalhoCompCliente from "./components/CabecalhoCompCliente.vue";
+import CabecalhoCompNotLogged from "./components/CabecalhoCompNotLogged.vue";
 
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
@@ -11,11 +11,11 @@ setInterval(checkTokenExpiration, 60000);
 
 <template>
   <div>
-    <div v-if="authStore.isAdmin === true">
+    <div v-if="authStore.isLogged === true">
       <CabecalhoCompAdmin />
     </div>
     <div v-else>
-      <CabecalhoCompCliente />
+      <CabecalhoCompNotLogged />
     </div>
     <main>
       <router-view />
