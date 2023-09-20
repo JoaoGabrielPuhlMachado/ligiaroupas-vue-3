@@ -8,7 +8,7 @@ import UsuariosApi from "/src/api/usuarios.js";
 const Logout = () => {
   authStore.LogOut();
   window.alert("Usuário encerrou sessão com sucesso!");
-  router.push("/admin/login");
+  router.push("/");
 };
 function abrir(id) {
   router.push(`/compras/${id}`);
@@ -65,7 +65,12 @@ async function excluir(usuario) {
       <div class="usuario-info">
         <div class="email">
           <label for="email">Email: </label>
-          <input id="email" type="email" v-model="usuario.email" />
+          <input
+            class="input"
+            id="email"
+            type="email"
+            v-model="usuario.email"
+          />
         </div>
         <div class="first_name">
           <label for="first_name">Primeiro Nome: </label>

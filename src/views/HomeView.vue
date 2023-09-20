@@ -1,32 +1,28 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import router from "../router";
+import { useAuthStore } from "@/stores/auth";
+const authStore = useAuthStore();
 
-import ProdutosApi from "/src/api/produtos.js";
-const produtosApi = new ProdutosApi();
-const produtos = ref([]);
-
-onMounted(async () => {
-  produtos.value = await produtosApi.buscarTodosOsProdutos();
+import UsuariosApi from "/src/api/usuarios.js";
+const usuariosApi = new UsuariosApi();
+const usuario = ref({
+  first_name: "",
 });
 
-function abrir(id) {
-  router.push(`admin/produtos/${id}`);
-}
+onMounted(async () => {
+  usuario.value = await usuariosApi.buscarUsuarioPorId(authStore.userId);
+});
 </script>
 <template>
   <div class="imagem-background">
     <img class="imagem-ligia" src="@/imagens/loja-de-roupas-online2.jpg" />
   </div>
-  <div class="produto-card-container">
-    <div class="produto-card" v-for="produto in produtos" :key="produto.id">
-      <div class="produto-card-content" @click="abrir(produto.id)">
-        <img class="img" v-if="produto.capa" :src="produto.capa.file" />
-        <div v-else class="sem-imagem">Produto Sem Imagem</div>
-        <div class="produto-card-text">
-          {{ produto.nome }}
-        </div>
-      </div>
+  <div class="boas_vindas">
+    <div v-if="authStore.isLogged === false">
+      <h1>Faça login para acessar à área do admin</h1>
+    </div>
+    <div v-else>
+      <h1>Bem vindo a área do admin, {{ usuario.first_name }}!</h1>
     </div>
   </div>
 </template>
@@ -37,6 +33,9 @@ function abrir(id) {
 }
 .imagem-background {
   margin: 20px 0;
+}
+.boas_vindas {
+  text-align: center;
 }
 .produto-card-text {
   display: flex;
