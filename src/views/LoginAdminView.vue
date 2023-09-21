@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import axios from "axios";
+const authStore = useAuthStore();
 import { useAuthStore } from "@/stores/auth";
 
 const router = useRouter();
@@ -9,8 +10,11 @@ const email = ref("");
 const password = ref("");
 const errorMessage = ref("");
 
-const authStore = useAuthStore();
-
+const Logout = () => {
+  authStore.LogOut();
+  window.alert("Usuário não é admin, permissão negada!");
+  router.push("/");
+};
 const login = async () => {
   try {
     const response = await axios.post("http://localhost:8000/api/token/", {
@@ -19,7 +23,9 @@ const login = async () => {
     });
     const token = response.data.access;
     authStore.setToken(token);
-
+    if (authStore.isAdmin === false) {
+      Logout();
+    }
     router.push("/");
   } catch (error) {
     errorMessage.value = "Erro ao fazer login";
@@ -36,14 +42,9 @@ const login = async () => {
 
         <label for="password">Senha:</label>
         <input type="password" id="password" v-model="password" required />
-        <div class="div-login">
+        <div class="div-botao-login">
           <button class="botao-login" type="submit">Login</button>
         </div>
-        <br />
-        <p>
-          Não tem conta?
-          <RouterLink to="/admin/cadastro"><span>Cadastre-se</span></RouterLink>
-        </p>
       </form>
     </div>
   </div>
@@ -53,35 +54,55 @@ const login = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 400px;
+  height: 500px;
 }
 .login-content {
   width: 300px;
   padding: 20px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
 }
 form {
   display: flex;
   flex-direction: column;
 }
 label {
+  font-size: 18px;
+  cursor: pointer;
+  text-align: center;
   margin-bottom: 5px;
 }
-input[type="text"],
-input[type="password"] {
+input {
   padding: 5px;
   margin-bottom: 10px;
+  width: 290px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
 }
-.div-login {
-  display: flex;
+.div-botao-login {
+  padding: 5px;
+  margin: 10px 0 0 0;
+  width: 290px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
   justify-content: center;
+  display: flex;
 }
 .botao-login {
-  width: 90px;
-  height: 35px;
+  border: none;
+  background-color: transparent;
 }
-span {
-  color: blue;
+.botao-login:hover {
+  cursor: pointer;
+}
+.div-botao-login:hover {
+  cursor: pointer;
+  background-color: #f1ebf7;
+  border: none;
 }
 </style>

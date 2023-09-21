@@ -11,6 +11,7 @@ const parseJwt = (token) => {
 export const useAuthStore = defineStore("auth", {
   state: () => ({
     token: localStorage.getItem("token") || "",
+    isAdmin: false,
     isLogged: false,
     userId: "",
   }),
@@ -18,11 +19,13 @@ export const useAuthStore = defineStore("auth", {
     setToken(token) {
       this.token = token;
       const splittedToken = parseJwt(token);
+      this.isAdmin = splittedToken["isAdmin"];
       this.isLogged = true;
       this.userId = splittedToken["user_id"];
       localStorage.setItem("token", token);
     },
     LogOut() {
+      this.isAdmin = false;
       this.isLogged = false;
       this.token = "";
       this.userId = "";
@@ -32,9 +35,11 @@ export const useAuthStore = defineStore("auth", {
       if (this.token) {
         this.isLogged = true;
         const splittedToken = parseJwt(this.token);
+        this.isAdmin = splittedToken["isAdmin"];
         this.userId = splittedToken["user_id"];
       } else {
         this.isLogged = false;
+        this.isAdmin = false;
         this.userId = "";
       }
     },

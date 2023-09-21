@@ -1,71 +1,123 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref, reactive } from "vue";
 import router from "../router";
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
+const showLinks = ref(false);
+const showMenu = ref(false);
 
-import UsuariosApi from "/src/api/usuarios.js";
-const usuariosApi = new UsuariosApi();
-const usuarios = ref([]);
-onMounted(async () => {
-  usuarios.value = await usuariosApi.buscarTodosOsUsuarios();
+const activeItem = reactive({
+  profile: false,
 });
-
 function abrir() {
   router.push(`/admin/usuarios/${authStore.userId}`);
+  activeItem.profile = true;
+}
+function mostrarLinks() {
+  showLinks.value = true;
+  showMenu.value = true;
+  activeItem.profile = false;
+}
+function fecharMenu() {
+  showLinks.value = false;
+  showMenu.value = false;
+  activeItem.profile = false;
 }
 </script>
+
 <template>
   <header>
     <div class="menu">
-      <div class="links">
-        <span><RouterLink to="/">Home</RouterLink></span>
-        <span><RouterLink to="/admin/produtos">Produtos</RouterLink></span>
-        <span><RouterLink to="/admin/categorias">Categorias</RouterLink></span>
-        <span><RouterLink to="/admin/marcas">Marcas</RouterLink></span>
-        <span><RouterLink to="/admin/tamanhos">Tamanhos</RouterLink></span>
-        <span><RouterLink to="/admin/cores">Cores</RouterLink></span>
+      <div class="menu-left" @click="mostrarLinks">
+        <span class="home-link">Menu</span>
       </div>
       <div class="nome-site">
         <span class="ligia">Lígia Roupas</span>
       </div>
-      <div class="login">
-        <div v-if="authStore.isLogged == false">
-          <span><RouterLink to="/admin/login">Login</RouterLink></span>
-        </div>
-        <div v-if="authStore.isLogged == true">
-          <button class="perfil" @click="abrir()">Perfil Admin</button>
+      <div class="menu-right">
+        <div class="login">
+          <span
+            @click="abrir()"
+            :class="{ 'active-profile': activeItem.profile }"
+            >Perfil</span
+          >
         </div>
       </div>
     </div>
+    <div v-if="showMenu" class="menu-overlay" @click="fecharMenu"></div>
+    <div class="links" :class="{ 'show-menu': showMenu }">
+      <span @click="fecharMenu"><RouterLink to="/">Home</RouterLink></span>
+      <span @click="fecharMenu"
+        ><RouterLink to="/admin/produtos">Produtos</RouterLink></span
+      >
+      <span @click="fecharMenu"
+        ><RouterLink to="/admin/categorias">Categorias</RouterLink></span
+      >
+      <span @click="fecharMenu"
+        ><RouterLink to="/admin/marcas">Marcas</RouterLink></span
+      >
+      <span @click="fecharMenu"
+        ><RouterLink to="/admin/tamanhos">Tamanhos</RouterLink></span
+      >
+      <span @click="fecharMenu"
+        ><RouterLink to="/admin/cores">Cores</RouterLink></span
+      >
+    </div>
   </header>
 </template>
-<style setup>
+<style scoped>
 .menu {
   display: flex;
-  width: 100%;
-}
-.perfil {
-  border: 1px solid black;
-  background-color: transparent;
-  cursor: pointer;
-  border-radius: 4px;
-  margin-right: 10px;
-}
-.nome-site,
-.links,
-.login-cliente {
-  width: 100%;
-  display: flex;
   align-items: center;
+  gap: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
-.login-cliente {
-  margin-right: 0px;
-  justify-content: flex-end;
+.menu-left,
+.menu-right {
+  cursor: pointer;
+}
+.nome-site {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
 }
 .ligia {
-  font-weight: bold;
   font-size: 40px;
+}
+.links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: -30%;
+  height: 100%;
+  width: 30%;
+  background-color: white;
+  z-index: 2;
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);
+  transition: left 0.5s;
+}
+.menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.1);
+  z-index: 1;
+  opacity: 0;
+  transition: 0.5s;
+}
+.active-profile {
+  font-weight: bold;
+}
+.show-menu {
+  left: 0;
 }
 .router-link-active {
   color: black;

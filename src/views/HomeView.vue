@@ -19,7 +19,7 @@ onMounted(async () => {
   </div>
   <div class="boas_vindas">
     <div v-if="authStore.isLogged === false">
-      <h1>Faça login para acessar à área do admin</h1>
+      <h1>Faça login para acessar a área do admin</h1>
     </div>
     <div v-else>
       <h1>Bem vindo a área do admin, {{ usuario.first_name }}!</h1>
