@@ -60,7 +60,11 @@ async function excluir(usuario) {
     <div class="form">
       <div class="usuario-imagem">
         <img class="foto" v-if="usuario.foto" :src="usuario.foto.url" alt="" />
-        <p v-else class="foto sem-img">Usuario Sem Imagem</p>
+        <p v-else class="foto sem-img">
+          Usuario<br />
+          Sem<br />
+          Imagem
+        </p>
       </div>
       <div class="usuario-info">
         <div class="email">
@@ -137,6 +141,7 @@ async function excluir(usuario) {
 .foto {
   height: 100%;
   width: 100%;
+  border-radius: 100%;
 }
 .sem-img {
   line-height: normal;

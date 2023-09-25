@@ -71,19 +71,19 @@ async function excluir(produto) {
   await produtosApi.excluirProduto(produto.id);
   produtos.value = await produtosApi.buscarTodosOsProdutos();
 }
-function selecionarCapa(event) {
-  const file = event.target.files[0];
-  if (file) {
-    produto.value.capa = URL.createObjectURL(file);
-  } else {
-    produto.value.capa = null;
-  }
-}
+// function selecionarCapa(event) {
+//   const file = event.target.files[0];
+//   if (file) {
+//     produto.value.capa = URL.createObjectURL(file);
+//   } else {
+//     produto.value.capa = null;
+//   }
+// }
 </script>
 
 <template>
   <div class="form">
-    <div class="capa">
+    <!-- <div class="capa">
       <label for="Capa">Foto de Capa: </label>
       <input
         class="capa2"
@@ -95,7 +95,7 @@ function selecionarCapa(event) {
       <div v-if="produto.capa">
         <img class="capa3" :src="produto.capa" />
       </div>
-    </div>
+    </div> -->
     <div class="descricao">
       <label for="Descricao">Descrição: </label>
       <input id="Descricao" type="text" v-model="produto.nome" />
@@ -161,7 +161,7 @@ function selecionarCapa(event) {
       </select>
     </div>
     <div class="header-botao">
-      <button class="botao" @click="salvar">Salvar</button>
+      <button class="salvar" @click="salvar">Salvar</button>
     </div>
   </div>
   <div class="produto-card-container">
@@ -189,15 +189,62 @@ function selecionarCapa(event) {
           Editar
         </button>
         <button class="produto-card-button cor-del" @click="excluir(produto)">
-          X
+          Excluir Produto
         </button>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
+label {
+  font-size: 18px;
+  cursor: pointer;
+  text-align: center;
+  margin-bottom: 5px;
+  width: 90%;
+}
+input {
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  margin: 0;
+}
+select {
+  width: 150px;
+  height: 42px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
+  cursor: pointer;
+  margin: 0;
+}
+button {
+  margin: 0;
+  width: 130px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #f1ebf7;
+  font-weight: bolder;
+  cursor: pointer;
+}
+.descricao,
+.estoque,
+.preco,
+.categoria,
+.cor,
+.marca,
+.tamanho {
+  display: flex;
+  flex-direction: column;
+  margin: 0 6px;
+}
 .capa2 {
-  height: 28px;
+  padding: 5px;
+  height: 30px;
   width: 200px;
 }
 .capa3 {
@@ -209,35 +256,37 @@ function selecionarCapa(event) {
   flex-wrap: wrap;
 }
 .produto-card {
-  width: 20%;
+  width: 310px;
   max-height: 530px;
   margin: 10px;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
   font-weight: bold;
-  background-color: #f5f5f5;
 }
-.produto-card-text {
-  cursor: pointer;
-}
-.produto-card-button {
-  font-weight: bold;
-  border: none;
-  border-radius: 5px;
-  padding: 7px 10px;
-  cursor: pointer;
+.cor-edit:hover {
+  background-color: black;
   color: white;
 }
-.cor-edit {
-  background-color: black;
-}
-.cor-del {
+.cor-del:hover {
   background-color: red;
+  color: white;
 }
 .botao-espaco {
   display: flex;
   justify-content: space-between;
   margin: 10px 0;
+}
+.salvar {
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 26px;
+  height: 42px;
+}
+.salvar:hover {
+  background-color: #f1ebf7;
 }
 </style>

@@ -7,10 +7,7 @@ import CadastroAdminView from "../views/CadastroAdminView.vue";
 import CategoriaAdminView from "../views/CategoriaAdminView.vue";
 import MarcaAdminView from "../views/MarcaAdminView.vue";
 import DescricaoProdutoAdminView from "../views/DescricaoProdutoAdminView.vue";
-// import CategoriaClienteView from "../views/CategoriaClienteView.vue";
 import LoginAdminView from "../views/LoginAdminView.vue";
-// import CadastroClienteView from "../views/CadastroClienteView.vue";
-// import MarcaClienteView from "../views/MarcaClienteView.vue";
 import UsuarioAdminView from "../views/UsuarioAdminView.vue";
 import ComprasView from "../views/ComprasView.vue";
 const router = createRouter({

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
 
-axios.defaults.baseURL = "http://localhost:8000/api/";
+axios.defaults.baseURL = "http://191.52.55.226:19003/api/";
 
 axios.interceptors.request.use(
   (config) => {

@@ -18,7 +18,7 @@ const errorMessage = ref("");
 
 const cadastro = async () => {
   try {
-    await axios.post("http://localhost:8000/api/usuarios/", {
+    await axios.post("http://191.52.55.226:19003/api/usuarios/", {
       email: email.value,
       password: password.value,
       first_name: first_name.value,
@@ -28,7 +28,7 @@ const cadastro = async () => {
       data_nascimento: data_nascimento.value,
       groups: [1],
     });
-    const response = await axios.post("http://localhost:8000/api/token/", {
+    const response = await axios.post("http://191.52.55.226:19003/api/token/", {
       email: email.value,
       password: password.value,
     });
@@ -88,10 +88,10 @@ const cadastro = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 600px;
+  margin-top: 30px;
 }
 .cadastro-content {
-  width: 500px;
+  width: 300px;
   padding: 20px;
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -150,6 +150,6 @@ input {
 .cpf,
 .data_nascimento {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 }
 </style>

@@ -16,7 +16,7 @@ const Logout = () => {
 };
 const login = async () => {
   try {
-    const response = await axios.post("http://localhost:8000/api/token/", {
+    const response = await axios.post("http://191.52.55.226:19003/api/token/", {
       email: email.value,
       password: password.value,
     });
