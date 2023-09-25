@@ -39,17 +39,16 @@ export default {
       <input id="cor" type="text" v-model="cor.nome_cor" />
     </div>
     <div class="header-botao">
-      <button class="botao" @click="salvar">Salvar</button>
+      <button class="salvar" @click="salvar">Salvar</button>
     </div>
   </div>
   <div class="card-container">
     <div class="card" v-for="cor in cores" :key="cor.id">
       <div class="card-content">
         ID: ({{ cor.id }}) - {{ cor.nome_cor }}
-        <button @click="editar(cor)">Editar</button>
-        <button class="card-button" @click="excluir(cor)">X</button>
+        <button class="edit" @click="editar(cor)">Editar</button>
+        <button class="del" @click="excluir(cor)">X</button>
       </div>
     </div>
   </div>
 </template>
-<style></style>

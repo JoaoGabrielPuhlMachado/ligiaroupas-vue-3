@@ -18,7 +18,7 @@ const errorMessage = ref("");
 
 const cadastro = async () => {
   try {
-    await axios.post("http://191.52.55.226:19003/api/usuarios/", {
+    await axios.post("http://localhost:8000/api/usuarios/", {
       email: email.value,
       password: password.value,
       first_name: first_name.value,
@@ -28,13 +28,12 @@ const cadastro = async () => {
       data_nascimento: data_nascimento.value,
       groups: [1],
     });
-    const response = await axios.post("http://191.52.55.226:19003/api/token/", {
+    const response = await axios.post("http://localhost:8000/api/token/", {
       email: email.value,
       password: password.value,
     });
     const token = response.data.access;
     authStore.setToken(token);
-
     router.push("/");
   } catch (error) {
     console.log(error);
@@ -44,40 +43,74 @@ const cadastro = async () => {
 </script>
 <template>
   <div class="cadastro-container">
-    <div class="cadastro-content">
+    <div class="login-cadastro-content">
       <form @submit.prevent="cadastro">
         <h1>Cadastro Admin</h1>
         <div class="email">
-          <label for="email">Email: </label>
-          <input class="input" id="email" type="email" v-model="email" />
+          <label class="label-user-login-cadastro" for="email">Email: </label>
+          <input
+            class="input-user-login-cadastro"
+            id="email"
+            type="email"
+            v-model="email"
+          />
         </div>
         <div class="first_name">
-          <label for="first_name">Primeiro Nome: </label>
-          <input id="first_name" type="text" v-model="first_name" />
+          <label class="label-user-login-cadastro" for="first_name"
+            >Primeiro Nome:
+          </label>
+          <input
+            class="input-user-login-cadastro"
+            id="first_name"
+            type="text"
+            v-model="first_name"
+          />
         </div>
         <div class="last_name">
-          <label for="last_name">Último Nome: </label>
-          <input id="last_name" type="text" v-model="last_name" />
+          <label class="label-user-login-cadastro" for="last_name"
+            >Último Nome:
+          </label>
+          <input
+            class="input-user-login-cadastro"
+            id="last_name"
+            type="text"
+            v-model="last_name"
+          />
         </div>
         <div class="telefone">
-          <label for="telefone">Telefone: </label>
-          <input id="telefone" type="tel" v-model="telefone" />
+          <label class="label-user-login-cadastro" for="telefone"
+            >Telefone:
+          </label>
+          <input
+            class="input-user-login-cadastro"
+            id="telefone"
+            type="tel"
+            v-model="telefone"
+          />
         </div>
         <div class="cpf">
-          <label for="cpf">CPF: </label>
-          <input id="cpf" type="text" v-model="cpf" />
+          <label class="label-user-login-cadastro" for="cpf">CPF: </label>
+          <input
+            class="input-user-login-cadastro"
+            id="cpf"
+            type="text"
+            v-model="cpf"
+          />
         </div>
         <div class="data_nascimento">
-          <label for="data_nascimento">Data de Nascimento: </label>
+          <label class="label-user-login-cadastro" for="data_nascimento"
+            >Data de Nascimento:
+          </label>
           <input
+            class="input-user-login-cadastro"
             type="date"
             id="data_nascimento"
             v-model="data_nascimento"
             required
           />
         </div>
-        <div class="div-cadastro">
-          <button class="botao-cadastro" type="submit">Registrar</button>
+        <div class="div-login-cadastro">
+          <button class="botao-login-cadastro" type="submit">Registrar</button>
         </div>
       </form>
     </div>
@@ -88,59 +121,7 @@ const cadastro = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 30px;
-}
-.cadastro-content {
-  width: 300px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
-form {
-  display: flex;
-  flex-direction: column;
-}
-label {
-  font-size: 18px;
-  cursor: pointer;
-  text-align: center;
-  margin-bottom: 5px;
-}
-input {
-  padding: 5px;
-  margin-bottom: 10px;
-  width: 290px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.8);
-}
-.div-cadastro {
-  padding: 5px;
-  margin: 10px 0 0 0;
-  width: 290px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: #f1ebf7;
-  justify-content: center;
-  display: flex;
-}
-.botao-cadastro {
-  border: none;
-  background-color: transparent;
-}
-.botao-cadastro:hover {
-  cursor: pointer;
-}
-.div-cadastro:hover {
-  cursor: pointer;
-  background-color: white;
-  border: none;
-}
-.erro-cadastro {
-  margin-top: 10px;
+  margin-top: 50px;
 }
 .email,
 .password,

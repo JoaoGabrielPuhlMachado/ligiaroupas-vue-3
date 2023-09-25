@@ -16,7 +16,7 @@ const Logout = () => {
 };
 const login = async () => {
   try {
-    const response = await axios.post("http://191.52.55.226:19003/api/token/", {
+    const response = await axios.post("http://localhost:8000/api/token/", {
       email: email.value,
       password: password.value,
     });
@@ -36,18 +36,30 @@ const login = async () => {
 </script>
 <template>
   <div class="login-container">
-    <div class="login-content">
+    <div class="login-cadastro-content">
       <h1>Login Admin</h1>
-      <form @submit.prevent="login">
-        <label for="email">Email:</label>
-        <input type="text" id="email" v-model="email" required />
+      <form class="form-login-cadastro" @submit.prevent="login">
+        <label class="label-user-login-cadastro" for="email">Email:</label>
+        <input
+          class="input-user-login-cadastro"
+          type="text"
+          id="email"
+          v-model="email"
+          required
+        />
 
-        <label for="password">Senha:</label>
-        <input type="password" id="password" v-model="password" required />
-        <div class="div-login">
-          <button class="botao-login" type="submit">Login</button>
+        <label class="label-user-login-cadastro" for="password">Senha:</label>
+        <input
+          class="input-user-login-cadastro"
+          type="password"
+          id="password"
+          v-model="password"
+          required
+        />
+        <div class="div-login-cadastro">
+          <button class="botao-login-cadastro" type="submit">Login</button>
         </div>
-        <p class="erro-login">{{ errorMessage }}</p>
+        <p class="erro-login-cadastro">{{ errorMessage }}</p>
       </form>
     </div>
   </div>
@@ -58,57 +70,5 @@ const login = async () => {
   justify-content: center;
   align-items: center;
   height: 600px;
-}
-.login-content {
-  width: 300px;
-  padding: 20px;
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
-form {
-  display: flex;
-  flex-direction: column;
-}
-label {
-  font-size: 18px;
-  cursor: pointer;
-  text-align: center;
-  margin-bottom: 5px;
-}
-input {
-  padding: 5px;
-  margin-bottom: 10px;
-  width: 290px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.8);
-}
-.div-login {
-  padding: 5px;
-  margin: 10px 0 0 0;
-  width: 290px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: #f1ebf7;
-  justify-content: center;
-  display: flex;
-}
-.botao-login {
-  border: none;
-  background-color: transparent;
-}
-.botao-login:hover {
-  cursor: pointer;
-}
-.div-login:hover {
-  cursor: pointer;
-  background-color: white;
-  border: none;
-}
-.erro-login {
-  margin-top: 10px;
 }
 </style>

@@ -71,19 +71,19 @@ async function excluir(produto) {
   await produtosApi.excluirProduto(produto.id);
   produtos.value = await produtosApi.buscarTodosOsProdutos();
 }
-// function selecionarCapa(event) {
-//   const file = event.target.files[0];
-//   if (file) {
-//     produto.value.capa = URL.createObjectURL(file);
-//   } else {
-//     produto.value.capa = null;
-//   }
-// }
+function selecionarCapa(event) {
+  const file = event.target.files[0];
+  if (file) {
+    produto.value.capa = URL.createObjectURL(file);
+  } else {
+    produto.value.capa = null;
+  }
+}
 </script>
 
 <template>
   <div class="form">
-    <!-- <div class="capa">
+    <div class="capa">
       <label for="Capa">Foto de Capa: </label>
       <input
         class="capa2"
@@ -95,7 +95,7 @@ async function excluir(produto) {
       <div v-if="produto.capa">
         <img class="capa3" :src="produto.capa" />
       </div>
-    </div> -->
+    </div>
     <div class="descricao">
       <label for="Descricao">Descrição: </label>
       <input id="Descricao" type="text" v-model="produto.nome" />
@@ -185,10 +185,10 @@ async function excluir(produto) {
         Preço: {{ produto.preco }}
       </div>
       <div class="botao-espaco">
-        <button class="produto-card-button cor-edit" @click="editar(produto)">
+        <button class="produto-card-button edit" @click="editar(produto)">
           Editar
         </button>
-        <button class="produto-card-button cor-del" @click="excluir(produto)">
+        <button class="produto-card-button del" @click="excluir(produto)">
           Excluir Produto
         </button>
       </div>
@@ -196,6 +196,12 @@ async function excluir(produto) {
   </div>
 </template>
 <style scoped>
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 25px 0;
+  width: 100vw;
+}
 label {
   font-size: 18px;
   cursor: pointer;
@@ -213,7 +219,7 @@ input {
   margin: 0;
 }
 select {
-  width: 150px;
+  width: 200px;
   height: 42px;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -222,7 +228,7 @@ select {
   margin: 0;
 }
 button {
-  margin: 0;
+  margin: 0 5px;
   width: 130px;
   height: 30px;
   border-radius: 10px;
@@ -237,7 +243,8 @@ button {
 .categoria,
 .cor,
 .marca,
-.tamanho {
+.tamanho,
+.capa {
   display: flex;
   flex-direction: column;
   margin: 0 6px;
@@ -245,11 +252,11 @@ button {
 .capa2 {
   padding: 5px;
   height: 30px;
-  width: 200px;
+  width: 130px;
 }
 .capa3 {
-  height: 200px;
-  width: 200px;
+  height: 50px;
+  width: 50px;
 }
 .produto-card-container {
   display: flex;
@@ -257,21 +264,13 @@ button {
 }
 .produto-card {
   width: 310px;
-  max-height: 530px;
+  max-height: 550px;
   margin: 10px;
   padding: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
   font-weight: bold;
-}
-.cor-edit:hover {
-  background-color: black;
-  color: white;
-}
-.cor-del:hover {
-  background-color: red;
-  color: white;
 }
 .botao-espaco {
   display: flex;

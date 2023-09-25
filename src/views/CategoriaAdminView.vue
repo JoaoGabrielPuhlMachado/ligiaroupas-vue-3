@@ -38,17 +38,16 @@ export default {
       <input id="categoria" type="text" v-model="categoria.descricao" />
     </div>
     <div class="header-botao">
-      <button class="botao" @click="salvar">Salvar</button>
+      <button class="salvar" @click="salvar">Salvar</button>
     </div>
   </div>
   <div class="card-container">
     <div class="card" v-for="categoria in categorias" :key="categoria.id">
       <div class="card-content">
         ID: ({{ categoria.id }}) - {{ categoria.descricao }}
-        <button @click="editar(categoria)">Editar</button>
-        <button class="card-button" @click="excluir(categoria)">X</button>
+        <button class="edit" @click="editar(categoria)">Editar</button>
+        <button class="del" @click="excluir(categoria)">X</button>
       </div>
     </div>
   </div>
 </template>
-<style></style>

@@ -39,15 +39,15 @@ export default {
       <input id="tamanho" type="text" v-model="tamanho.especificacao" />
     </div>
     <div class="header-botao">
-      <button class="botao" @click="salvar">Salvar</button>
+      <button class="salvar" @click="salvar">Salvar</button>
     </div>
   </div>
   <div class="card-container">
     <div class="card" v-for="tamanho in tamanhos" :key="tamanho.id">
       <div class="card-content">
         ID: ({{ tamanho.id }}) - {{ tamanho.especificacao }}
-        <button @click="editar(tamanho)">Editar</button>
-        <button class="card-button" @click="excluir(tamanho)">X</button>
+        <button class="edit" @click="editar(tamanho)">Editar</button>
+        <button class="del" @click="excluir(tamanho)">X</button>
       </div>
     </div>
   </div>

@@ -39,15 +39,15 @@ export default {
       <input id="marca" type="text" v-model="marca.nome_marca" />
     </div>
     <div class="header-botao">
-      <button class="botao" @click="salvar">Salvar</button>
+      <button class="salvar" @click="salvar">Salvar</button>
     </div>
   </div>
   <div class="card-container">
     <div class="card" v-for="marca in marcas" :key="marca.id">
       <div class="card-content">
         ID: ({{ marca.id }}) - {{ marca.nome_marca }}
-        <button @click="editar(marca)">Editar</button>
-        <button class="card-button" @click="excluir(marca)">X</button>
+        <button class="edit" @click="editar(marca)">Editar</button>
+        <button class="del" @click="excluir(marca)">X</button>
       </div>
     </div>
   </div>

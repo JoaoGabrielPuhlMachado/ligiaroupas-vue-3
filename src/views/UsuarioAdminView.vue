@@ -68,33 +68,62 @@ async function excluir(usuario) {
       </div>
       <div class="usuario-info">
         <div class="email">
-          <label for="email">Email: </label>
+          <label class="label-user-login-cadastro" for="email">Email: </label>
           <input
-            class="input"
+            class="input-user-login-cadastro"
             id="email"
             type="email"
             v-model="usuario.email"
           />
         </div>
         <div class="first_name">
-          <label for="first_name">Primeiro Nome: </label>
-          <input id="first_name" type="text" v-model="usuario.first_name" />
+          <label class="label-user-login-cadastro" for="first_name"
+            >Primeiro Nome:
+          </label>
+          <input
+            class="input-user-login-cadastro"
+            id="first_name"
+            type="text"
+            v-model="usuario.first_name"
+          />
         </div>
         <div class="last_name">
-          <label for="last_name">Último Nome: </label>
-          <input id="last_name" type="text" v-model="usuario.last_name" />
+          <label class="label-user-login-cadastro" for="last_name"
+            >Último Nome:
+          </label>
+          <input
+            class="input-user-login-cadastro"
+            id="last_name"
+            type="text"
+            v-model="usuario.last_name"
+          />
         </div>
         <div class="telefone">
-          <label for="telefone">Telefone: </label>
-          <input id="telefone" type="tel" v-model="usuario.telefone" />
+          <label class="label-user-login-cadastro" for="telefone"
+            >Telefone:
+          </label>
+          <input
+            class="input-user-login-cadastro"
+            id="telefone"
+            type="tel"
+            v-model="usuario.telefone"
+          />
         </div>
         <div class="cpf">
-          <label for="cpf">CPF: </label>
-          <input id="cpf" type="text" v-model="usuario.cpf" />
+          <label class="label-user-login-cadastro" for="cpf">CPF: </label>
+          <input
+            class="input-user-login-cadastro"
+            id="cpf"
+            type="text"
+            v-model="usuario.cpf"
+          />
         </div>
         <div class="data_nascimento">
-          <label for="data_nascimento">Data de Nascimento: </label>
+          <label class="label-user-login-cadastro" for="data_nascimento"
+            >Data de Nascimento:
+          </label>
           <input
+            class="input-user-login-cadastro"
             type="date"
             id="data_nascimento"
             v-model="usuario.data_nascimento"
@@ -122,7 +151,9 @@ async function excluir(usuario) {
   align-items: center;
   height: 600px;
   width: 600px;
+  display: flex;
   flex-direction: column;
+  margin: 80px 0;
 }
 .form-centralizado {
   display: flex;
@@ -148,14 +179,14 @@ async function excluir(usuario) {
   display: inline-block;
   vertical-align: middle;
 }
-label {
+.label-user-login-cadastro {
   font-size: 18px;
   cursor: pointer;
   text-align: center;
   width: 300px;
   margin-top: 10px;
 }
-input {
+.input-user-login-cadastro {
   padding: 5px;
   margin-bottom: 10px;
   width: 290px;
@@ -173,20 +204,6 @@ button:hover .excluir {
 button:hover .certeza {
   display: inline;
 }
-button {
-  padding: 8px;
-  margin-top: -15px;
-  margin-bottom: 25px;
-  margin-right: auto;
-  margin-left: auto;
-  width: 200px;
-  height: 35px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.8);
-  justify-content: center;
-  display: flex;
-}
 .email,
 .password,
 .first_name,
@@ -202,6 +219,18 @@ button {
 .salvar,
 .sair {
   cursor: pointer;
+  padding: 8px;
+  margin-top: -15px;
+  margin-bottom: 25px;
+  margin-right: auto;
+  margin-left: auto;
+  width: 200px;
+  height: 35px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
+  justify-content: center;
+  display: flex;
 }
 .confirmacao {
   background-color: black;
@@ -232,5 +261,10 @@ button {
   background-color: #f1ebf7;
   display: flex;
   flex-wrap: wrap;
+}
+.carrinho:hover,
+.salvar:hover,
+.sair:hover {
+  background-color: #f1ebf7;
 }
 </style>
