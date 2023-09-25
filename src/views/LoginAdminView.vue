@@ -12,8 +12,7 @@ const errorMessage = ref("");
 
 const Logout = () => {
   authStore.LogOut();
-  window.alert("Usuário não é admin, permissão negada!");
-  router.push("/");
+  router.push("/admin/login");
 };
 const login = async () => {
   try {
@@ -25,8 +24,11 @@ const login = async () => {
     authStore.setToken(token);
     if (authStore.isAdmin === false) {
       Logout();
+      errorMessage.value = "Usuário não é admin, permissão negada!";
     }
-    router.push("/");
+    if (authStore.isAdmin === true) {
+      router.push("/");
+    }
   } catch (error) {
     errorMessage.value = "Erro ao fazer login";
   }
@@ -42,9 +44,10 @@ const login = async () => {
 
         <label for="password">Senha:</label>
         <input type="password" id="password" v-model="password" required />
-        <div class="div-botao-login">
+        <div class="div-login">
           <button class="botao-login" type="submit">Login</button>
         </div>
+        <p class="erro-login">{{ errorMessage }}</p>
       </form>
     </div>
   </div>
@@ -54,7 +57,7 @@ const login = async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 500px;
+  height: 600px;
 }
 .login-content {
   width: 300px;
@@ -82,14 +85,14 @@ input {
   border: 1px solid rgba(0, 0, 0, 0.1);
   background-color: rgba(255, 255, 255, 0.8);
 }
-.div-botao-login {
+.div-login {
   padding: 5px;
   margin: 10px 0 0 0;
   width: 290px;
   height: 30px;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: #f1ebf7;
   justify-content: center;
   display: flex;
 }
@@ -100,9 +103,12 @@ input {
 .botao-login:hover {
   cursor: pointer;
 }
-.div-botao-login:hover {
+.div-login:hover {
   cursor: pointer;
-  background-color: #f1ebf7;
+  background-color: white;
   border: none;
+}
+.erro-login {
+  margin-top: 10px;
 }
 </style>

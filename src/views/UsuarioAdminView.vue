@@ -60,7 +60,7 @@ async function excluir(usuario) {
     <div class="form">
       <div class="usuario-imagem">
         <img class="foto" v-if="usuario.foto" :src="usuario.foto.url" alt="" />
-        <p v-else class="foto sem-imagem">Usuario Sem Imagem</p>
+        <p v-else class="foto sem-img">Usuario Sem Imagem</p>
       </div>
       <div class="usuario-info">
         <div class="email">
@@ -99,25 +99,88 @@ async function excluir(usuario) {
         </div>
       </div>
       <div class="usuario-edit">
-        <div class="botao-espaco">
-          <button
-            class="usuario-card-button confirmacao"
-            @click="excluir(usuario)"
-          >
-            <span class="excluir">Excluir Conta</span>
-            <span class="certeza">Certeza?</span>
-          </button>
-          <button class="sair" @click="Logout()">Sair</button>
-          <button class="salvar" @click="salvar">Salvar Dados</button>
-          <button class="carrinho" @click="abrir()">Carrinho</button>
-        </div>
+        <button class="confirmacao" @click="excluir(usuario)">
+          <span class="excluir">Excluir Conta</span>
+          <span class="certeza">Certeza?</span>
+        </button>
+        <button class="sair" @click="Logout()">Sair</button>
+        <button class="salvar" @click="salvar">Salvar Dados</button>
+        <button class="carrinho" @click="abrir()">Carrinho</button>
       </div>
     </div>
   </div>
 </template>
 <style scoped>
+.form {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  justify-content: center;
+  align-items: center;
+  height: 600px;
+  width: 600px;
+  flex-direction: column;
+}
+.form-centralizado {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.usuario-imagem {
+  width: 100px;
+  height: 100px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #f1ebf7;
+  border-radius: 100%;
+  text-align: center;
+  line-height: 130px;
+}
+.foto {
+  height: 100%;
+  width: 100%;
+}
+.sem-img {
+  line-height: normal;
+  display: inline-block;
+  vertical-align: middle;
+}
 label {
+  font-size: 18px;
+  cursor: pointer;
+  text-align: center;
+  width: 300px;
+  margin-top: 10px;
+}
+input {
+  padding: 5px;
+  margin-bottom: 10px;
+  width: 290px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
+}
+button .certeza {
+  display: none;
+}
+button:hover .excluir {
+  display: none;
+}
+button:hover .certeza {
+  display: inline;
+}
+button {
+  padding: 8px;
+  margin-top: -15px;
+  margin-bottom: 25px;
+  margin-right: auto;
+  margin-left: auto;
   width: 200px;
+  height: 35px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
+  justify-content: center;
+  display: flex;
 }
 .email,
 .password,
@@ -129,73 +192,40 @@ label {
   display: flex;
   flex-direction: row;
 }
-.editar,
+.carrinho,
 .confirmacao,
 .salvar,
 .sair {
   cursor: pointer;
 }
-.form-centralizado {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.confirmacao {
+  background-color: black;
+  color: white;
+  font-weight: bolder;
+  font-size: 15px;
 }
 .confirmacao:hover {
   background-color: rgb(243, 10, 10);
-}
-button .certeza {
-  display: none;
-}
-button:hover .excluir {
-  display: none;
-}
-button:hover .certeza {
-  display: inline;
-}
-.form {
-  background-color: rgb(192, 214, 255);
-  justify-content: center;
-  align-items: center;
-  height: 600px;
-  width: 600px;
-  flex-direction: column;
-}
-.foto {
-  height: 100%;
-  width: 100%;
-}
-.usuario-imagem {
-  border: 2px solid rgb(0, 0, 0);
-  border-radius: 8%;
-  width: 15%;
-  height: 100px;
+  font-size: 15px;
+  font-weight: bolder;
+  color: white;
+  border: none;
 }
 .usuario-info {
   width: 450px;
-  background-color: rgb(249, 251, 255);
+  background-color: #f1ebf7;
   padding: 4%;
-  border-radius: 3%;
+  border-radius: 10px;
   margin: 10px;
 }
 .usuario-edit {
-  width: 65%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  width: 450px;
+  height: 50px;
+  padding: 4%;
+  border-radius: 10px;
   font-weight: bold;
-  background-color: #f5f5f5;
-}
-.usuario-card-button {
-  font-weight: bold;
-  background-color: black;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  padding: 7px 10px;
-}
-.botao-espaco {
+  background-color: #f1ebf7;
   display: flex;
-  justify-content: space-between;
-  margin: 10px 0;
+  flex-wrap: wrap;
 }
 </style>

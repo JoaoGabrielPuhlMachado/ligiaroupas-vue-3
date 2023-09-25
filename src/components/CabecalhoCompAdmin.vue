@@ -66,14 +66,20 @@ function fecharMenu() {
   </header>
 </template>
 <style scoped>
+.links span {
+  margin-top: 20px;
+}
+.links span:hover {
+  border-bottom: 1px solid black;
+}
 .menu {
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
+  height: 60px;
+  width: 100%;
+  background-color: white;
+  color: black;
 }
 .menu-left,
 .menu-right {
@@ -96,7 +102,7 @@ function fecharMenu() {
   top: 0;
   left: -30%;
   height: 100%;
-  width: 30%;
+  width: 20%;
   background-color: white;
   z-index: 2;
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1);

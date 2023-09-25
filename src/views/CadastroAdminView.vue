@@ -16,7 +16,7 @@ const cpf = ref("");
 const data_nascimento = ref("");
 const errorMessage = ref("");
 
-const cadastroadmin = async () => {
+const cadastro = async () => {
   try {
     await axios.post("http://localhost:8000/api/usuarios/", {
       email: email.value,
@@ -38,41 +38,44 @@ const cadastroadmin = async () => {
     router.push("/");
   } catch (error) {
     console.log(error);
-    errorMessage.value = "Erro ao fazer login";
+    errorMessage.value = "Erro ao cadastrar-se";
   }
 };
 </script>
 <template>
   <div class="cadastro-container">
     <div class="cadastro-content">
-      <form @submit.prevent="cadastroadmin">
+      <form @submit.prevent="cadastro">
         <h1>Cadastro Admin</h1>
-        <label for="primeironome">Primeiro Nome:</label>
-        <input type="text" id="primeironome" v-model="first_name" required />
-
-        <label for="ultimonome">Último Nome:</label>
-        <input type="text" id="ultimonome" v-model="last_name" required />
-
-        <label for="email">Email:</label>
-        <input type="email" id="email" v-model="email" required />
-
-        <label for="telefone">Telefone:</label>
-        <input type="tel" id="telefone" v-model="telefone" required />
-
-        <label for="cpf">CPF:</label>
-        <input type="text" id="cpf" v-model="cpf" required />
-
-        <label for="datanascimento">Data de Nascimento:</label>
-        <input
-          type="date"
-          id="datanascimento"
-          v-model="data_nascimento"
-          required
-        />
-
-        <label for="senha">Senha:</label>
-        <input type="password" id="senha" v-model="password" required />
-
+        <div class="email">
+          <label for="email">Email: </label>
+          <input class="input" id="email" type="email" v-model="email" />
+        </div>
+        <div class="first_name">
+          <label for="first_name">Primeiro Nome: </label>
+          <input id="first_name" type="text" v-model="first_name" />
+        </div>
+        <div class="last_name">
+          <label for="last_name">Último Nome: </label>
+          <input id="last_name" type="text" v-model="last_name" />
+        </div>
+        <div class="telefone">
+          <label for="telefone">Telefone: </label>
+          <input id="telefone" type="tel" v-model="telefone" />
+        </div>
+        <div class="cpf">
+          <label for="cpf">CPF: </label>
+          <input id="cpf" type="text" v-model="cpf" />
+        </div>
+        <div class="data_nascimento">
+          <label for="data_nascimento">Data de Nascimento: </label>
+          <input
+            type="date"
+            id="data_nascimento"
+            v-model="data_nascimento"
+            required
+          />
+        </div>
         <div class="div-cadastro">
           <button class="botao-cadastro" type="submit">Registrar</button>
         </div>
@@ -80,3 +83,73 @@ const cadastroadmin = async () => {
     </div>
   </div>
 </template>
+<style scoped>
+.cadastro-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 600px;
+}
+.cadastro-content {
+  width: 500px;
+  padding: 20px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+form {
+  display: flex;
+  flex-direction: column;
+}
+label {
+  font-size: 18px;
+  cursor: pointer;
+  text-align: center;
+  margin-bottom: 5px;
+}
+input {
+  padding: 5px;
+  margin-bottom: 10px;
+  width: 290px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
+}
+.div-cadastro {
+  padding: 5px;
+  margin: 10px 0 0 0;
+  width: 290px;
+  height: 30px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #f1ebf7;
+  justify-content: center;
+  display: flex;
+}
+.botao-cadastro {
+  border: none;
+  background-color: transparent;
+}
+.botao-cadastro:hover {
+  cursor: pointer;
+}
+.div-cadastro:hover {
+  cursor: pointer;
+  background-color: white;
+  border: none;
+}
+.erro-cadastro {
+  margin-top: 10px;
+}
+.email,
+.password,
+.first_name,
+.last_name,
+.telefone,
+.cpf,
+.data_nascimento {
+  display: flex;
+  flex-direction: row;
+}
+</style>
