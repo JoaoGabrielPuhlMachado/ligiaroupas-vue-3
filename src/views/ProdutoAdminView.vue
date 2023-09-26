@@ -210,7 +210,7 @@ label {
   width: 90%;
 }
 input {
-  width: 200px;
+  width: 170px;
   height: 40px;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -219,7 +219,7 @@ input {
   margin: 0;
 }
 select {
-  width: 200px;
+  width: 170px;
   height: 42px;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -264,7 +264,7 @@ button {
 }
 .produto-card {
   width: 310px;
-  max-height: 550px;
+  min-height: 550px;
   margin: 10px;
   padding: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);

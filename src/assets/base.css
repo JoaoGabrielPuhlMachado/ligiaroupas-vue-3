@@ -24,7 +24,8 @@ header span {
   margin-right: auto;
 }
 .card {
-  width: 250px;
+  width: 20%;
+  height: 50px;
   margin: 10px;
   padding: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -43,6 +44,11 @@ header span {
 .card-container {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+}
+.del, .edit {
+  width: 50px;
+  height: 30px;
 }
 .edit:hover {
   background-color: black;
@@ -100,7 +106,7 @@ header span {
 .div-login-cadastro:hover {
   cursor: pointer;
   background-color: white;
-  border: none;
+  border: 1px solid transparent;
 }
 .erro-login-cadastro {
   margin-top: 10px;

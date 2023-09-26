@@ -46,8 +46,10 @@ export default {
     <div class="card" v-for="marca in marcas" :key="marca.id">
       <div class="card-content">
         ID: ({{ marca.id }}) - {{ marca.nome_marca }}
-        <button class="edit" @click="editar(marca)">Editar</button>
-        <button class="del" @click="excluir(marca)">X</button>
+        <div class="botoes">
+          <button class="edit" @click="editar(marca)">Editar</button>
+          <button class="del" @click="excluir(marca)">X</button>
+        </div>
       </div>
     </div>
   </div>

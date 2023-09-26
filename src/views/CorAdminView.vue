@@ -46,8 +46,10 @@ export default {
     <div class="card" v-for="cor in cores" :key="cor.id">
       <div class="card-content">
         ID: ({{ cor.id }}) - {{ cor.nome_cor }}
-        <button class="edit" @click="editar(cor)">Editar</button>
-        <button class="del" @click="excluir(cor)">X</button>
+        <div class="botoes">
+          <button class="edit" @click="editar(cor)">Editar</button>
+          <button class="del" @click="excluir(cor)">X</button>
+        </div>
       </div>
     </div>
   </div>

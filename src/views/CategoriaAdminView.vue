@@ -45,8 +45,10 @@ export default {
     <div class="card" v-for="categoria in categorias" :key="categoria.id">
       <div class="card-content">
         ID: ({{ categoria.id }}) - {{ categoria.descricao }}
-        <button class="edit" @click="editar(categoria)">Editar</button>
-        <button class="del" @click="excluir(categoria)">X</button>
+        <div class="botoes">
+          <button class="edit" @click="editar(categoria)">Editar</button>
+          <button class="del" @click="excluir(categoria)">X</button>
+        </div>
       </div>
     </div>
   </div>

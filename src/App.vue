@@ -25,7 +25,7 @@ setInterval(checkTokenExpiration, 60000);
 
 <style>
 #app {
-  height: 100vh;
+  min-height: 100vh;
   background-color: #f1ebf7;
 }
 </style>

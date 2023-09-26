@@ -46,8 +46,10 @@ export default {
     <div class="card" v-for="tamanho in tamanhos" :key="tamanho.id">
       <div class="card-content">
         ID: ({{ tamanho.id }}) - {{ tamanho.especificacao }}
-        <button class="edit" @click="editar(tamanho)">Editar</button>
-        <button class="del" @click="excluir(tamanho)">X</button>
+        <div class="botoes">
+          <button class="edit" @click="editar(tamanho)">Editar</button>
+          <button class="del" @click="excluir(tamanho)">X</button>
+        </div>
       </div>
     </div>
   </div>
