@@ -10,9 +10,6 @@ const Logout = () => {
   window.alert("Usuário encerrou sessão com sucesso!");
   router.push("/");
 };
-function abrir(id) {
-  router.push(`/compras/${id}`);
-}
 const usuariosApi = new UsuariosApi();
 const props = defineProps({
   id: {
@@ -138,7 +135,6 @@ async function excluir(usuario) {
         </button>
         <button class="sair" @click="Logout()">Sair</button>
         <button class="salvar" @click="salvar">Salvar Dados</button>
-        <button class="carrinho" @click="abrir()">Carrinho</button>
       </div>
     </div>
   </div>

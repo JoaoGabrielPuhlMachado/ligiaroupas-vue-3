@@ -9,7 +9,6 @@ import MarcaAdminView from "../views/MarcaAdminView.vue";
 import DescricaoProdutoAdminView from "../views/DescricaoProdutoAdminView.vue";
 import LoginAdminView from "../views/LoginAdminView.vue";
 import UsuarioAdminView from "../views/UsuarioAdminView.vue";
-import ComprasView from "../views/ComprasView.vue";
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -64,12 +63,6 @@ const router = createRouter({
       path: "/admin/usuarios/:id",
       name: "usuarios",
       component: UsuarioAdminView,
-      props: true,
-    },
-    {
-      path: "/compras/:id",
-      name: "compras",
-      component: ComprasView,
       props: true,
     },
   ],
