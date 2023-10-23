@@ -18,7 +18,7 @@ const errorMessage = ref("");
 
 const cadastro = async () => {
   try {
-    await axios.post("http://localhost:8000/api/usuarios/", {
+    await axios.post("http://0.0.0.0:19003/api/usuarios/", {
       email: email.value,
       password: password.value,
       first_name: first_name.value,
@@ -28,7 +28,7 @@ const cadastro = async () => {
       data_nascimento: data_nascimento.value,
       groups: [1],
     });
-    const response = await axios.post("http://localhost:8000/api/token/", {
+    const response = await axios.post("http://0.0.0.0:19003/api/token/", {
       email: email.value,
       password: password.value,
     });

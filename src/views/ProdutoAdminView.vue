@@ -1,21 +1,22 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { onMounted,reactive, ref } from "vue";
 import ProdutosApi from "/src/api/produtos.js";
 import CategoriasApi from "@/api/categorias";
 import MarcasApi from "@/api/marcas";
 import TamanhosApi from "@/api/tamanhos";
 import CoresApi from "@/api/cores";
-import ImagensApi from "../api/imagens";
+import imageService from "@/services/images.js";
 
 const produtosApi = new ProdutosApi();
 const categoriasApi = new CategoriasApi();
 const marcasApi = new MarcasApi();
 const tamanhosApi = new TamanhosApi();
 const coresApi = new CoresApi();
-const imagensApi = new ImagensApi();
 
 const produtos = ref([]);
-const produto = ref({
+const file = ref(null);
+const coverUrl = ref("");
+const produto = reactive({})({
   nome: "",
   preco: "",
   quantidade: "",
@@ -37,14 +38,14 @@ onMounted(async () => {
   tamanhos.value = await tamanhosApi.buscarTodosOsTamanhos();
   categorias.value = await categoriasApi.buscarTodasAsCategorias();
 });
+function onFileChange(e) {
+  file.value = e.target.files[0];
+  coverUrl.value = URL.createObjectURL(file.value);
+}
 async function salvar() {
   if (produto.value.capa) {
-    const urlImagemNoServidor = await imagensApi.adicionarImagem(
-      produto.value.capa
-    );
-    produto.value.capa = {
-      file: urlImagemNoServidor,
-    };
+    const image = await imageService.adicionarImagem(file.value);
+    produto.capa_attachment_key = image.attachment_key;
   }
   produto.value.cor = produto.value.cor.id;
   produto.value.marca = produto.value.marca.id;
@@ -70,14 +71,6 @@ function editar(editproduto) {
 async function excluir(produto) {
   await produtosApi.excluirProduto(produto.id);
   produtos.value = await produtosApi.buscarTodosOsProdutos();
-}
-function selecionarCapa(event) {
-  const file = event.target.files[0];
-  if (file) {
-    produto.value.capa = URL.createObjectURL(file);
-  } else {
-    produto.value.capa = null;
-  }
 }
 </script>
 
