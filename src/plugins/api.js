@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
-
-axios.defaults.baseURL = "http://0.0.0.0:19003/api/";
-
+const MY_IP = import.meta.env.VITE_MY_IP;
+const api = axios.create({
+  baseURL: `http://${MY_IP}:19003/api/`,
+});
 axios.interceptors.request.use(
   (config) => {
     const authStore = useAuthStore();
@@ -18,6 +19,7 @@ axios.interceptors.request.use(
   }
 );
 
+export default api;
 // axios.interceptors.response.use(
 //     status === 401..toExponential.apply. refresh.. se erro LoginAdminViewVue.
 // )

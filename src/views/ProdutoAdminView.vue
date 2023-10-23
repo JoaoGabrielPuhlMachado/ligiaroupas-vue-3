@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted,reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import ProdutosApi from "/src/api/produtos.js";
 import CategoriasApi from "@/api/categorias";
 import MarcasApi from "@/api/marcas";
@@ -83,7 +83,7 @@ async function excluir(produto) {
         id="Capa"
         type="file"
         accept="image/*"
-        @change="selecionarCapa"
+        @change="onFileChange"
       />
       <div v-if="produto.capa">
         <img class="capa3" :src="produto.capa" />
