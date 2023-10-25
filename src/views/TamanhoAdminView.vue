@@ -1,5 +1,5 @@
 <script>
-import TamanhosApi from "@/api/tamanhos";
+import TamanhosApi from "@/services/tamanhos";
 const tamanhosApi = new TamanhosApi();
 export default {
   data() {

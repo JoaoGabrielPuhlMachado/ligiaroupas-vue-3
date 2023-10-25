@@ -5,6 +5,7 @@ export default class UsuariosApi {
     return data;
   }
   async buscarUsuarioPorId(id) {
+    console.log(id)
     const { data } = await axios.get(`usuarios/${id}/`);
     return data;
   }

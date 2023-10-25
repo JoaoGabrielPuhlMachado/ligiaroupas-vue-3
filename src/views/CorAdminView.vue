@@ -1,5 +1,5 @@
 <script>
-import CoresApi from "@/api/cores";
+import CoresApi from "@/services/cores";
 const coresApi = new CoresApi();
 export default {
   data() {

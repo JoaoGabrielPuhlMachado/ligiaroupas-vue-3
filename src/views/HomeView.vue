@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
 
-import UsuariosApi from "/src/api/usuarios.js";
+import UsuariosApi from "/src/services/usuarios.js";
 const usuariosApi = new UsuariosApi();
 const usuario = ref({
   first_name: "",

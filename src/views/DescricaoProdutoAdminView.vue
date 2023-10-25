@@ -1,10 +1,10 @@
 <script setup>
 import { onMounted, ref } from "vue";
-import ProdutosApi from "@/api/produtos.js";
-import CategoriasApi from "@/api/categorias.js";
-import MarcasApi from "@/api/marcas.js";
-import TamanhosApi from "@/api/tamanhos.js";
-import CoresApi from "@/api/cores.js";
+import ProdutosApi from "@/services/produtos.js";
+import CategoriasApi from "@/services/categorias.js";
+import MarcasApi from "@/services/marcas.js";
+import TamanhosApi from "@/services/tamanhos.js";
+import CoresApi from "@/services/cores.js";
 
 const produtosApi = new ProdutosApi();
 const categoriasApi = new CategoriasApi();

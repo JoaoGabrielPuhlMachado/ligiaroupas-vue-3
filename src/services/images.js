@@ -1,4 +1,4 @@
-import api from "@/src/plugins";
+import api from "../plugins/api";
 
 class ImageService {
   async adicionarImagem(file) {

@@ -1,5 +1,5 @@
 <script>
-import MarcasApi from "@/api/marcas";
+import MarcasApi from "@/services/marcas";
 const marcasApi = new MarcasApi();
 export default {
   data() {

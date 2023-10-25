@@ -7,6 +7,7 @@ const api = axios.create({
 });
 axios.interceptors.request.use(
   (config) => {
+    config.baseURL = `http://${MY_IP}:19003/api/`
     const authStore = useAuthStore();
     const { token } = storeToRefs(authStore);
     if (token.value !== undefined) {

@@ -3,7 +3,7 @@ import { onMounted, ref } from "vue";
 import router from "../router";
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
-import UsuariosApi from "/src/api/usuarios.js";
+import UsuariosApi from "@/services/usuarios";
 
 const Logout = () => {
   authStore.LogOut();
@@ -28,6 +28,7 @@ const usuario = ref({
 });
 
 onMounted(async () => {
+  console.log(props.id)
   usuario.value = await usuariosApi.buscarUsuarioPorId(props.id);
 });
 

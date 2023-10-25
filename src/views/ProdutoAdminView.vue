@@ -1,10 +1,10 @@
 <script setup>
-import { onMounted, reactive, ref } from "vue";
-import ProdutosApi from "/src/api/produtos.js";
-import CategoriasApi from "@/api/categorias";
-import MarcasApi from "@/api/marcas";
-import TamanhosApi from "@/api/tamanhos";
-import CoresApi from "@/api/cores";
+import { onMounted, ref } from "vue";
+import ProdutosApi from "/src/services/produtos.js";
+import CategoriasApi from "@/services/categorias";
+import MarcasApi from "@/services/marcas";
+import TamanhosApi from "@/services/tamanhos";
+import CoresApi from "@/services/cores";
 import imageService from "@/services/images.js";
 
 const produtosApi = new ProdutosApi();
@@ -16,7 +16,7 @@ const coresApi = new CoresApi();
 const produtos = ref([]);
 const file = ref(null);
 const coverUrl = ref("");
-const produto = reactive({})({
+const produto = ref({
   nome: "",
   preco: "",
   quantidade: "",
@@ -45,7 +45,7 @@ function onFileChange(e) {
 async function salvar() {
   if (produto.value.capa) {
     const image = await imageService.adicionarImagem(file.value);
-    produto.capa_attachment_key = image.attachment_key;
+    produto.value.capa_attachment_key = image.attachment_key;
   }
   produto.value.cor = produto.value.cor.id;
   produto.value.marca = produto.value.marca.id;

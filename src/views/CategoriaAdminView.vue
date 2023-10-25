@@ -1,5 +1,5 @@
 <script>
-import CategoriasApi from "@/api/categorias";
+import CategoriasApi from "@/services/categorias";
 const categoriasApi = new CategoriasApi();
 export default {
   data() {
