@@ -70,6 +70,8 @@ async function salvar() {
     capa: null,
   };
   produtos.value = await produtosApi.buscarTodosOsProdutos();
+  coverUrl.value = null;
+  file.value = null;
 }
 function editar(editproduto) {
   produto.value = { ...editproduto };
@@ -82,19 +84,6 @@ async function excluir(produto) {
 
 <template>
   <div class="form">
-    <div class="capa">
-      <label for="Capa">Foto de Capa: </label>
-      <input
-        class="capa2"
-        id="Capa"
-        type="file"
-        accept="image/*"
-        @change="onFileChange"
-      />
-      <div>
-        <img v-if="coverUrl" class="capa3" :src="coverUrl" />
-      </div>
-    </div>
     <div class="descricao">
       <label for="Descricao">Descrição: </label>
       <input id="Descricao" type="text" v-model="produto.nome" />
@@ -161,6 +150,22 @@ async function excluir(produto) {
         </option>
       </select>
     </div>
+    <div class="capa">
+      <div class="cover">
+        <div class="capa_label">
+          <label for="Capa">Capa do produto: </label>
+          <label class="cor_label" for="Capa">Selecionar Imagem</label>
+        </div>
+        <img v-if="coverUrl" class="capa3" :src="coverUrl" />
+      </div>
+      <input
+        class="capa2"
+        id="Capa"
+        type="file"
+        accept="image/*"
+        @change="onFileChange"
+      />
+    </div>
     <div class="header-botao">
       <button class="salvar" @click="salvar">Salvar</button>
     </div>
@@ -206,7 +211,7 @@ async function excluir(produto) {
   width: 100vw;
 }
 label {
-  font-size: 18px;
+  font-size: 17px;
   cursor: pointer;
   text-align: center;
   margin-bottom: 5px;
@@ -250,17 +255,18 @@ button {
 .capa {
   display: flex;
   flex-direction: column;
-  margin: 0 6px;
+  margin: 0 7px;
 }
 .capa2 {
   padding: 5px;
   height: 30px;
   width: 130px;
-
 }
 .capa3 {
-  height: 50px;
-  width: 50px;
+  height: 40px;
+  width: 40px;
+  margin-top: 25px;
+  border-radius: 10px;
 }
 .produto-card-container {
   display: flex;
@@ -291,5 +297,24 @@ button {
 }
 .salvar:hover {
   background-color: #f1ebf7;
+}
+input[type="file"] {
+  display: none;
+}
+.cor_label {
+  width: 90%;
+  height: 39px;
+  margin-top: 0px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+}
+.capa_label {
+  display: flex;
+  flex-direction: column;
+}
+.cover {
+  display: flex;
+  flex-direction: row;
 }
 </style>

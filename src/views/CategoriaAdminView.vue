@@ -1,6 +1,7 @@
 <script>
 import CategoriasApi from "@/services/categorias";
 const categoriasApi = new CategoriasApi();
+
 export default {
   data() {
     return {
