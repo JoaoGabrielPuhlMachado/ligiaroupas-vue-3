@@ -21,8 +21,14 @@ const produto = ref({
   preco: "",
   quantidade: "",
   cor: {},
-  marca: {},
-  categoria: {},
+  categoria: {
+    descricao: "",
+    capa_categoria: null,
+  },
+  marca: {
+    nome_marca: "",
+    logo_marca: null,
+  },
   tamanho: {},
   capa: null,
 });
@@ -43,7 +49,7 @@ function onFileChange(e) {
   coverUrl.value = URL.createObjectURL(file.value);
 }
 async function salvar() {
-  if (produto.value.capa) {
+  if (file.value) {
     const image = await imageService.adicionarImagem(file.value);
     produto.value.capa_attachment_key = image.attachment_key;
   }
@@ -85,8 +91,8 @@ async function excluir(produto) {
         accept="image/*"
         @change="onFileChange"
       />
-      <div v-if="produto.capa">
-        <img class="capa3" :src="produto.capa" />
+      <div>
+        <img v-if="coverUrl" class="capa3" :src="coverUrl" />
       </div>
     </div>
     <div class="descricao">
@@ -109,6 +115,7 @@ async function excluir(produto) {
           :key="categoria.id"
           :value="categoria"
           :selected="categoria.id === produto.categoria.id ? true : false"
+          return-object
         >
           {{ categoria.descricao }}
         </option>
@@ -135,6 +142,7 @@ async function excluir(produto) {
           :key="marca.id"
           :value="marca"
           :selected="marca.id === produto.marca.id ? true : false"
+          return-object
         >
           {{ marca.nome_marca }}
         </option>
@@ -248,6 +256,7 @@ button {
   padding: 5px;
   height: 30px;
   width: 130px;
+
 }
 .capa3 {
   height: 50px;
