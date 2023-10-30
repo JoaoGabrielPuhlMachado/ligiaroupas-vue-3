@@ -165,6 +165,8 @@ async function excluir(produto) {
         <br />
         ID: ({{ produto.id }})
         <br />
+        Descrição: {{ produto.nome }}
+        <br />
         Cor: {{ produto.cor.nome_cor }}
         <br />
         Categoria: {{ produto.categoria.descricao }}
