@@ -153,18 +153,12 @@ async function excluir(produto) {
     <div class="capa">
       <div class="cover">
         <div class="capa_label">
-          <label for="Capa">Capa do produto: </label>
+          <label for="Capa">Capa do produto:</label>
           <label class="cor_label" for="Capa">Selecionar Imagem</label>
         </div>
-        <img v-if="coverUrl" class="capa3" :src="coverUrl" />
+        <img v-if="coverUrl" class="capa_previa" :src="coverUrl" />
       </div>
-      <input
-        class="capa2"
-        id="Capa"
-        type="file"
-        accept="image/*"
-        @change="onFileChange"
-      />
+      <input id="Capa" type="file" accept="image/*" @change="onFileChange" />
     </div>
     <div class="header-botao">
       <button class="salvar" @click="salvar">Salvar</button>
@@ -227,7 +221,7 @@ input {
   margin: 0;
 }
 select {
-  width: 170px;
+  width: 176px;
   height: 42px;
   border-radius: 10px;
   border: 1px solid rgba(0, 0, 0, 0.1);
@@ -252,17 +246,12 @@ button {
 .cor,
 .marca,
 .tamanho,
-.capa {
+.capa_label {
   display: flex;
   flex-direction: column;
   margin: 0 7px;
 }
-.capa2 {
-  padding: 5px;
-  height: 30px;
-  width: 130px;
-}
-.capa3 {
+.capa_previa {
   height: 40px;
   width: 40px;
   margin-top: 25px;
@@ -289,29 +278,32 @@ button {
 }
 .salvar {
   background-color: rgba(255, 255, 255, 0.8);
-  display: flex;
-  justify-content: center;
-  align-items: center;
   margin-top: 26px;
-  height: 42px;
-}
-.salvar:hover {
-  background-color: #f1ebf7;
+  height: 40px;
 }
 input[type="file"] {
   display: none;
 }
 .cor_label {
-  width: 90%;
-  height: 39px;
+  width: 170px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  height: 40px;
   margin-top: 0px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
+  transition: 0.6s;
+}
+
+.cor_label:hover {
+  background-color: #f1ebf7;
 }
 .capa_label {
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .cover {
   display: flex;
