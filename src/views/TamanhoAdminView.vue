@@ -1,46 +1,47 @@
-<script>
+<script setup>
+import { onMounted, ref } from "vue";
 import TamanhosApi from "@/services/tamanhos";
 const tamanhosApi = new TamanhosApi();
-export default {
-  data() {
-    return {
-      tamanhos: [],
-      tamanho: {},
-    };
-  },
-  async created() {
-    this.tamanhos = await tamanhosApi.buscarTodosOsTamanhos();
-  },
-  methods: {
-    async salvar() {
-      if (this.tamanho.id) {
-        await tamanhosApi.atualizarTamanho(this.tamanho);
-      } else {
-        await tamanhosApi.adicionarTamanho(this.tamanho);
-      }
-      this.tamanho = {};
-      this.tamanhos = await tamanhosApi.buscarTodosOsTamanhos();
-    },
-    editar(tamanho) {
-      Object.assign(this.tamanho, tamanho);
-    },
-    async excluir(tamanho) {
-      await tamanhosApi.excluirTamanho(tamanho.id);
-      this.tamanhos = await tamanhosApi.buscarTodosOsTamanhos();
-    },
-  },
-};
-</script>
 
+const tamanhos = ref([]);
+const tamanho = ref({
+  especificacao: "",
+});
+onMounted(async () => {
+  tamanhos.value = await tamanhosApi.buscarTodosOsTamanhos();
+});
+async function salvar() {
+  if (tamanho.value.id) {
+    await tamanhosApi.atualizarTamanho(tamanho.value);
+  } else {
+    await tamanhosApi.adicionarTamanho(tamanho.value);
+  }
+  tamanho.value = {
+    especificacao: "",
+  };
+  tamanhos.value = await tamanhosApi.buscarTodosOsTamanhos();
+}
+function editar(edittamanho) {
+  tamanho.value = { ...edittamanho };
+}
+async function limpar() {
+  tamanho.value = {
+    especificacao: "",
+  };
+}
+async function excluir(tamanho) {
+  await tamanhosApi.excluirTamanho(tamanho.id);
+  tamanhos.value = await tamanhosApi.buscarTodosOsTamanhos();
+}
+</script>
 <template>
   <div class="form">
     <div class="tamanho">
       <label for="tamanho">Tamanhos: </label>
       <input id="tamanho" type="text" v-model="tamanho.especificacao" />
     </div>
-    <div class="header-botao">
-      <button class="salvar" @click="salvar">Salvar</button>
-    </div>
+    <button class="salvar" @click="salvar">Salvar</button>
+    <button class="limpar" @click="limpar">Limpar</button>
   </div>
   <div class="card-container">
     <div class="card" v-for="tamanho in tamanhos" :key="tamanho.id">
@@ -54,4 +55,45 @@ export default {
     </div>
   </div>
 </template>
-<style></style>
+<style scoped>
+.capa_previa {
+  height: 40px;
+  width: 40px;
+  margin-top: 25px;
+  border-radius: 10px;
+}
+input[type="file"] {
+  display: none;
+}
+.cor_label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 170px;
+  height: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  transition: 0.6s;
+}
+.cor_label:hover {
+  background-color: #f1ebf7;
+}
+.capa_label {
+  display: flex;
+  flex-direction: column;
+  margin: 0 7px;
+}
+label {
+  cursor: pointer;
+}
+.cover {
+  display: flex;
+  flex-direction: row;
+}
+.tamanho {
+  display: flex;
+  flex-direction: column;
+  margin: 0 7px;
+}
+</style>

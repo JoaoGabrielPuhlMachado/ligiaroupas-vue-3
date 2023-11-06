@@ -1,46 +1,47 @@
-<script>
+<script setup>
+import { onMounted, ref } from "vue";
 import CoresApi from "@/services/cores";
 const coresApi = new CoresApi();
-export default {
-  data() {
-    return {
-      cores: [],
-      cor: {},
-    };
-  },
-  async created() {
-    this.cores = await coresApi.buscarTodasAsCores();
-  },
-  methods: {
-    async salvar() {
-      if (this.cor.id) {
-        await coresApi.atualizarCor(this.cor);
-      } else {
-        await coresApi.adicionarCor(this.cor);
-      }
-      this.cor = {};
-      this.cores = await coresApi.buscarTodasAsCores();
-    },
-    editar(cor) {
-      Object.assign(this.cor, cor);
-    },
-    async excluir(cor) {
-      await coresApi.excluirCor(cor.id);
-      this.cores = await coresApi.buscarTodasAsCores();
-    },
-  },
-};
-</script>
 
+const cores = ref([]);
+const cor = ref({
+  nome_cor: "",
+});
+onMounted(async () => {
+  cores.value = await coresApi.buscarTodasAsCores();
+});
+async function salvar() {
+  if (cor.value.id) {
+    await coresApi.atualizarCor(cor.value);
+  } else {
+    await coresApi.adicionarCor(cor.value);
+  }
+  cor.value = {
+    nome_cor: "",
+  };
+  cores.value = await coresApi.buscarTodasAsCores();
+}
+function editar(editcor) {
+  cor.value = { ...editcor };
+}
+async function limpar() {
+  cor.value = {
+    nome_cor: "",
+  };
+}
+async function excluir(cor) {
+  await coresApi.excluirCor(cor.id);
+  cores.value = await coresApi.buscarTodasAsCores();
+}
+</script>
 <template>
   <div class="form">
     <div class="cor">
       <label for="cor">Cores: </label>
       <input id="cor" type="text" v-model="cor.nome_cor" />
     </div>
-    <div class="header-botao">
-      <button class="salvar" @click="salvar">Salvar</button>
-    </div>
+    <button class="salvar" @click="salvar">Salvar</button>
+    <button class="limpar" @click="limpar">Limpar</button>
   </div>
   <div class="card-container">
     <div class="card" v-for="cor in cores" :key="cor.id">
@@ -54,3 +55,45 @@ export default {
     </div>
   </div>
 </template>
+<style scoped>
+.capa_previa {
+  height: 40px;
+  width: 40px;
+  margin-top: 25px;
+  border-radius: 10px;
+}
+input[type="file"] {
+  display: none;
+}
+.cor_label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 170px;
+  height: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  transition: 0.6s;
+}
+.cor_label:hover {
+  background-color: #f1ebf7;
+}
+.capa_label {
+  display: flex;
+  flex-direction: column;
+  margin: 0 7px;
+}
+label {
+  cursor: pointer;
+}
+.cover {
+  display: flex;
+  flex-direction: row;
+}
+.cor {
+  display: flex;
+  flex-direction: column;
+  margin: 0 7px;
+}
+</style>

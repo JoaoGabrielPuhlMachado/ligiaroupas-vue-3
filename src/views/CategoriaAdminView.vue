@@ -61,7 +61,7 @@ async function excluir(categoria) {
 <template>
   <div class="form">
     <div class="categoria">
-      <label class="label_categoria" for="categoria">Categorias: </label>
+      <label for="categoria">Categorias: </label>
       <input id="categoria" type="text" v-model="categoria.descricao" />
     </div>
     <div class="capa">

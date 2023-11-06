@@ -4,13 +4,16 @@ import router from "../router";
 import { useAuthStore } from "@/stores/auth";
 const authStore = useAuthStore();
 import UsuariosApi from "@/services/usuarios";
+const usuariosApi = new UsuariosApi();
+import imageService from "@/services/images.js";
 
 const Logout = () => {
   authStore.LogOut();
   window.alert("Usuário encerrou sessão com sucesso!");
   router.push("/");
 };
-const usuariosApi = new UsuariosApi();
+const file = ref(null);
+const coverUrl = ref("");
 const props = defineProps({
   id: {
     required: true,
@@ -28,11 +31,17 @@ const usuario = ref({
 });
 
 onMounted(async () => {
-  console.log(props.id)
   usuario.value = await usuariosApi.buscarUsuarioPorId(props.id);
 });
-
+function onFileChange(e) {
+  file.value = e.target.files[0];
+  coverUrl.value = URL.createObjectURL(file.value);
+}
 async function salvar() {
+  if (file.value) {
+    const image = await imageService.adicionarImagem(file.value);
+    usuario.value.foto_attachment_key = image.attachment_key;
+  }
   if (usuario.value.id) {
     await usuariosApi.atualizarUsuario(usuario.value);
     window.alert("Usuário atualizado com sucesso!");
@@ -57,12 +66,22 @@ async function excluir(usuario) {
   <div class="form-centralizado">
     <div class="form">
       <div class="usuario-imagem">
-        <img class="foto" v-if="usuario.foto" :src="usuario.foto.url" alt="" />
-        <p v-else class="foto sem-img">
-          Usuario<br />
-          Sem<br />
-          Imagem
-        </p>
+        <div class="campo_foto">
+          <div class="cover">
+            <img v-if="coverUrl" class="capa_previa" :src="coverUrl" />
+            <p v-else class="foto sem-img">
+              Usuario<br />
+              Sem<br />
+              Imagem
+            </p>
+          </div>
+          <input
+            id="Capa"
+            type="file"
+            accept="image/*"
+            @change="onFileChange"
+          />
+        </div>
       </div>
       <div class="usuario-info">
         <div class="email">
@@ -263,5 +282,45 @@ button:hover .certeza {
 .salvar:hover,
 .sair:hover {
   background-color: #f1ebf7;
+}
+.capa_previa {
+  height: 40px;
+  width: 40px;
+  margin-top: 25px;
+  border-radius: 10px;
+}
+input[type="file"] {
+  display: none;
+}
+.cor_label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 170px;
+  height: 40px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 10px;
+  transition: 0.6s;
+}
+.cor_label:hover {
+  background-color: #f1ebf7;
+}
+.capa_label {
+  display: flex;
+  flex-direction: column;
+  margin: 0 7px;
+}
+label {
+  cursor: pointer;
+}
+.cover {
+  display: flex;
+  flex-direction: row;
+}
+.cor {
+  display: flex;
+  flex-direction: column;
+  margin: 0 7px;
 }
 </style>

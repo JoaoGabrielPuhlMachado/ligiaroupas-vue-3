@@ -1,9 +1,9 @@
 <script setup>
 import { ref } from "vue";
 import { useRouter } from "vue-router";
-import axios from "axios";
 const authStore = useAuthStore();
 import { useAuthStore } from "@/stores/auth";
+import api from "../plugins/api";
 
 const router = useRouter();
 const email = ref("");
@@ -16,7 +16,7 @@ const Logout = () => {
 };
 const login = async () => {
   try {
-    const response = await axios.post("http://191.52.55.187:19003/api/token/", {
+    const response = await api.post("/token/", {
       email: email.value,
       password: password.value,
     });

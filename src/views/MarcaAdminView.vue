@@ -61,7 +61,7 @@ async function excluir(marca) {
 <template>
   <div class="form">
     <div class="marca">
-      <label class="label_marca" for="marca">Marcas: </label>
+      <label for="marca">Marcas: </label>
       <input id="marca" type="text" v-model="marca.nome_marca" />
     </div>
     <div class="capa">
