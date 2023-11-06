@@ -142,7 +142,8 @@ button {
   font-weight: bolder;
   cursor: pointer;
 }
-.salvar {
+.salvar,
+.limpar {
   background-color: rgba(255, 255, 255, 0.8);
   display: flex;
   justify-content: center;
@@ -151,6 +152,7 @@ button {
   margin-top: 26px;
   transition: 0.6s;
 }
-.salvar:hover {
+.salvar:hover,
+.limpar:hover {
   background-color: #f1ebf7;
 }

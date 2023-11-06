@@ -9,13 +9,7 @@ const file = ref(null);
 const coverUrl = ref("");
 const categoria = ref({
   descricao: "",
-  capa_categoria: {
-    attachment_key: "",
-    public_id: "",
-    file: "http://191.52.55.168:19003/media/images/af7c6d40-e1f7-495e-9603-f594614802d5.png",
-    description: "",
-    uploaded_on: "",
-  },
+  capa_categoria: null,
 });
 onMounted(async () => {
   categorias.value = await categoriasApi.buscarTodasAsCategorias();
@@ -45,6 +39,20 @@ async function salvar() {
 function editar(editcategoria) {
   categoria.value = { ...editcategoria };
 }
+async function limpar() {
+  categoria.value = {
+    descricao: "",
+    capa_categoria: {
+      attachment_key: "",
+      public_id: "",
+      file: "",
+      description: "",
+      uploaded_on: "",
+    },
+  };
+  coverUrl.value = null;
+  file.value = null;
+}
 async function excluir(categoria) {
   await categoriasApi.excluirCategoria(categoria.id);
   categorias.value = await categoriasApi.buscarTodasAsCategorias();
@@ -66,14 +74,17 @@ async function excluir(categoria) {
       </div>
       <input id="Capa" type="file" accept="image/*" @change="onFileChange" />
     </div>
-    <div class="header-botao">
-      <button class="salvar" @click="salvar">Salvar</button>
-    </div>
+    <button class="salvar" @click="salvar">Salvar</button>
+    <button class="limpar" @click="limpar">Limpar</button>
   </div>
   <div class="card-container">
     <div class="card" v-for="categoria in categorias" :key="categoria.id">
       <div class="card-content">
-        <img class="img" v-if="categoria.capa" :src="categoria.capa.file" />
+        <img
+          class="categoria_img"
+          v-if="categoria.capa_categoria"
+          :src="categoria.capa_categoria.url"
+        />
         ID: ({{ categoria.id }}) - {{ categoria.descricao }}
         <div class="botoes">
           <button class="edit" @click="editar(categoria)">Editar</button>
@@ -84,12 +95,6 @@ async function excluir(categoria) {
   </div>
 </template>
 <style scoped>
-.form {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 25px 0;
-  width: 100vw;
-}
 .capa_previa {
   height: 40px;
   width: 40px;
@@ -100,9 +105,11 @@ input[type="file"] {
   display: none;
 }
 .cor_label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 170px;
   height: 40px;
-  margin-top: 0px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
@@ -128,8 +135,8 @@ label {
   flex-direction: column;
   margin: 0 7px;
 }
-.salvar {
-  margin-top: 26px;
-  height: 40px;
+.categoria_img {
+  height: 50px;
+  width: 40px;
 }
 </style>

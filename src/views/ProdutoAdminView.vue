@@ -76,6 +76,27 @@ async function salvar() {
 function editar(editproduto) {
   produto.value = { ...editproduto };
 }
+async function limpar() {
+  produto.value = {
+    nome: "",
+    preco: "",
+    quantidade: "",
+    cor: {},
+    categoria: {
+      descricao: "",
+      capa_categoria: null,
+    },
+    marca: {
+      nome_marca: "",
+      logo_marca: null,
+    },
+    tamanho: {},
+    capa: null,
+  };
+  coverUrl.value = null;
+  file.value = null;
+}
+
 async function excluir(produto) {
   await produtosApi.excluirProduto(produto.id);
   produtos.value = await produtosApi.buscarTodosOsProdutos();
@@ -160,9 +181,8 @@ async function excluir(produto) {
       </div>
       <input id="Capa" type="file" accept="image/*" @change="onFileChange" />
     </div>
-    <div class="header-botao">
-      <button class="salvar" @click="salvar">Salvar</button>
-    </div>
+    <button class="salvar" @click="salvar">Salvar</button>
+    <button class="limpar" @click="limpar">Limpar</button>
   </div>
   <div class="produto-card-container">
     <div class="produto-card" v-for="produto in produtos" :key="produto.id">
@@ -276,7 +296,8 @@ button {
   justify-content: space-between;
   margin: 10px 0;
 }
-.salvar {
+.salvar,
+.limpar {
   background-color: rgba(255, 255, 255, 0.8);
   margin-top: 26px;
   height: 40px;
@@ -285,12 +306,11 @@ input[type="file"] {
   display: none;
 }
 .cor_label {
-  width: 170px;
-  text-align: center;
   display: flex;
+  justify-content: center;
   align-items: center;
+  width: 170px;
   height: 40px;
-  margin-top: 0px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
