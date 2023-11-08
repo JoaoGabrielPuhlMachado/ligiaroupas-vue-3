@@ -65,20 +65,6 @@ async function excluir(tamanho) {
 input[type="file"] {
   display: none;
 }
-.cor_label {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 170px;
-  height: 40px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.8);
-  border-radius: 10px;
-  transition: 0.6s;
-}
-.cor_label:hover {
-  background-color: #f1ebf7;
-}
 .capa_label {
   display: flex;
   flex-direction: column;

@@ -13,5 +13,5 @@ export function checkTokenExpiration() {
 }
 export function logoutUser() {
   localStorage.removeItem("token");
-  router.push("/login");
+  router.push("/admin/login");
 }

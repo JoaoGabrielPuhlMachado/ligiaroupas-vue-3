@@ -45,7 +45,7 @@ async function salvar() {
   if (usuario.value.id) {
     await usuariosApi.atualizarUsuario(usuario.value);
     window.alert("Usuário atualizado com sucesso!");
-    router.push("/");
+    window.location.reload();
   } else {
     await usuariosApi.adicionarUsuario(usuario.value);
   }
@@ -66,22 +66,15 @@ async function excluir(usuario) {
   <div class="form-centralizado">
     <div class="form">
       <div class="usuario-imagem">
-        <div class="campo_foto">
-          <div class="cover">
-            <img v-if="coverUrl" class="capa_previa" :src="coverUrl" />
-            <p v-else class="foto sem-img">
-              Usuario<br />
-              Sem<br />
-              Imagem
-            </p>
-          </div>
-          <input
-            id="Capa"
-            type="file"
-            accept="image/*"
-            @change="onFileChange"
-          />
-        </div>
+        <input id="Capa" type="file" accept="image/*" @change="onFileChange" />
+        <!-- <img class="capa_previa" :src="coverUrl" /> -->
+        <img class="foto" v-if="usuario.foto" :src="usuario.foto.url" alt="" />
+        <p v-else>
+          Usuario<br />
+          Sem<br />
+          Imagem
+        </p>
+        <label class="label_img" for="Capa">+</label>
       </div>
       <div class="usuario-info">
         <div class="email">
@@ -179,37 +172,13 @@ async function excluir(usuario) {
 .usuario-imagem {
   width: 100px;
   height: 100px;
+  display: flex;
   border: 1px solid rgba(0, 0, 0, 0.1);
   background-color: #f1ebf7;
   border-radius: 100%;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  line-height: 130px;
-}
-.foto {
-  height: 100%;
-  width: 100%;
-  border-radius: 100%;
-}
-.sem-img {
-  line-height: normal;
-  display: inline-block;
-  vertical-align: middle;
-}
-.label-user-login-cadastro {
-  font-size: 18px;
-  cursor: pointer;
-  text-align: center;
-  width: 300px;
-  margin-top: 10px;
-}
-.input-user-login-cadastro {
-  padding: 5px;
-  margin-bottom: 10px;
-  width: 290px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: rgba(255, 255, 255, 0.8);
 }
 button .certeza {
   display: none;
@@ -283,44 +252,36 @@ button:hover .certeza {
 .sair:hover {
   background-color: #f1ebf7;
 }
-.capa_previa {
-  height: 40px;
-  width: 40px;
-  margin-top: 25px;
-  border-radius: 10px;
+.foto {
+  height: 100px;
+  width: 100px;
+  border-radius: 100%;
 }
 input[type="file"] {
   display: none;
 }
-.cor_label {
+.label_img {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 170px;
-  height: 40px;
+  height: 25px;
+  width: 25px;
   border: 1px solid rgba(0, 0, 0, 0.1);
   background-color: rgba(255, 255, 255, 0.8);
   border-radius: 10px;
   transition: 0.6s;
+  position: absolute;
+  margin-top: 70px;
+  margin-left: 90px;
+  color: white;
+  font-weight: bold;
+  background-color: black;
 }
-.cor_label:hover {
+.label_img:hover {
   background-color: #f1ebf7;
-}
-.capa_label {
-  display: flex;
-  flex-direction: column;
-  margin: 0 7px;
+  color: black;
 }
 label {
   cursor: pointer;
-}
-.cover {
-  display: flex;
-  flex-direction: row;
-}
-.cor {
-  display: flex;
-  flex-direction: column;
-  margin: 0 7px;
 }
 </style>

@@ -35,7 +35,7 @@ function fecharMenu() {
         <span class="ligia">Lígia Roupas</span>
       </div>
       <div class="menu-right">
-        <div class="login">
+        <div>
           <span
             @click="abrir()"
             :class="{ 'active-profile': activeItem.profile }"

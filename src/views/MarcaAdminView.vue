@@ -68,7 +68,7 @@ async function excluir(marca) {
       <div class="cover">
         <div class="capa_label">
           <label for="Capa">Capa: </label>
-          <label class="cor_label" for="Capa">Selecionar Imagem</label>
+          <label class="label_img" for="Capa">Selecionar Imagem</label>
         </div>
         <img v-if="coverUrl" class="capa_previa" :src="coverUrl" />
       </div>
@@ -104,7 +104,7 @@ async function excluir(marca) {
 input[type="file"] {
   display: none;
 }
-.cor_label {
+.label_img {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -115,7 +115,7 @@ input[type="file"] {
   border-radius: 10px;
   transition: 0.6s;
 }
-.cor_label:hover {
+.label_img:hover {
   background-color: #f1ebf7;
 }
 .capa_label {
