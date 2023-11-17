@@ -1,13 +1,13 @@
 import axios from "axios";
 import { useAuthStore } from "@/stores/auth";
 import { storeToRefs } from "pinia";
-const MY_IP = import.meta.env.VITE_MY_IP;
+// const MY_IP = import.meta.env.VITE_MY_IP;
 const api = axios.create({
-  baseURL: `http://${MY_IP}:19003/api/`,
+  baseURL: `https://ligiaroupas.3.us-1.fl0.io/api/`,
 });
 axios.interceptors.request.use(
   (config) => {
-    config.baseURL = `http://${MY_IP}:19003/api/`;
+    config.baseURL = `https://ligiaroupas.3.us-1.fl0.io/api/`;
     const authStore = useAuthStore();
     const { token } = storeToRefs(authStore);
     if (token.value !== undefined) {
