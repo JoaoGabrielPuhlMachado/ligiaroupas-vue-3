@@ -16,17 +16,17 @@ const Logout = () => {
 };
 const login = async () => {
   try {
-    const response = await api.post("/token/", {
+    const response = await api.post("/token/custom/", {
       email: email.value,
       password: password.value,
     });
     const token = response.data.access;
     authStore.setToken(token);
-    if (authStore.isAdmin === false) {
+    if (authStore.tipo_usuario === 2) {
       Logout();
       errorMessage.value = "Usuário não é admin, permissão negada!";
     }
-    if (authStore.isAdmin === true) {
+    if (authStore.tipo_usuario === 1) {
       router.push("/");
     }
   } catch (error) {

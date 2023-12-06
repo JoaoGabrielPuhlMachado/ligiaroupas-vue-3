@@ -28,6 +28,7 @@ const usuario = ref({
   cpf: "",
   data_nascimento: "",
   foto: "",
+  tipo_usuario: "",
 });
 
 onMounted(async () => {
