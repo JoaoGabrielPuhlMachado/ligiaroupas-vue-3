@@ -54,7 +54,7 @@ async function limpar() {
   file.value = null;
 }
 async function excluir(marca) {
-  await marcasApi.excluirCategoria(marca.id);
+  await marcasApi.excluirMarca(marca.id);
   marcas.value = await marcasApi.buscarTodasAsMarcas();
 }
 </script>

@@ -29,7 +29,7 @@ const produto = ref({
     nome_marca: "",
     logo_marca: null,
   },
-  tamanho: {},
+  tamanhos: [],
   capa: null,
 });
 const marcas = ref([]);
@@ -44,10 +44,12 @@ onMounted(async () => {
   tamanhos.value = await tamanhosApi.buscarTodosOsTamanhos();
   categorias.value = await categoriasApi.buscarTodasAsCategorias();
 });
+
 function onFileChange(e) {
   file.value = e.target.files[0];
   coverUrl.value = URL.createObjectURL(file.value);
 }
+
 async function salvar() {
   if (file.value) {
     const image = await imageService.adicionarImagem(file.value);
@@ -56,7 +58,16 @@ async function salvar() {
   produto.value.cor = produto.value.cor.id;
   produto.value.marca = produto.value.marca.id;
   produto.value.categoria = produto.value.categoria.id;
-  produto.value.tamanho = produto.value.tamanho.id;
+
+  let tamanhosSelecionados = [];
+  if (produto.value.tamanhos && produto.value.tamanhos.length > 0) {
+    tamanhosSelecionados = produto.value.tamanhos.map((tamanhoId) => {
+      return { id: tamanhoId };
+    });
+  }
+
+  produto.value.tamanhos = tamanhosSelecionados;
+
   if (produto.value.id) {
     await produtosApi.atualizarProduto(produto.value);
   } else {
@@ -66,16 +77,24 @@ async function salvar() {
     cor: "",
     marca: "",
     categoria: "",
-    tamanho: "",
+    tamanhos: [],
     capa: null,
   };
   produtos.value = await produtosApi.buscarTodosOsProdutos();
   coverUrl.value = null;
   file.value = null;
 }
+
 function editar(editproduto) {
   produto.value = { ...editproduto };
+  produto.value.tamanhos = editproduto.tamanhos.map((tamanho) => tamanho.id);
+  if (tamanhos.value) {
+    tamanhos.value.forEach((tamanho) => {
+      tamanho.isChecked = produto.value.tamanhos.includes(tamanho.id);
+    });
+  }
 }
+
 async function limpar() {
   produto.value = {
     nome: "",
@@ -90,7 +109,7 @@ async function limpar() {
       nome_marca: "",
       logo_marca: null,
     },
-    tamanho: {},
+    tamanhos: [], // Limpar a lista de tamanhos
     capa: null,
   };
   coverUrl.value = null;
@@ -100,6 +119,19 @@ async function limpar() {
 async function excluir(produto) {
   await produtosApi.excluirProduto(produto.id);
   produtos.value = await produtosApi.buscarTodosOsProdutos();
+}
+
+function handleTamanhoChange(tamanhoId) {
+  if (!produto.value.tamanhos) {
+    produto.value.tamanhos = [];
+  }
+
+  const index = produto.value.tamanhos.findIndex((id) => id === tamanhoId);
+  if (index > -1) {
+    produto.value.tamanhos.splice(index, 1);
+  } else {
+    produto.value.tamanhos.push(tamanhoId);
+  }
 }
 </script>
 
@@ -159,17 +191,26 @@ async function excluir(produto) {
       </select>
     </div>
     <div class="tamanho">
-      <label for="Tamanho">Tamanhos: </label>
-      <select id="Tamanho" v-model="produto.tamanho">
-        <option
+      <label>Tamanhos:</label>
+      <div class="checkbox-grid">
+        <div
           v-for="tamanho in tamanhos"
           :key="tamanho.id"
-          :value="tamanho"
-          :selected="tamanho.id === produto.tamanho.id ? true : false"
+          class="checkbox-item"
         >
-          {{ tamanho.especificacao }}
-        </option>
-      </select>
+          <input
+            class="checkbox"
+            type="checkbox"
+            :id="`tamanho_${tamanho.id}`"
+            :value="tamanho.id"
+            :checked="tamanho.isChecked"
+            @change="handleTamanhoChange(tamanho.id)"
+          />
+          <label class="checkbox-label" :for="`tamanho_${tamanho.id}`">{{
+            tamanho.especificacao
+          }}</label>
+        </div>
+      </div>
     </div>
     <div class="capa">
       <div class="cover">
@@ -259,6 +300,36 @@ button {
   font-weight: bolder;
   cursor: pointer;
 }
+.tamanho {
+  width: 170px;
+}
+.checkbox-grid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.checkbox-item {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  height: 30px;
+  margin-bottom: 5px;
+  align-items: center;
+}
+.checkbox {
+  width: 15px;
+  height: 15px;
+}
+.checkbox-label {
+  margin-top: 2px;
+}
+.checkbox-label:hover {
+  color: #0f75ff;
+  font-weight: bold;
+}
+
 .descricao,
 .estoque,
 .preco,
