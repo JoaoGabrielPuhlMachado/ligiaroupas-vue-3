@@ -36,11 +36,11 @@ function fecharMenu() {
       </div>
       <div class="menu-right">
         <div>
-          <span
+          <img
+            src="@/imagens/perfil.jpg"
             @click="abrir()"
-            :class="{ 'active-profile': activeItem.profile }"
-            >Perfil</span
-          >
+            class="imagem-perfil"
+          />
         </div>
       </div>
     </div>
@@ -119,7 +119,9 @@ function fecharMenu() {
   opacity: 0;
   transition: 0.5s;
 }
-.active-profile {
+.imagem-perfil {
+  height: 65px;
+  width: 65px;
   font-weight: bold;
 }
 .show-menu {
