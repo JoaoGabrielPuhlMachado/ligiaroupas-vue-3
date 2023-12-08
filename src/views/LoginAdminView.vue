@@ -16,7 +16,7 @@ const Logout = () => {
 };
 const login = async () => {
   try {
-    const response = await api.post("/token/custom/", {
+    const response = await api.post("token/custom/", {
       email: email.value,
       password: password.value,
     });
